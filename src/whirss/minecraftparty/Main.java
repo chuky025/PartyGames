@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -137,6 +138,9 @@ public class Main extends JavaPlugin implements Listener {
 	Main m;
 	MainSQL msql;
 
+	String currentversion = "1.6";
+	
+
 	@Override
 	public void onEnable(){
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
@@ -260,9 +264,9 @@ public class Main extends JavaPlugin implements Listener {
 			metrics.start();
 		} catch (IOException e) { }
 
-		if(getConfig().getBoolean("config.auto_updating")){
+		/*if(getConfig().getBoolean("config.auto_updating")){
 			Updater updater = new Updater(this, 71596, this.getFile(), Updater.UpdateType.DEFAULT, false);
-		}
+		}*/
 
 		if(economy){
 			if (!setupEconomy()) {
@@ -271,9 +275,24 @@ public class Main extends JavaPlugin implements Listener {
 	        }
 		}
 		
-		// let's check which version we're on.
-		String version = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1);
-		Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "MinecraftParty is running on " + version + ".");
+		
+		
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MinecraftParty by Whirss");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version " + currentversion + " (Spigot " + Bukkit.getBukkitVersion() + " )");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
+		
+		//Update Checker
+		new UpdateChecker(this, 86837).getVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+            	//getLogger().info("There is not a new update available.");
+            } else {
+            	getLogger().info("An update to MinecraftParty is available: " + version + ". You are on " + currentversion);
+            	getLogger().info("Download it here: www.spigotmc.org/resources/86837/");
+            }
+        });
+		
+		
 	}
 
 
@@ -291,7 +310,7 @@ public class Main extends JavaPlugin implements Listener {
 
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){    	
-		if(cmd.getName().equalsIgnoreCase("minecraftparty") || cmd.getName().equalsIgnoreCase("mp") || cmd.getName().equalsIgnoreCase("mgp")){
+		if(cmd.getName().equalsIgnoreCase("minecraftparty") ){
 
 			if (!(sender instanceof Player)) {
 				sender.sendMessage("You must be a player to run this command.");
@@ -302,7 +321,7 @@ public class Main extends JavaPlugin implements Listener {
 			if(args.length > 0){
 				if(args[0].equalsIgnoreCase("setup")){
 					// setup all arenas and spawns and lobbies and spectatorlobbies and what not
-					if(p.hasPermission("mp.setup")){
+					if(p.hasPermission("minecraftparty.setup")){
 						Bukkit.getServer().getScheduler().runTask(this, new Runnable(){
 							public void run(){
 								setupAll(p.getLocation());
@@ -310,7 +329,7 @@ public class Main extends JavaPlugin implements Listener {
 						});
 					}
 				}else if(args[0].equalsIgnoreCase("setupasync")){
-					if(p.hasPermission("mp.setup")){
+					if(p.hasPermission("minecraftparty.setup")){
 						Runnable r = new Runnable() {
 					        public void run() {
 					        	setupAll(p.getLocation());
@@ -319,7 +338,7 @@ public class Main extends JavaPlugin implements Listener {
 					    new Thread(r).start();
 					}
 				}else if(args[0].equalsIgnoreCase("setuppoint")){
-					if(p.hasPermission("mp.setup")){
+					if(p.hasPermission("minecraftparty.setup")){
 						final Location l = this.getComponentForMinigame("ColorMatch", "spawn");
 						if(l != null){
 							l.add(0.5, -2, 0.5);
@@ -333,7 +352,7 @@ public class Main extends JavaPlugin implements Listener {
 						}
 					}
 				}else if(args[0].equalsIgnoreCase("setlobby")){
-					if(sender.hasPermission("mp.setlobby")){
+					if(sender.hasPermission("minecraftparty.setlobby")){
 						getConfig().set("lobby.world", p.getLocation().getWorld().getName());
 						getConfig().set("lobby.location.x", p.getLocation().getBlockX());
 						getConfig().set("lobby.location.y", p.getLocation().getBlockY());
@@ -343,7 +362,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				}else if(args[0].equalsIgnoreCase("setcomponent")){
 					// /mp setcomponent [minigame] [component]
-					if(sender.hasPermission("mp.setup")){
+					if(sender.hasPermission("minecraftparty.setup")){
 						if(args.length > 2){
 							this.saveComponentForMinigame(args[1], args[2], p.getLocation());
 							p.sendMessage(ChatColor.GREEN + "Saved component");
@@ -372,13 +391,13 @@ public class Main extends JavaPlugin implements Listener {
 					sender.sendMessage(ChatColor.GREEN + "Successfully reloaded config.");
 				}else if(args[0].equalsIgnoreCase("enable")){
 					if(args.length > 1){
-						if(sender.hasPermission("mp.enable")){
+						if(sender.hasPermission("minecraftparty.enable")){
 							this.enableMinigame(sender, args[1]);
 						}
 					}
 				}else if(args[0].equalsIgnoreCase("disable")){
 					if(args.length > 1){
-						if(sender.hasPermission("mp.disable")){
+						if(sender.hasPermission("minecraftparty.disable")){
 							this.disableMinigame(sender, args[1]);
 						}
 					}
@@ -457,7 +476,7 @@ public class Main extends JavaPlugin implements Listener {
 				}else if(args[0].equalsIgnoreCase("shop")){
 					Shop.openShop(this, p.getName());
 				}else if(args[0].equalsIgnoreCase("skip")){
-					if(!sender.hasPermission("mp.skip")){
+					if(!sender.hasPermission("minecraftparty.skip")){
 						return true;
 					}
 					if(currentmg > -1){
@@ -470,36 +489,22 @@ public class Main extends JavaPlugin implements Listener {
 						minigames.get(currentmg).join(p);
 					}
 				}else{
-					p.sendMessage(ChatColor.GREEN + "-- " + ChatColor.GOLD + "MinecraftParty Help" + ChatColor.GREEN + " --");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp setlobby");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp setup");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp disable/enable [minigame]");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp stats [player]");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp list");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp leaderboards [wins|credits]");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp leave");
-					p.sendMessage(ChatColor.DARK_AQUA + "/mp setcomponent [minigame] [component]");
-					p.sendMessage(ChatColor.GOLD + "To setup the game, do the following: ");
-					p.sendMessage(ChatColor.DARK_AQUA + "1. Build the main lobby");
-					p.sendMessage(ChatColor.DARK_AQUA + "2. /mp setlobby");
-					p.sendMessage(ChatColor.DARK_AQUA + "3. Go far away");
-					p.sendMessage(ChatColor.DARK_AQUA + "4. /mp setup");
+					p.sendMessage("§c§lMinecraft§d§lParty §7- §fHelp");
+			        p.sendMessage("§a/mp join §fJoin a match");
+			        p.sendMessage("§a/mp leave §fLeave match");
+			        p.sendMessage("§a/mp list §fSee the list of minigames");
+			        p.sendMessage("§a/mp stats [player] §fSee a player statistics");
+			        p.sendMessage("§a/mp leaderboards [wins|credits] §fSee the Leaderboards");
+			        p.sendMessage("§a/mp adminhelp §fHelp for admins");
 				}
 			}else{
-				p.sendMessage(ChatColor.GREEN + "-- " + ChatColor.GOLD + "MinecraftParty Help" + ChatColor.GREEN + " --");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp setlobby");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp setup");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp disable/enable [minigame]");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp stats [player]");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp list");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp leaderboards [wins|credits]");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp leave");
-				p.sendMessage(ChatColor.DARK_AQUA + "/mp setcomponent [minigame] [component]");
-				p.sendMessage(ChatColor.GOLD + "To setup the game, do the following: ");
-				p.sendMessage(ChatColor.DARK_AQUA + "1. Build the main lobby");
-				p.sendMessage(ChatColor.DARK_AQUA + "2. /mp setlobby");
-				p.sendMessage(ChatColor.DARK_AQUA + "3. Go far away");
-				p.sendMessage(ChatColor.DARK_AQUA + "4. /mp setup");
+				p.sendMessage("§c§lMinecraft§d§lParty §7- §fHelp");
+		        p.sendMessage("§a/mp join §fJoin a match");
+		        p.sendMessage("§a/mp leave §fLeave match");
+		        p.sendMessage("§a/mp list §fSee the list of minigames");
+		        p.sendMessage("§a/mp stats [player] §fSee a player statistics");
+		        p.sendMessage("§a/mp leaderboards [wins|credits] §fSee the Leaderboards");
+		        p.sendMessage("§a/mp adminhelp §fHelp for admins");
 			}
 			return true;
 		}
@@ -518,9 +523,9 @@ public class Main extends JavaPlugin implements Listener {
 			}
 		}
 
-		/*if(players.size() < min_players){
+		if(players.size() < min_players){
 			stopFull();
-		}*/
+		}
 	}
 
 	@EventHandler 
@@ -663,8 +668,8 @@ public class Main extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onSignChange(SignChangeEvent event) {
 		Player p = event.getPlayer();
-		if(event.getLine(0).toLowerCase().contains("[party]") || event.getLine(1).toLowerCase().contains("[party]")){
-			if(event.getPlayer().hasPermission("mp.sign")){
+		if(event.getLine(0).toLowerCase().contains("MinecraftParty") || event.getLine(1).toLowerCase().contains("MinecraftParty")){
+			if(event.getPlayer().hasPermission("minecraftparty.sign")){
 				event.setLine(0, "");
 				event.setLine(1, ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + "[PARTY]");
 			}
@@ -1090,9 +1095,9 @@ public class Main extends JavaPlugin implements Listener {
 		this.updatePlayerStats(p.getName(), "wins", getPlayerStats(p.getName(), "wins") + 1);
 		Random r = new Random();
 		int reward = r.nextInt((maxreward - minreward) + 1) + minreward;
-		if(p.hasPermission("mp.double_coins")){
+		if(p.hasPermission("minecraftparty.double_coins")){
 			reward = reward * 2;
-		}else if(p.hasPermission("mp.triple_coins")){
+		}else if(p.hasPermission("minecraftparty.triple_coins")){
 			reward = reward * 3;
 		}
 		this.updatePlayerStats(p.getName(), "credits", getPlayerStats(p.getName(), "credits") + reward);		
@@ -1114,9 +1119,9 @@ public class Main extends JavaPlugin implements Listener {
 		
 		if(item_rewards){
 			int reward_ = r.nextInt((item_maxreward - item_minreward) + 1) + item_minreward;
-			if(p.hasPermission("mp.double_coins")){
+			if(p.hasPermission("minecraftparty.double_coins")){
 				reward_ = reward_ * 2;
-			}else if(p.hasPermission("mp.triple_coins")){
+			}else if(p.hasPermission("minecraftparty.triple_coins")){
 				reward_ = reward_ * 3;
 			}
 			p.sendMessage("§aYou earned " + Integer.toString(reward_) + " " + Material.getMaterial(item_id).name() + " this round. You'll get them at the end.");
