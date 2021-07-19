@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -14,46 +15,13 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Egg;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityPortalEnterEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerShearEntityEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
@@ -62,10 +30,26 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
-import org.bukkit.util.BlockIterator;
 
 import whirss.minecraftparty.commands.AdminCommand;
 import whirss.minecraftparty.commands.PlayerCommand;
+import whirss.minecraftparty.events.OnBlockBreak;
+import whirss.minecraftparty.events.OnBlockPlace;
+import whirss.minecraftparty.events.OnDrop;
+import whirss.minecraftparty.events.OnEntityDamage;
+import whirss.minecraftparty.events.OnFlightAttempt;
+import whirss.minecraftparty.events.OnHunger;
+import whirss.minecraftparty.events.OnInventoryClick;
+import whirss.minecraftparty.events.OnMove;
+import whirss.minecraftparty.events.OnPlayerCommand;
+import whirss.minecraftparty.events.OnPlayerJoin;
+import whirss.minecraftparty.events.OnPlayerLeave;
+import whirss.minecraftparty.events.OnPlayerPortalEnter;
+import whirss.minecraftparty.events.OnPlayerShearSheep;
+import whirss.minecraftparty.events.OnPlayerTeleport;
+import whirss.minecraftparty.events.OnProjectileLand;
+import whirss.minecraftparty.events.OnSignChange;
+import whirss.minecraftparty.events.OnSignUse;
 import whirss.minecraftparty.minigames.ChickenTag;
 import whirss.minecraftparty.minigames.ColorMatch;
 import whirss.minecraftparty.minigames.DeadEnd;
@@ -77,7 +61,6 @@ import whirss.minecraftparty.minigames.SheepFreenzy;
 import whirss.minecraftparty.minigames.SlapFight;
 import whirss.minecraftparty.minigames.SmokeMonster;
 import whirss.minecraftparty.minigames.Spleef;
-import whirss.minecraftparty.nms.NMSEffectManager;
 import whirss.minecraftparty.sql.MainSQL;
 
 public class Main extends JavaPlugin implements Listener {
@@ -132,7 +115,7 @@ public class Main extends JavaPlugin implements Listener {
 	public int seconds = 60;
 	
 	Main m;
-	MainSQL msql;
+	public MainSQL msql;
 
 	String currentversion = "1.6";
 	
@@ -269,11 +252,9 @@ public class Main extends JavaPlugin implements Listener {
 	        }
 		}
 		
-		this.getCommand("minecraftpartyadmin").setExecutor(new AdminCommand(this));
-		this.getCommand("minecraftparty").setExecutor(new PlayerCommand(this));
+		RegisterCommands();
+		RegisterEvents();
 
-		
-		
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MinecraftParty by Whirss");
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version " + currentversion + " (Spigot " + Bukkit.getBukkitVersion() + " )");
@@ -291,8 +272,7 @@ public class Main extends JavaPlugin implements Listener {
 		
 		
 	}
-
-
+	
 	private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -304,562 +284,33 @@ public class Main extends JavaPlugin implements Listener {
         econ = rsp.getProvider();
         return econ != null;
     }
-
-	@EventHandler
-	public void onPlayerLeave(PlayerQuitEvent event){
-		if(players.contains(event.getPlayer().getName())){
-			players.remove(event.getPlayer().getName());
-			players_left.add(event.getPlayer().getName());
-			
-			if(players.size() < min_players){
-				stopFull();
-			}
-		}
-
-		if(players.size() < min_players){
-			stopFull();
-		}
+	
+	public void RegisterCommands() {
+		this.getCommand("minecraftpartyadmin").setExecutor(new AdminCommand(this));
+		this.getCommand("minecraftparty").setExecutor(new PlayerCommand(this));
 	}
-
-	@EventHandler 
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		final Player p = event.getPlayer();
+	
+	public void RegisterEvents() {
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new OnBlockBreak(main), this);
+		pm.registerEvents(new OnBlockPlace(main), this);
+		pm.registerEvents(new OnDrop(main), this);
+		pm.registerEvents(new OnEntityDamage(main), this);
+		pm.registerEvents(new OnFlightAttempt(main), this);
+		pm.registerEvents(new OnHunger(main), this);
+		pm.registerEvents(new OnInventoryClick(main), this);
+		pm.registerEvents(new OnMove(main), this);
+		pm.registerEvents(new OnPlayerCommand(main), this);
+		pm.registerEvents(new OnPlayerLeave(main), this);
+		pm.registerEvents(new OnPlayerJoin(main), this);
+		pm.registerEvents(new OnPlayerPortalEnter(main), this);
+		pm.registerEvents(new OnPlayerShearSheep(main), this);
+		pm.registerEvents(new OnPlayerTeleport(main), this);
+		pm.registerEvents(new OnProjectileLand(main), this);
+		pm.registerEvents(new OnSignUse(main), this);
+		pm.registerEvents(new OnSignChange(), this);
 		
-		// update credits from mysql
-		try{
-			if(msql.getCredits(p.getName()) > -1){
-				this.updatePlayerStats(p.getName(), "wins", msql.getWins(p.getName()));
-				this.updatePlayerStats(p.getName(), "credits", msql.getCredits(p.getName()));		
-			}
-		}catch(Exception e){
-			getLogger().warning("An error occurred while syncing credits and wins for player " + p.getName());
-		}
-
-		if(players_left.contains(p.getName())){
-			Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
-				public void run(){
-					p.teleport(getLobby());
-					p.getInventory().setContents(pinv.get(p.getName()));
-					p.updateInventory();
-				}
-			}, 4);
-			players_left.remove(p.getName());
-		}
-
-		if (!getConfig().getBoolean("config.game-on-join")) return;
-
-		if(players.contains(event.getPlayer().getName())){
-			p.sendMessage(ChatColor.RED + "You are already in the game!");
-			return;
-		}
-		players.add(p.getName());
-		event.setJoinMessage(ChatColor.GOLD + p.getName() + " has joined the game!");
-
-
-		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			public void run() {
-				
-				// if its the first player to join, start the whole minigame
-				if(players.size() < min_players + 1){
-					pinv.put(p.getName(), p.getInventory().getContents());
-					startNew();
-					return;
-				}
-				
-				try {
-					pinv.put(p.getName(), p.getInventory().getContents());
-					if (currentmg > -1) {
-						minigames.get(currentmg).join(p);
-						p.teleport(minigames.get(currentmg).spawn);
-					}
-				} catch (Exception ex) {
-					p.sendMessage(ChatColor.RED + "An error occured.");
-				}
-			}
-		}, 6);
 	}
-
-	@EventHandler
-	public void onSignUse(PlayerInteractEvent event)
-	{	
-		if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)
-		{
-			if(event.hasBlock()){
-				if (event.getClickedBlock().getType() == Material.SIGN_POST || event.getClickedBlock().getType() == Material.WALL_SIGN)
-				{
-					final Sign s = (Sign) event.getClickedBlock().getState();
-					if (s.getLine(1).equalsIgnoreCase(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + "[PARTY]")){
-						if(players.contains(event.getPlayer().getName())){
-							event.getPlayer().sendMessage(ChatColor.GOLD + "Use /mp leave to leave!");
-						}else{
-							if(players.size() > getConfig().getInt("config.max_players") - 1){
-								event.getPlayer().sendMessage(ChatColor.RED + "You can't join because the minigames party is full!");
-								return;
-							}
-							players.add(event.getPlayer().getName());
-							// if its the first player to join, start the whole minigame
-							if(players.size() < min_players + 1){
-								pinv.put(event.getPlayer().getName(), event.getPlayer().getInventory().getContents());
-								startNew();
-								if(min_players > 1){
-									event.getPlayer().sendMessage(ChatColor.GREEN + "You joined the queue. There are " + ChatColor.GOLD + Integer.toString(min_players) + ChatColor.GREEN + " players needed to start.");
-								}
-							}else{ // else: just join the minigame
-								try{
-									pinv.put(event.getPlayer().getName(), event.getPlayer().getInventory().getContents());
-									if(currentmg > -1){
-										if(ingame_started){
-											minigames.get(currentmg).lost.add(event.getPlayer());
-											minigames.get(currentmg).spectate(event.getPlayer());
-										}else{
-											minigames.get(currentmg).join(event.getPlayer());
-										}
-									}
-								}catch(Exception e){
-									event.getPlayer().sendMessage(ChatColor.RED + "An error occured.");
-								}
-							}
-						}
-					}
-				}	
-			}
-		}else if(event.getAction().equals(Action.PHYSICAL)){
-			if(event.getClickedBlock().getType() == Material.STONE_PLATE){
-				if(players.contains(event.getPlayer().getName())){
-					final Player p = event.getPlayer();
-					NMSEffectManager.createMinefieldEffect(p.getLocation());
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-						@Override
-						public void run() {
-							p.teleport(minigames.get(currentmg).spawn);
-						}
-					}, 5);
-					event.getClickedBlock().setType(Material.AIR);
-				}
-			}
-		}
-		
-		if(event.hasItem()){
-			if(event.getItem() != null){
-				if(event.getItem().getItemMeta().getDisplayName() != null){
-					if(event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("megagrenade")){
-						if(players.contains(event.getPlayer().getName())){
-							Egg egg = event.getPlayer().launchProjectile(Egg.class);
-							egg.setMetadata("mega", new FixedMetadataValue(m, "mega"));
-							event.getPlayer().getInventory().remove(Material.EGG);
-							event.getPlayer().updateInventory();
-							event.setCancelled(true);
-							event.getPlayer().getInventory().addItem(Shop.enchantedItemStack(new ItemStack(Material.EGG, Shop.getPlayerShopComponent(m, event.getPlayer().getName(), "megagrenades") - 1), "MegaGrenade"));
-							event.getPlayer().updateInventory();
-						}
-					}
-				}
-			}
-		}
-	}
-
-	@EventHandler
-	public void onSignChange(SignChangeEvent event) {
-		Player p = event.getPlayer();
-		if(event.getLine(0).toLowerCase().contains("MinecraftParty") || event.getLine(1).toLowerCase().contains("MinecraftParty")){
-			if(event.getPlayer().hasPermission("minecraftparty.sign")){
-				event.setLine(0, "");
-				event.setLine(1, ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + "[PARTY]");
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onMove(PlayerMoveEvent event){
-		try{
-			if(players.contains(event.getPlayer().getName())){
-				if(event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR){
-					if(currentmg > -1 && currentmg < minigames.size()){
-						if(m.minigames.get(currentmg).name.equalsIgnoreCase("slapfight")){
-							event.getPlayer().setAllowFlight(true);
-						}	
-					}
-				}
-				if(currentmg > -1){
-					final Minigame current = minigames.get(currentmg);
-					if(!current.lost.contains(event.getPlayer())){
-						if(started && !ingame_started){
-							if(current.name.equalsIgnoreCase("JumpnRun") || current.name.equalsIgnoreCase("MineField")){
-								final Player p = event.getPlayer();
-								if(p.getLocation().getBlockZ() > current.spawn.getBlockZ() + 1){
-									Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
-										public void run(){
-											p.teleport(current.spawn);
-										}
-									}, 5);
-								}else if(p.getLocation().getBlockY() + 2 < current.spawn.getBlockY()){
-									Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
-										public void run(){
-											p.teleport(current.spawn);
-										}
-									}, 5);
-								}
-							}
-						}
-						if(started && ingame_started){
-							if(current.name.equalsIgnoreCase("DeadEnd")){
-								World w = event.getPlayer().getWorld();
-								Location under = new Location(w, event.getPlayer().getLocation().getBlockX(), event.getPlayer().getLocation().getBlockY() - 1, event.getPlayer().getLocation().getBlockZ());
-								if(w.getBlockAt(under).getType() == Material.LAPIS_BLOCK){
-									w.getBlockAt(under).setType(Material.AIR);
-								}
-							}
-							if(current.name.equalsIgnoreCase("SmokeMonster")){
-								for(Location l : SmokeMonster.locs){
-									if(event.getPlayer().getLocation().distance(l) < 3 || event.getPlayer().getLocation().distance(l.add(0D, -1.5D, 0D))  < 3){
-										current.lost.add(event.getPlayer());
-										int count = 0;
-										for(String pl : m.players){
-											Player p = Bukkit.getPlayerExact(pl);
-											if(p.isOnline()){
-												if(!current.lost.contains(p)){
-													count++;
-												}
-											}
-										}
-										sendPlace(count, event.getPlayer());
-										current.spectate(event.getPlayer());
-										if(count < 2){
-											c_ += seconds-c;
-											c = seconds; 
-										}
-									}
-								}
-							}
-							if(current.name.equalsIgnoreCase("JumpnRun") || current.name.equalsIgnoreCase("MineField")){
-								final Player p = event.getPlayer();
-								if(p.getLocation().getBlockZ() > current.finish.getBlockZ()){
-									c_ += seconds-c;
-									c = seconds; // just skips all the remaining seconds and sets to 60, current timer will do the rest
-									return;
-								}
-							}
-							if(event.getPlayer().getLocation().getBlockY() + 2 < current.spawn.getBlockY()){
-								if(current.name.equalsIgnoreCase("JumpnRun") || current.name.equalsIgnoreCase("MineField")){
-									final Player p = event.getPlayer();
-									Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
-										public void run(){
-											p.teleport(current.spawn);
-										}
-									}, 5);
-									return;
-								}
-								if(current.name.equalsIgnoreCase("slapfight")){
-									if(event.getPlayer().getLocation().getBlockY() > current.spawn.getBlockY() - 5){
-										return;
-									}
-								}
-								current.lost.add(event.getPlayer());
-								int count = 0;
-								for(String pl : m.players){
-									Player p = Bukkit.getPlayerExact(pl);
-									if(p.isOnline()){
-										if(!current.lost.contains(p)){
-											count++;
-										}
-									}
-								}
-								sendPlace(count, event.getPlayer());
-								current.spectate(event.getPlayer());
-								// there's only one man standing
-								if(count < 2){
-									c_ += seconds-c;
-									c = seconds; // just skips all the remaining seconds and sets to 60, current timer will do the rest
-								}
-							}
-						}
-					}else if(current.lost.contains(event.getPlayer())){
-						if(started && ingame_started){
-							if(event.getPlayer().getLocation().getBlockY() < current.spectatorlobby.getBlockY() || event.getPlayer().getLocation().getBlockY() > current.spectatorlobby.getBlockY()){
-								//current.spectate(event.getPlayer());
-								final Player p = event.getPlayer();
-								final Minigame mg = current;
-								final float b = p.getLocation().getYaw();
-								final float c = p.getLocation().getPitch();
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-									@Override
-									public void run() {
-										p.setAllowFlight(true);
-										p.setFlying(true);
-										p.teleport(new Location(p.getWorld(), p.getLocation().getBlockX(), mg.spectatorlobby.getBlockY(), p.getLocation().getBlockZ(), b, c));
-										//p.getLocation().setYaw(b);
-										//p.getLocation().setPitch(c);
-									}
-								}, 5);
-							}
-						}
-					}	
-				}
-
-			}	
-		}catch(Exception e){
-			for(StackTraceElement et : e.getStackTrace()){
-				System.out.println(et);
-			}
-		}
-
-	}
-	
-
-
-	@EventHandler
-	public void onEntityDamage(EntityDamageEvent event){
-		if(event.getEntity() instanceof Player){
-			final Player p = (Player)event.getEntity();
-			if(players.contains(p.getName())){
-				if(currentmg > -1 && currentmg < minigames.size()){
-					if(minigames.get(currentmg).name.equalsIgnoreCase("slapfight")){
-						// current minigame is SlapFight, enable all damage (except for fall damage)
-						if(ingame_started){
-							// enable damage only when cooldown finished
-							if(event.getCause() == DamageCause.FALL){
-								event.setCancelled(true);
-							}
-							p.setHealth(20D);
-						}else{
-							event.setCancelled(true);
-						}
-					}else if(minigames.get(currentmg).name.equalsIgnoreCase("chickentag")){
-						// current minigame is chickentag, enable all damage again
-						if(ingame_started){
-							// enable damage only when cooldown finished
-							if(event.getCause() == DamageCause.FALL){
-								event.setCancelled(true);
-							}
-							// TODO pass the chicken
-							if(hasChicken.containsKey(p.getName())){
-								if(hasChicken.get(p.getName())){
-									// if the player already has the chicken, don't allow passing to him
-									return;
-								}	
-							}
-							if(event instanceof EntityDamageByEntityEvent){
-								EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
-								if(e.getDamager() instanceof Player){
-									Player p2 = (Player) e.getDamager();
-									if(hasChicken.containsKey(p2.getName())){
-										hasChicken.put(p2.getName(), false);
-										Entity t = p2.getPassenger();
-										p2.eject();
-										t.remove();
-									}
-									NMSEffectManager.createBloodEffect(m, p.getLocation().add(0, 0.5, 0));
-									p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + p2.getName() + " passed his Chicken to you! Try to get rid of it!");
-								}
-							}
-							hasChicken.put(p.getName(), true);
-							final Chicken c = (Chicken) p.getWorld().spawnEntity(p.getLocation(), EntityType.CHICKEN);
-							Bukkit.getScheduler().runTaskLater(m, new Runnable(){
-								public void run(){
-									p.setPassenger(c);
-								}
-							}, 2L);
-							p.setHealth(20D);
-						}else{
-							event.setCancelled(true);
-						}
-					}else{
-						event.setCancelled(true);
-					}
-				}
-			}
-		}
-		
-		// last archer standing
-		if (event instanceof EntityDamageByEntityEvent) {
-			EntityDamageByEntityEvent event_ = (EntityDamageByEntityEvent) event;
-			if (event_.getDamager() instanceof Arrow) {
-				final Arrow arrow = (Arrow) event_.getDamager();
-				if (arrow.getShooter() instanceof Player && event.getEntity() instanceof Player) {
-					Player p = (Player) event.getEntity();
-					Player damager = (Player) arrow.getShooter();
-					if(players.contains(p.getName()) && players.contains(damager.getName())){
-						if(currentmg > -1){
-							final Minigame current = minigames.get(currentmg);
-							
-							if(!current.lost.contains(p)){
-								if(started && ingame_started){
-									current.lost.add(p);
-									NMSEffectManager.createBloodEffect(m, p.getLocation().add(0, 0.5, 0));
-									int count = 0;
-									for(String pl : m.players){
-										Player p_ = Bukkit.getPlayerExact(pl);
-										if(p_.isOnline()){
-											if(!current.lost.contains(p_)){
-												count++;
-											}
-										}
-									}
-									sendPlace(count, p);
-									current.spectate(p);
-									// there's only one man standing
-									if(count < 2){
-										c_ += seconds-c;
-										c = seconds; // just skips all the remaining seconds and sets to 60, current timer will do the rest
-									}
-									
-									damager.sendMessage(ChatColor.GOLD + "You shot " + ChatColor.DARK_PURPLE + p.getName() + ChatColor.GOLD + "!");
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	@EventHandler
-	public void onHunger(FoodLevelChangeEvent event){
-		if(event.getEntity() instanceof Player){
-			Player p = (Player)event.getEntity();
-			if(players.contains(p.getName())){
-				event.setCancelled(true);
-			}
-		}
-	}
-
-	@EventHandler
-	public void onBlockBreak(BlockBreakEvent event){
-		if(players.contains(event.getPlayer().getName())){
-			//SPLEEF
-			if(ingame_started){
-				if(event.getBlock().getType() == Material.SNOW_BLOCK){
-					event.getPlayer().getInventory().addItem(new ItemStack(Material.SNOW_BALL, 2));
-					event.getPlayer().updateInventory();
-					event.getBlock().setType(Material.AIR);
-					event.setCancelled(true);
-				}else{
-					event.setCancelled(true);
-				}
-			}else{
-				event.setCancelled(true);
-			}
-		}
-	}
-
-	@EventHandler
-	public void onBlockPlace(BlockPlaceEvent event){
-		if(players.contains(event.getPlayer().getName())){
-			event.setCancelled(true);
-		}
-	}
-
-	@EventHandler
-	public void onInventoryClick(InventoryClickEvent event){
-		if(players.contains(((Player)event.getWhoClicked()).getName())){
-			event.setCancelled(true);
-		}
-	}
-
-	@EventHandler
-	public void onDrop(PlayerDropItemEvent event) {
-		if(players.contains(event.getPlayer().getName())){
-			event.getItemDrop().remove();
-			event.setCancelled(true);
-		}
-	}
-	
-	@EventHandler
-	public void onProjectileLand(ProjectileHitEvent e) {   
-		if (e.getEntity().getShooter() instanceof Player) {
-			if (e.getEntity() instanceof Snowball) {
-				Player player = (Player) e.getEntity().getShooter();
-				if(players.contains(player.getName())){
-					BlockIterator bi = new BlockIterator(e.getEntity().getWorld(), e.getEntity().getLocation().toVector(), e.getEntity().getVelocity().normalize(), 0.0D, 4);
-					Block hit = null;
-					while (bi.hasNext()) {
-						hit = bi.next();
-						if (hit.getTypeId() != 0) {
-							break;
-						}
-					}
-					try {
-						if (hit.getLocation().getBlockY() < minigames.get(currentmg).spawn.getBlockY() && hit.getType() == Material.SNOW_BLOCK) {
-							hit.setTypeId(0);
-
-							player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, 1F, 1F);
-							
-						}
-					} catch (Exception ex) { 
-						
-					}
-				}
-			} else if (e.getEntity() instanceof Egg){
-				Player player = (Player) e.getEntity().getShooter();
-				if(players.contains(player.getName())){
-					BlockIterator bi = new BlockIterator(e.getEntity().getWorld(), e.getEntity().getLocation().toVector(), e.getEntity().getVelocity().normalize(), 0.0D, 4);
-					Block hit = null;
-					while (bi.hasNext()) {
-						hit = bi.next();
-						if (hit.getTypeId() != 0) {
-							break;
-						}
-					}
-					try {
-						Location l = hit.getLocation();
-						if (hit.getLocation().getBlockY() < minigames.get(currentmg).spawn.getBlockY() && hit.getType() == Material.SNOW_BLOCK) {
-							if(e.getEntity().hasMetadata("mega")){
-								for(int x = 1; x <= 5; x++){
-									for(int z = 1; z <= 5; z++){
-										Block b = l.getWorld().getBlockAt(new Location(l.getWorld(), l.getBlockX() + x - 3, l.getBlockY(), l.getBlockZ() + z - 3));
-										b.setTypeId(0);
-									}
-								}
-								Shop.removeFromPlayerShopComponent(m, player.getName(), "megagrenades", 1);
-							}else{
-								for(int x = 1; x <= 3; x++){
-									for(int z = 1; z <= 3; z++){
-										Block b = l.getWorld().getBlockAt(new Location(l.getWorld(), l.getBlockX() + x - 2, l.getBlockY(), l.getBlockZ() + z - 2));
-										b.setTypeId(0);
-									}
-								}
-								Shop.removeFromPlayerShopComponent(m, player.getName(), "grenades", 1);
-							}
-							hit.setTypeId(0);
-
-							player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, 1F, 1F);
-							/*for (Player sp : players) {
-	                            sp.getPlayer().playEffect(new Location(hit.getWorld(), hit.getLocation().getBlockX(), hit.getLocation().getBlockY() + 1.0D, hit.getLocation().getBlockZ()), Effect.MOBSPAWNER_FLAMES, 25);
-	                    	}*/
-						}
-					} catch (Exception ex) { 
-						
-					}
-				}
-			}
-		}
-	}
-	
-
-	Random rand = new Random();
-	@EventHandler
-	public void onPlayerShearSheep(PlayerShearEntityEvent event){
-		if(players.contains(event.getPlayer().getName())){
-			int i = rand.nextInt(100);
-			if(!currentscore.containsKey(event.getPlayer().getName())){
-				currentscore.put(event.getPlayer().getName(), 0);
-			}
-			if(i < 5){
-				currentscore.put(event.getPlayer().getName(), currentscore.get(event.getPlayer().getName()) + 3);
-				int temp = Shop.getPlayerShopComponent(m, event.getPlayer().getName(), "sheepfreenzy_explosion_immunity");
-				if(temp < 1){
-					Shop.removeFromPlayerShopComponent(m, event.getPlayer().getName(), "sheepfreenzy_explosion_immunity", 1);
-					event.getPlayer().getLocation().getWorld().createExplosion(event.getEntity().getLocation(), 2F);
-				}
-			}else{
-				currentscore.put(event.getPlayer().getName(), currentscore.get(event.getPlayer().getName()) + 1);
-			}
-			NMSEffectManager.createSheepFreenzyEffect(event.getEntity().getLocation());
-			event.getEntity().remove();
-		}
-	}
-	
-	
 	
 
 	/*public void nextMinigame(Player p){
@@ -959,7 +410,7 @@ public class Main extends JavaPlugin implements Listener {
 	public int c = 0; // count
 	public int c_ = 0; 
 	public boolean ingame_started = false;
-	boolean started = false;
+	public boolean started = false;
 	BukkitTask t = null;
 	public int currentmg = 0;
 	BukkitTask currentid = null;
@@ -1660,59 +1111,6 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		return ret;
 	}
-
-
-	
-	@EventHandler(priority=EventPriority.HIGH)
-	public void onPlayerCommand(PlayerCommandPreprocessEvent event){
-		if(players.contains(event.getPlayer().getName())){
-			if(event.getMessage().startsWith("/leave") || event.getMessage().equalsIgnoreCase("/quit")){
-				final Player p = event.getPlayer();
-				p.teleport(getLobby());
-				Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
-					public void run(){
-						p.teleport(getLobby());
-					}
-				}, 5);
-				updateScoreboardOUTGAME(p.getName());
-				p.getInventory().clear();
-				p.updateInventory();
-				Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-					public void run(){
-						p.getInventory().setContents(pinv.get(p.getName()));
-						p.updateInventory();
-					}
-				}, 10L);
-				if(currentmg > -1){
-					minigames.get(currentmg).leave(p);
-				}
-				players.remove(p.getName());
-				p.sendMessage(ChatColor.RED + getConfig().getString("strings.you_left"));
-				if(players.size() < min_players){
-					Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-						public void run(){
-							stopFull(p);
-						}
-					}, 15);
-				}
-				event.setCancelled(true);
-				return;
-			}else if(event.getMessage().equalsIgnoreCase("/shop")){
-				Shop.openShop(this, event.getPlayer().getName());
-				event.setCancelled(true);
-			}
-			
-			if(!event.getPlayer().isOp()){
-				if(event.getMessage().startsWith("/mp") || event.getMessage().equalsIgnoreCase("/minecraftparty")){
-					// nothing
-				}else{
-					event.setCancelled(true);
-					event.getPlayer().sendMessage("§3You're in MinecraftParty. Please use §6/mp leave §3to leave the minigame.");
-				}
-			}
-		}
-	}
-	
 	
 	public void outputLeaderboardsByCredits(Player p){
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
@@ -1833,66 +1231,6 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 	
-	@EventHandler
-	public void onPlayerPortalEnter(EntityPortalEnterEvent event){
-		if(event.getEntity() instanceof Player){
-			final Player p = (Player) event.getEntity();
-			if(players.contains(p.getName())){
-				p.getInventory().clear();
-				p.updateInventory();
-				Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-					public void run(){
-						p.getInventory().setContents(pinv.get(p.getName()));
-						p.updateInventory();
-					}
-				}, 10L);
-				if(currentmg > -1){
-					minigames.get(currentmg).leave(p);
-				}
-				players.remove(p.getName());
-				p.sendMessage(ChatColor.RED + getConfig().getString("strings.you_left"));
-				if(players.size() < min_players){
-					Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-						public void run(){
-							stopFull(p);
-						}
-					}, 15);
-				}
-			}
-		}
-	}
-	
-	
-	@EventHandler
-	public void onFlightAttempt(PlayerToggleFlightEvent event) {
-		final Player p = event.getPlayer();
-	    if(p.getGameMode() != GameMode.CREATIVE) {
-	    	if(currentmg < 0 || currentmg > minigames.size() - 1 || !players.contains(p.getName())){
-	    		return;
-	    	}
-	    	if(players.contains(p.getName()) && m.minigames.get(currentmg).name.equalsIgnoreCase("slapfight")){
-	    		if(!players_doublejumped.contains(p.getName())){
-		    		event.getPlayer().setAllowFlight(false);
-			        event.getPlayer().setFlying(false);
-			        event.setCancelled(true);
-		    		event.getPlayer().setVelocity(p.getVelocity().setY(1.4F)); // add(new Vector(0,0.7,0)
-			        players_doublejumped.add(p.getName());
-			        Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-			        	public void run(){
-			        		players_doublejumped.remove(p.getName());
-			        	}
-			        }, 20 * 10);
-	    		}else{
-	    			p.sendMessage(ChatColor.RED + "You can only use Double Jump after a cooldown of 10 seconds.");
-	    			p.setAllowFlight(false);
-			        p.setFlying(false);
-			        event.setCancelled(true);
-	    		}
-	    	}
-	    }
-	}
-	
-	
 	public void shuffleMinigames(){
 		Collections.shuffle(minigames);
 	}
@@ -1908,30 +1246,8 @@ public class Main extends JavaPlugin implements Listener {
 	// Nope nope nope nope sometimes simply crashes
 	// will look into that later
 	
-	/*@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onPlayerTeleport(PlayerTeleportEvent event) {
-		final Player player = event.getPlayer();
-		final int visibleDistance = getServer().getViewDistance() * 16;
-		// Fix the visibility issue one tick later
-		getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
-			public void run() {
-				// Refresh nearby clients
-				final List<Player> nearby = getPlayersWithin(player, visibleDistance);
-				// Hide every player
-				updateEntities(player, nearby, false);
-				// Then show them again
-				getServer().getScheduler().scheduleSyncDelayedTask(m, new Runnable() {
-					@Override
-					public void run() {
-						updateEntities(player, nearby, true);
-					}
-				}, 1);
-			}
-		}, 15);
-	}
 
-	private void updateEntities(Player tpedPlayer, List<Player> players_, boolean visible) {
+	public void updateEntities(Player tpedPlayer, List<Player> players_, boolean visible) {
 		for (Player player : players_) {
 			if (visible) {
 				tpedPlayer.showPlayer(player);
@@ -1943,7 +1259,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	private List<Player> getPlayersWithin(Player player, int distance) {
+	public List<Player> getPlayersWithin(Player player, int distance) {
 		List<Player> res = new ArrayList<Player>();
 		int d2 = distance * distance;
 		for (Player p : getServer().getOnlinePlayers()) {
@@ -1952,5 +1268,5 @@ public class Main extends JavaPlugin implements Listener {
 			}
 		}
 		return res;
-	}*/
+	}
 }

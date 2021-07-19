@@ -18,7 +18,6 @@ public class AdminCommand implements CommandExecutor {
 		this.main = main;
 	}
 
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){    	
 			if (!(sender instanceof Player)) {
 				sender.sendMessage("You must be a player to run this command.");
