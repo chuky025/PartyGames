@@ -6,5 +6,9 @@ depend: [Vault]
 commands:
    minecraftparty:
       aliases: [mp, mcparty, mcp]
-      description: Main command
+      description: Command for players
       usage: /minecraftparty [action]
+   minecraftpartyadmin:
+      aliases: [mpadmin, mpa, mcpartyadmin]
+      description: Command for admins
+      usage: /minecraftpartyadmin [action]

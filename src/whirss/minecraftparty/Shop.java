@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import whirss.minecraftparty.commands.AdminCommand;
 import whirss.minecraftparty.nms.NMSEffectManager;
 
 public class Shop {

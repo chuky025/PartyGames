@@ -65,6 +65,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.BlockIterator;
 
+import whirss.minecraftparty.commands.AdminCommand;
+import whirss.minecraftparty.commands.PlayerCommand;
 import whirss.minecraftparty.minigames.ChickenTag;
 import whirss.minecraftparty.minigames.ColorMatch;
 import whirss.minecraftparty.minigames.DeadEnd;
@@ -268,6 +270,9 @@ public class Main extends JavaPlugin implements Listener {
 	        }
 		}
 		
+		this.getCommand("minecraftpartyadmin").setExecutor(new AdminCommand(this));
+		this.getCommand("minecraftparty").setExecutor(new PlayerCommand(this));
+
 		
 		
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
@@ -300,219 +305,6 @@ public class Main extends JavaPlugin implements Listener {
         econ = rsp.getProvider();
         return econ != null;
     }
-
-
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){    	
-		if(cmd.getName().equalsIgnoreCase("minecraftparty") ){
-
-			if (!(sender instanceof Player)) {
-				sender.sendMessage("You must be a player to run this command.");
-				return true;
-			}
-			final Player p = (Player)sender;
-
-			if(args.length > 0){
-				if(args[0].equalsIgnoreCase("setup")){
-					// setup all arenas and spawns and lobbies and spectatorlobbies and what not
-					if(p.hasPermission("minecraftparty.setup")){
-						Bukkit.getServer().getScheduler().runTask(this, new Runnable(){
-							public void run(){
-								setupAll(p.getLocation());
-							}
-						});
-					}
-				}else if(args[0].equalsIgnoreCase("setupasync")){
-					if(p.hasPermission("minecraftparty.setup")){
-						Runnable r = new Runnable() {
-					        public void run() {
-					        	setupAll(p.getLocation());
-					        }
-					    };
-					    new Thread(r).start();
-					}
-				}else if(args[0].equalsIgnoreCase("setuppoint")){
-					if(p.hasPermission("minecraftparty.setup")){
-						final Location l = this.getComponentForMinigame("ColorMatch", "spawn");
-						if(l != null){
-							l.add(0.5, -2, 0.5);
-							Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-								public void run(){
-									p.setAllowFlight(true);
-									p.setFlying(true);
-									p.teleport(l);
-								}
-							}, 5L);
-						}
-					}
-				
-				}else if (args[0].equalsIgnoreCase("adminhelp")) {
-			           if (p.hasPermission("minecraftparty.setup")) {
-			             p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD +"Party " + ChatColor.GRAY + "- " + ChatColor.WHITE+ "Admin Help");
-			             p.sendMessage(ChatColor.GREEN + "/mp setlobby ");
-			             p.sendMessage(ChatColor.GREEN + "/mp setup " );
-			             p.sendMessage(ChatColor.GREEN + "/mp enable/disable [game] ");
-			             p.sendMessage(ChatColor.GREEN + "/mp setcomponent [game] [component] ");
-			           }
-				}else if(args[0].equalsIgnoreCase("setlobby")){
-					if(sender.hasPermission("minecraftparty.setlobby")){
-						getConfig().set("lobby.world", p.getLocation().getWorld().getName());
-						getConfig().set("lobby.location.x", p.getLocation().getBlockX());
-						getConfig().set("lobby.location.y", p.getLocation().getBlockY());
-						getConfig().set("lobby.location.z", p.getLocation().getBlockZ());
-						this.saveConfig();
-						p.sendMessage(ChatColor.GREEN + "Saved Main lobby.");	
-					}
-				}else if(args[0].equalsIgnoreCase("setcomponent")){
-					// /mp setcomponent [minigame] [component]
-					if(sender.hasPermission("minecraftparty.setup")){
-						if(args.length > 2){
-							this.saveComponentForMinigame(args[1], args[2], p.getLocation());
-							p.sendMessage(ChatColor.GREEN + "Saved component");
-						}
-					}
-				}else if(args[0].equalsIgnoreCase("stats")){
-					sender.sendMessage(ChatColor.DARK_AQUA + "-- " + ChatColor.GOLD + "Statistics " + ChatColor.DARK_AQUA + "--");
-					if(args.length > 1){
-						String player = args[1];
-						sender.sendMessage(ChatColor.GREEN + player + " has " + Integer.toString(this.getPlayerStats(player, "credits")) + " Credits.");
-					}else{
-						String player = p.getName();
-						sender.sendMessage(ChatColor.GREEN + "You have " + Integer.toString(this.getPlayerStats(player, "credits")) + " Credits.");
-					}
-				}else if(args[0].equalsIgnoreCase("list")){
-					sender.sendMessage(ChatColor.DARK_AQUA + "-- " + ChatColor.GOLD + "Minigames: " + ChatColor.DARK_AQUA + "--");
-					for(Minigame m : minigames){
-						if(m.isEnabled()){
-							sender.sendMessage(ChatColor.GREEN + m.name);
-						}else{
-							sender.sendMessage(ChatColor.RED + m.name);
-						}
-					}
-				}else if(args[0].equalsIgnoreCase("reloadconfig")){
-					this.reloadConfig();
-					sender.sendMessage(ChatColor.GREEN + "Successfully reloaded config.");
-				}else if(args[0].equalsIgnoreCase("enable")){
-					if(args.length > 1){
-						if(sender.hasPermission("minecraftparty.enable")){
-							this.enableMinigame(sender, args[1]);
-						}
-					}
-				}else if(args[0].equalsIgnoreCase("disable")){
-					if(args.length > 1){
-						if(sender.hasPermission("minecraftparty.disable")){
-							this.disableMinigame(sender, args[1]);
-						}
-					}
-				}else if(args[0].equalsIgnoreCase("leaderboards")){
-					sender.sendMessage(ChatColor.DARK_AQUA + "-- " + ChatColor.GOLD + "Leaderboards: " + ChatColor.DARK_AQUA + "--");
-					if(args.length > 1){
-						if(args[1].startsWith("credit")){
-							outputLeaderboardsByCredits(p);
-						}else if(args[1].startsWith("win")){
-							outputLeaderboardsByWins(p);
-						}else{
-							sender.sendMessage(ChatColor.GREEN + "/mp leaderboards [credits/wins].");
-						}
-					}else{
-						outputLeaderboardsByCredits(p);
-					}
-				}else if(args[0].equalsIgnoreCase("leave")){
-					if(players.contains(p.getName())){
-						p.teleport(getLobby());
-						Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
-							public void run(){
-								p.teleport(getLobby());
-							}
-						}, 5);
-						updateScoreboardOUTGAME(p.getName());
-						p.getInventory().clear();
-						p.updateInventory();
-						Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-							public void run(){
-								p.getInventory().setContents(pinv.get(p.getName()));
-								p.updateInventory();
-							}
-						}, 10L);
-						if(currentmg > -1){
-							minigames.get(currentmg).leave(p);
-						}
-						players.remove(p.getName());
-						p.sendMessage(ChatColor.RED + getConfig().getString("strings.you_left"));
-						if(players.size() < min_players){
-							Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-								public void run(){
-									stopFull(p);
-								}
-							}, 15);
-						}
-					}
-				}else if(args[0].equalsIgnoreCase("join")){
-					if(players.contains(p.getName())){
-						p.sendMessage(ChatColor.GOLD + "Use /mp leave to leave!");
-					}else{
-						if(players.size() > getConfig().getInt("config.max_players") - 1){
-							p.sendMessage(ChatColor.RED + "You can't join because the minigames party is full!");
-							return true;
-						}
-						players.add(p.getName());
-						// if its the first player to join, start the whole minigame
-						if(players.size() < min_players + 1){
-							pinv.put(p.getName(), p.getInventory().getContents());
-							startNew();
-							if(min_players > 1){
-								p.sendMessage(ChatColor.GREEN + "You joined the queue. There are " + ChatColor.GOLD + Integer.toString(min_players) + ChatColor.GREEN + " players needed to start.");
-							}
-						}else{ // else: just join the minigame
-							try{
-								pinv.put(p.getName(), p.getInventory().getContents());
-								if(ingame_started){
-									minigames.get(currentmg).lost.add(p);
-									minigames.get(currentmg).spectate(p);
-								}else{
-									minigames.get(currentmg).join(p);
-								}
-							}catch(Exception e){}
-							p.sendMessage(ChatColor.GREEN + "You joined the queue. There are " + ChatColor.GOLD + Integer.toString(min_players) + ChatColor.GREEN + " players needed to start.");
-						}	
-					}
-				}else if(args[0].equalsIgnoreCase("shop")){
-					Shop.openShop(this, p.getName());
-				}else if(args[0].equalsIgnoreCase("skip")){
-					if(!sender.hasPermission("minecraftparty.skip")){
-						return true;
-					}
-					if(currentmg > -1){
-						c_ += seconds-c;
-						c = seconds;
-					}
-					if(args.length > 1){
-						String count = args[1];
-						currentmg += Integer.parseInt(count) - 1;
-						minigames.get(currentmg).join(p);
-					}
-				}else{
-					p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Party " + ChatColor.GRAY + "- " + ChatColor.WHITE + "Help");
-			        p.sendMessage(ChatColor.GREEN + "/mp join " + ChatColor.WHITE + "Join a match");
-			        p.sendMessage(ChatColor.GREEN + "/mp leave " + ChatColor.WHITE + "Leave match");
-			        p.sendMessage(ChatColor.GREEN + "/mp list " + ChatColor.WHITE + "See the list of minigames");
-			        p.sendMessage(ChatColor.GREEN + "/mp stats [player] " + ChatColor.WHITE + "See a player statistics");
-			        p.sendMessage(ChatColor.GREEN + "/mp leaderboards [wins|credits] " + ChatColor.WHITE + "See the Leaderboards");
-			        p.sendMessage(ChatColor.GREEN + "/mp adminhelp " + ChatColor.WHITE + "Help for admins");
-				}
-			}else{
-				p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Party " + ChatColor.GRAY + "- " + ChatColor.WHITE + "Help");
-		        p.sendMessage(ChatColor.GREEN + "/mp join " + ChatColor.WHITE + "Join a match");
-		        p.sendMessage(ChatColor.GREEN + "/mp leave " + ChatColor.WHITE + "Leave match");
-		        p.sendMessage(ChatColor.GREEN + "/mp list " + ChatColor.WHITE + "See the list of minigames");
-		        p.sendMessage(ChatColor.GREEN + "/mp stats [player] " + ChatColor.WHITE + "See a player statistics");
-		        p.sendMessage(ChatColor.GREEN + "/mp leaderboards [wins|credits] " + ChatColor.WHITE + "See the Leaderboards");
-		        p.sendMessage(ChatColor.GREEN + "/mp adminhelp " + ChatColor.WHITE + "Help for admins");
-			}
-			return true;
-		}
-		return false;
-	}
-
 
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent event){
@@ -1167,7 +959,7 @@ public class Main extends JavaPlugin implements Listener {
 	 */
 	public int c = 0; // count
 	public int c_ = 0; 
-	boolean ingame_started = false;
+	public boolean ingame_started = false;
 	boolean started = false;
 	BukkitTask t = null;
 	public int currentmg = 0;
@@ -1422,6 +1214,8 @@ public class Main extends JavaPlugin implements Listener {
 	 */
 
 	public HashMap<String, Integer> currentscore = new HashMap<String, Integer>();
+
+	public Main main;
 
 	public void updateScoreboard(int c){
 
