@@ -45,7 +45,7 @@ public class RedAlert extends Minigame implements Listener{
 
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y_, z + j));
-				b_.setType(Material.GLOWSTONE);
+				b_.setType(Material.BEDROCK);
 				b.setType(Material.WOOL);
 			}
 		}

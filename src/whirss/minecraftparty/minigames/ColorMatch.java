@@ -101,7 +101,7 @@ public class ColorMatch extends Minigame implements Listener{
 					for(int j_ = 0; j_ < 4; j_++){
 						Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x_ + i_, y, z_ + j_));
 						Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x_ + i_, y_, z_ + j_));
-						b_.setType(Material.GLOWSTONE);
+						b_.setType(Material.BEDROCK);
 						b.setType(Material.WOOL);
 						b.setData(colors.get(current).getWoolData());
 					}

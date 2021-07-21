@@ -64,28 +64,6 @@ import whirss.minecraftparty.sql.MainSQL;
 
 public class Main extends JavaPlugin implements Listener {
 
-	/* setup pattern:
-	 * 
-	 * # - - -
-	 * # - - -
-	 * # - - -
-	 * # # # #
-	 * 
-	 * #=minigame
-	 * 
-	 * IMPORTANT: LOBBY SPAWN MUST BE ABOVE SPAWNS
-	 */
-
-	/*
-	 * SETUP
-	 * 
-	 * 1. build main lobby
-	 * 2. /mp setlobby
-	 * 3. go to location somewhere UNDER lobby
-	 * 4. /mp setup
-	 * 
-	 */
-
 	public static Economy econ = null;
 
 	public ArrayList<Minigame> minigames = new ArrayList<Minigame>();
@@ -119,7 +97,6 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable(){
-		Bukkit.getServer().getPluginManager().registerEvents(this, this);
 		m = this;
 		msql = new MainSQL(this);
 		int id = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
@@ -995,58 +972,69 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		return false;
 	}
-
-	public void setupAll(Location start){
-		int x = start.getBlockX();
-		int y = start.getBlockY();
-		int z = start.getBlockZ();
-
+	
+	public void setupColorMatch(Location start) {
 		ColorMatch.setup(start, this, "ColorMatch");
-		Spleef.setup(new Location(start.getWorld(), x, y, z + 64 + 20), this, "Spleef");
-		MineField.setup(new Location(start.getWorld(), x, y, z + 64 * 2 + 20 * 2), this, "MineField");
-		JumpnRun.setup(new Location(start.getWorld(), x, y, z + 64 * 3 + 20 * 3), this, "JumpnRun");
-		DeadEnd.setup(new Location(start.getWorld(), x + 64 + 20, y, z), this, "DeadEnd");
-		RedAlert.setup(new Location(start.getWorld(), x + 64 * 2 + 20 * 2, y, z), this, "RedAlert");
-		LastArcherStanding.setup(new Location(start.getWorld(), x + 64 * 3 + 20 * 3, y, z), this, "LastArcherStanding");
-		SheepFreenzy.setup(new Location(start.getWorld(), x + 64 + 20, y, z + 64 + 20), this, "SheepFreenzy");
-		SmokeMonster.setup(new Location(start.getWorld(), x + 64 * 2 + 20 * 2, y, z + 64 + 20), this, "SmokeMonster");
-		SlapFight.setup(new Location(start.getWorld(), x + 64 * 3 + 20 * 3, y, z + 64 + 20), this, "SlapFight");
-
-		
-		/*
-		 * next minigame locations: (TODO FOR LATER USE)
-		 * 
-		 * new Location(start.getWorld(), x, y, z + 64 * 2 + 20 * 2) [MINEFIELD]
-		 * new Location(start.getWorld(), x, y, z + 64 * 3 + 20 * 3) [JUMPNRUN]
-		 * new Location(start.getWorld(), x + 64 + 20, y, z) [DEADEND]
-		 * new Location(start.getWorld(), x + 64 * 2 + 20 * 2, y, z) [REDALERT]
-		 * new Location(start.getWorld(), x + 64 * 3 + 20 * 3, y, z) [LASTARCHERSTANDING]
-		 * 
-		 * would create the following pattern:
-		 * 
-		 * # - - -
-		 * # - - -
-		 * # - - -
-		 * # # # #
-		 * 
-		 * #=minigame
-		 * 
-		 * IMPORTANT: LOBBY SPAWN MUST BE ABOVE SPAWNS!
-		 */ 
-
-		minigames.clear();
 		minigames.add(new ColorMatch(this, this.getComponentForMinigame("ColorMatch", "spawn"), this.getComponentForMinigame("ColorMatch", "lobby"), this.getComponentForMinigame("ColorMatch", "spectatorlobby")));
+		getLogger().info("[MinecraftParty] Finished ColorMatch Setup.");
+	}
+	
+	public void setupSpleef(Location start) {
+		Spleef.setup(start, this, "Spleef");
 		minigames.add(new Spleef(this, this.getComponentForMinigame("Spleef", "spawn"), this.getComponentForMinigame("Spleef", "lobby"), this.getComponentForMinigame("Spleef", "spectatorlobby")));
+		getLogger().info("[MinecraftParty] Finished Spleef Setup.");
+	}
+	
+	public void setupMineField(Location start) {
+		MineField.setup(start, this, "MineField");
 		minigames.add(new MineField(this, this.getComponentForMinigame("MineField", "spawn"), this.getComponentForMinigame("MineField", "lobby"), this.getComponentForMinigame("MineField", "spectatorlobby"), m.getComponentForMinigame("MineField", "finishline")));
+		getLogger().info("[MinecraftParty] Finished MineField Setup.");
+	}
+	
+	public void setupJumpnRun(Location start) {
+		JumpnRun.setup(start, this, "JumpnRun");
 		minigames.add(new JumpnRun(this, this.getComponentForMinigame("JumpnRun", "spawn"), this.getComponentForMinigame("JumpnRun", "lobby"), this.getComponentForMinigame("JumpnRun", "spectatorlobby"), m.getComponentForMinigame("JumpnRun", "finishline")));
+		getLogger().info("[MinecraftParty] Finished JumpnRun Setup.");
+	}
+	
+	public void setupDeadEnd(Location start) {
+		DeadEnd.setup(start, this, "DeadEnd");
 		minigames.add(new DeadEnd(this, this.getComponentForMinigame("DeadEnd", "spawn"), this.getComponentForMinigame("DeadEnd", "lobby"), this.getComponentForMinigame("DeadEnd", "spectatorlobby")));
+		getLogger().info("[MinecraftParty] Finished DeadEnd Setup.");
+	}
+	
+	public void setupRedAlert(Location start) {
+		RedAlert.setup(start, this, "RedAlert");
 		minigames.add(new RedAlert(this, this.getComponentForMinigame("RedAlert", "spawn"), this.getComponentForMinigame("RedAlert", "lobby"), this.getComponentForMinigame("RedAlert", "spectatorlobby")));
+		getLogger().info("[MinecraftParty] Finished RedAlert Setup.");
+	}
+	
+	public void setupLastArcherStanding(Location start) {
+		LastArcherStanding.setup(start, this, "LastArcherStanding");
 		minigames.add(new LastArcherStanding(this, this.getComponentForMinigame("LastArcherStanding", "spawn"), this.getComponentForMinigame("LastArcherStanding", "lobby"), this.getComponentForMinigame("LastArcherStanding", "spectatorlobby")));
+		getLogger().info("[MinecraftParty] Finished LastArcherStanding Setup.");
+	}
+	
+	public void setupSheepFreenzy(Location start) {
+		SheepFreenzy.setup(start, this, "SheepFreenzy");
 		minigames.add(new SheepFreenzy(this, this.getComponentForMinigame("SheepFreenzy", "spawn"), this.getComponentForMinigame("SheepFreenzy", "lobby"), this.getComponentForMinigame("SheepFreenzy", "spectatorlobby")));
+		getLogger().info("[MinecraftParty] Finished SheepFreenzy Setup.");
+	}
+	
+	public void setupSmokeMonster(Location start) {
+		SmokeMonster.setup(start, this, "SmokeMonster");
 		minigames.add(new SmokeMonster(this, this.getComponentForMinigame("SmokeMonster", "spawn"), this.getComponentForMinigame("SmokeMonster", "lobby"), this.getComponentForMinigame("SmokeMonster", "spectatorlobby")));
+		getLogger().info("[MinecraftParty] Finished SmokeMonster Setup.");
+	}
+	
+	public void setupSlapFight(Location start) {
+		SlapFight.setup(start, this, "SlapFight");
 		minigames.add(new SlapFight(this, this.getComponentForMinigame("SlapFight", "spawn"), this.getComponentForMinigame("SlapFight", "lobby"), this.getComponentForMinigame("SlapFight", "spectatorlobby")));
-
-		getLogger().info("[MinecraftParty] Finished Setup.");
+		getLogger().info("[MinecraftParty] Finished SlapFlight Setup.");
+	}
+	
+	public void clearMinigames() {
+		minigames.clear();
 	}
 
 	public void resetAll(boolean flag){
