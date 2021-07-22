@@ -1,6 +1,6 @@
-config:
-  auto_updating: true
-  min_players: 1
+settings:
+  update-check: true
+  min_players: 3
   game-on-join: false
   max_reward: 30
   min_reward: 10
@@ -13,13 +13,3 @@ config:
   scoreboardoutgame: true
   announcements: true
   seconds_for_each_minigame: 60
-shop:
-  grenades_price: 70
-  jumpboost_price: 60
-  deadendboost_price: 50
-  chickentagboost_price: 60
-  slapfight_knockback_price: 100
-  smokemonsterboost_price: 150
-  jumpnrunboost_price: 150
-  sheepfreenzyimmunity_price: 100
-  megagrenades_price: 130

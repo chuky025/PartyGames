@@ -27,53 +27,53 @@ public class Shop {
 	public static int megagrenades_price = 0;
 
 	public static void initShop(Main m){
-		m.getConfig().addDefault("shop.grenades_price", 70);
-		m.getConfig().addDefault("shop.jumpboost_price", 60);
-		m.getConfig().addDefault("shop.deadendboost_price", 50);
+		m.getShop().addDefault("shop.grenades_price", 70);
+		m.getShop().addDefault("shop.jumpboost_price", 60);
+		m.getShop().addDefault("shop.deadendboost_price", 50);
 		
-		m.getConfig().addDefault("shop.chickentagboost_price", 60);
-		m.getConfig().addDefault("shop.slapfight_knockback_price", 100);
-		m.getConfig().addDefault("shop.smokemonsterboost_price", 150);
-		m.getConfig().addDefault("shop.jumpnrunboost_price", 150);
-		m.getConfig().addDefault("shop.sheepfreenzyimmunity_price", 100);
-		m.getConfig().addDefault("shop.megagrenades_price", 130);
+		m.getShop().addDefault("shop.chickentagboost_price", 60);
+		m.getShop().addDefault("shop.slapfight_knockback_price", 100);
+		m.getShop().addDefault("shop.smokemonsterboost_price", 150);
+		m.getShop().addDefault("shop.jumpnrunboost_price", 150);
+		m.getShop().addDefault("shop.sheepfreenzyimmunity_price", 100);
+		m.getShop().addDefault("shop.megagrenades_price", 130);
 	}
 	
 	public static void loadPrices(Main m){
-		grenades_price = m.getConfig().getInt("shop.grenades_price");
-		jumpboost_price = m.getConfig().getInt("shop.jumpboost_price");
-		deadendboost_price = m.getConfig().getInt("shop.deadendboost_price");
+		grenades_price = m.getShop().getInt("shop.grenades_price");
+		jumpboost_price = m.getShop().getInt("shop.jumpboost_price");
+		deadendboost_price = m.getShop().getInt("shop.deadendboost_price");
 		
-		chickentagboost_price = m.getConfig().getInt("shop.chickentagboost_price");
-		slapfight_knockback_price = m.getConfig().getInt("shop.slapfight_knockback_price");
-		smokemonsterboost_price = m.getConfig().getInt("shop.smokemonsterboost_price");
-		jumpnrunboost_price = m.getConfig().getInt("shop.jumpnrunboost_price");
-		sheepfreenzyimmunity_price = m.getConfig().getInt("shop.sheepfreenzyimmunity_price");
-		megagrenades_price = m.getConfig().getInt("shop.megagrenades_price");
+		chickentagboost_price = m.getShop().getInt("shop.chickentagboost_price");
+		slapfight_knockback_price = m.getShop().getInt("shop.slapfight_knockback_price");
+		smokemonsterboost_price = m.getShop().getInt("shop.smokemonsterboost_price");
+		jumpnrunboost_price = m.getShop().getInt("shop.jumpnrunboost_price");
+		sheepfreenzyimmunity_price = m.getShop().getInt("shop.sheepfreenzyimmunity_price");
+		megagrenades_price = m.getShop().getInt("shop.megagrenades_price");
 	}
 	
 	public static int getPlayerShopComponent(Main m, String p, String component) {
 		int amount = 0;
-		if(m.getConfig().isSet("shop." + p + "." + component)){
-			amount = m.getConfig().getInt("shop." + p + "." + component);
+		if(m.getShop().isSet("shop." + p + "." + component)){
+			amount = m.getShop().getInt("shop." + p + "." + component);
 		}
 		return amount;
 	}
 
 	public static void addToPlayerShopComponent(Main m, String p, String component, int value) {
-		if (m.getConfig().contains("shop." + p + "." + component)) {
-			m.getConfig().set("shop." + p + "." + component, m.getConfig().getInt("shop." + p + "." + component) + value);
+		if (m.getShop().contains("shop." + p + "." + component)) {
+			m.getShop().set("shop." + p + "." + component, m.getShop().getInt("shop." + p + "." + component) + value);
 		} else {
-			m.getConfig().set("shop." + p + "." + component, value);
+			m.getShop().set("shop." + p + "." + component, value);
 		}
 		m.saveConfig();
 	}
 	
 	public static void removeFromPlayerShopComponent(Main m, String p, String component, int value) {
-		if (m.getConfig().contains("shop." + p + "." + component)) {
-			m.getConfig().set("shop." + p + "." + component, m.getConfig().getInt("shop." + p + "." + component) - value);
+		if (m.getShop().contains("shop." + p + "." + component)) {
+			m.getShop().set("shop." + p + "." + component, m.getShop().getInt("shop." + p + "." + component) - value);
 		} else {
-			m.getConfig().set("shop." + p + "." + component, 0);
+			m.getShop().set("shop." + p + "." + component, 0);
 		}
 		m.saveConfig();
 	}

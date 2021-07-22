@@ -107,6 +107,8 @@ public class Main extends JavaPlugin implements Listener {
 	private File settingsFile = null;
 	private FileConfiguration scoreboard = null;
 	private File scoreboardFile = null;
+	private FileConfiguration shop = null;
+	private File shopFile = null;
 	private FileConfiguration mysql = null;
 	private File mysqlFile = null;
 	
@@ -157,21 +159,21 @@ public class Main extends JavaPlugin implements Listener {
 		registerSettings();
 		registerMessages();
 		registerScoreboard();
+		registerShop();
 		registerMysql();
 		
 		Shop.initShop(this);
-		
 		Shop.loadPrices(this);
 
-		min_players = getSettings().getInt("config.min_players");
+		min_players = getSettings().getInt("settings.min_players");
 
-		minreward = getSettings().getInt("config.min_reward");
-		maxreward = getSettings().getInt("config.max_reward");
-		item_minreward = getSettings().getInt("config.item_reward_minamount");
-		item_maxreward = getSettings().getInt("config.item_reward_maxamount");
+		minreward = getSettings().getInt("settings.min_reward");
+		maxreward = getSettings().getInt("settings.max_reward");
+		item_minreward = getSettings().getInt("settings.item_reward_minamount");
+		item_maxreward = getSettings().getInt("settings.item_reward_maxamount");
 
-		item_id = getSettings().getInt("config.item_reward_id"); 
-		seconds = getSettings().getInt("config.seconds_for_each_minigame");
+		item_id = getSettings().getInt("settings.item_reward_id"); 
+		seconds = getSettings().getInt("settings.seconds_for_each_minigame");
 		
 		if(minreward > maxreward){
 			int temp = maxreward;
@@ -191,10 +193,6 @@ public class Main extends JavaPlugin implements Listener {
 		int pluginId = 9703;
         Metrics metrics = new Metrics(this, pluginId);
 
-		/*if(getSettings().getBoolean("config.auto_updating")){
-			Updater updater = new Updater(this, 71596, this.getFile(), Updater.UpdateType.DEFAULT, false);
-		}*/
-
 		if(economy){
 			if (!setupEconomy()) {
 	            getLogger().severe(String.format("[%s] - No iConomy dependency found! Disabling Economy.", getDescription().getName()));
@@ -211,16 +209,16 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
 		
 		//Update Checker
+        if(getSettings().getBoolean("settings.update_check")){
 		new UpdateChecker(this, 86837).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-            	//getLogger().info("There is not a new update available.");
+            	//Bukkit.getConsoleSender().sendMessage("There is not a new update available.");
             } else {
-            	getLogger().info("An update to MinecraftParty is available: " + version + ". You are on " + currentversion);
-            	getLogger().info("Download it here: www.spigotmc.org/resources/86837/");
+            	getLogger().info("[MinecraftParty] An update to MinecraftParty is available: " + version + ". You are on " + currentversion);
+            	getLogger().info("[MinecraftParty] Download it here: www.spigotmc.org/resources/86837/");
             }
         });
-		
-		
+       }
 	}
 	
 	private boolean setupEconomy() {
@@ -424,6 +422,56 @@ public class Main extends JavaPlugin implements Listener {
 		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
 		                      + "                                                                  |___/\n");
 			saveScoreboard();
+		}
+	}
+	
+	
+	
+	//shop.yml
+	public FileConfiguration getShop() {
+		if(shop == null) {
+			reloadShop();
+		}
+		return shop;
+	}
+	
+	public void reloadShop(){
+		if(shop == null){
+			shopFile = new File(getDataFolder(),"shop.yml");
+		}
+		shop = YamlConfiguration.loadConfiguration(shopFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("shop.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				shop.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveShop(){
+		try{
+			shop.save(shopFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerShop(){
+		shopFile = new File(this.getDataFolder(),"shop.yml");
+		if(!shopFile.exists()){
+			this.getShop().options().copyDefaults(true);
+			getShop().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveShop();
 		}
 	}
 	
@@ -1170,61 +1218,62 @@ public class Main extends JavaPlugin implements Listener {
 	public void setupColorMatch(Location start) {
 		ColorMatch.setup(start, this, "ColorMatch");
 		minigames.add(new ColorMatch(this, this.getComponentForMinigame("ColorMatch", "spawn"), this.getComponentForMinigame("ColorMatch", "lobby"), this.getComponentForMinigame("ColorMatch", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished ColorMatch Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished ColorMatch Setup.");
 	}
 	
 	public void setupSpleef(Location start) {
 		Spleef.setup(start, this, "Spleef");
 		minigames.add(new Spleef(this, this.getComponentForMinigame("Spleef", "spawn"), this.getComponentForMinigame("Spleef", "lobby"), this.getComponentForMinigame("Spleef", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished Spleef Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished Spleef Setup.");
 	}
 	
 	public void setupMineField(Location start) {
 		MineField.setup(start, this, "MineField");
 		minigames.add(new MineField(this, this.getComponentForMinigame("MineField", "spawn"), this.getComponentForMinigame("MineField", "lobby"), this.getComponentForMinigame("MineField", "spectatorlobby"), m.getComponentForMinigame("MineField", "finishline")));
-		getLogger().info("[MinecraftParty] Finished MineField Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished MineField Setup.");
 	}
 	
 	public void setupJumpnRun(Location start) {
 		JumpnRun.setup(start, this, "JumpnRun");
 		minigames.add(new JumpnRun(this, this.getComponentForMinigame("JumpnRun", "spawn"), this.getComponentForMinigame("JumpnRun", "lobby"), this.getComponentForMinigame("JumpnRun", "spectatorlobby"), m.getComponentForMinigame("JumpnRun", "finishline")));
-		getLogger().info("[MinecraftParty] Finished JumpnRun Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished JumpnRun Setup.");
 	}
 	
 	public void setupDeadEnd(Location start) {
 		DeadEnd.setup(start, this, "DeadEnd");
 		minigames.add(new DeadEnd(this, this.getComponentForMinigame("DeadEnd", "spawn"), this.getComponentForMinigame("DeadEnd", "lobby"), this.getComponentForMinigame("DeadEnd", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished DeadEnd Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished DeadEnd Setup.");
 	}
 	
 	public void setupRedAlert(Location start) {
 		RedAlert.setup(start, this, "RedAlert");
 		minigames.add(new RedAlert(this, this.getComponentForMinigame("RedAlert", "spawn"), this.getComponentForMinigame("RedAlert", "lobby"), this.getComponentForMinigame("RedAlert", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished RedAlert Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished RedAlert Setup.");
 	}
 	
 	public void setupLastArcherStanding(Location start) {
 		LastArcherStanding.setup(start, this, "LastArcherStanding");
 		minigames.add(new LastArcherStanding(this, this.getComponentForMinigame("LastArcherStanding", "spawn"), this.getComponentForMinigame("LastArcherStanding", "lobby"), this.getComponentForMinigame("LastArcherStanding", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished LastArcherStanding Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished LastArcherStanding Setup.");
 	}
 	
 	public void setupSheepFreenzy(Location start) {
 		SheepFreenzy.setup(start, this, "SheepFreenzy");
 		minigames.add(new SheepFreenzy(this, this.getComponentForMinigame("SheepFreenzy", "spawn"), this.getComponentForMinigame("SheepFreenzy", "lobby"), this.getComponentForMinigame("SheepFreenzy", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished SheepFreenzy Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished SheepFreenzy Setup.");
 	}
 	
 	public void setupSmokeMonster(Location start) {
 		SmokeMonster.setup(start, this, "SmokeMonster");
 		minigames.add(new SmokeMonster(this, this.getComponentForMinigame("SmokeMonster", "spawn"), this.getComponentForMinigame("SmokeMonster", "lobby"), this.getComponentForMinigame("SmokeMonster", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished SmokeMonster Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished SmokeMonster Setup.");
+		Bukkit.getConsoleSender().sendMessage("");
 	}
 	
 	public void setupSlapFight(Location start) {
 		SlapFight.setup(start, this, "SlapFight");
 		minigames.add(new SlapFight(this, this.getComponentForMinigame("SlapFight", "spawn"), this.getComponentForMinigame("SlapFight", "lobby"), this.getComponentForMinigame("SlapFight", "spectatorlobby")));
-		getLogger().info("[MinecraftParty] Finished SlapFlight Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished SlapFlight Setup.");
 	}
 	
 	public void clearMinigames() {
@@ -1232,7 +1281,7 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	public void resetAll(boolean flag){
-		getLogger().info("Resetting in ALL mode: " +  Boolean.toString(flag));
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Resetting in ALL mode: " +  Boolean.toString(flag));
 		
 		if(flag){
 			for(Minigame m : minigames){
