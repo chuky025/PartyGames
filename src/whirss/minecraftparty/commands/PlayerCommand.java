@@ -42,7 +42,7 @@ public class PlayerCommand implements CommandExecutor {
 						}else if(args[1].startsWith("win")){
 							main.outputLeaderboardsByWins(p);
 						}else{
-							sender.sendMessage(ChatColor.GREEN + "/mp leaderboards [credits/wins].");
+							sender.sendMessage(ChatColor.RED + "Use: /mp leaderboards [credits, wins]");
 						}
 					}else{
 						main.outputLeaderboardsByCredits(p);
@@ -130,7 +130,9 @@ public class PlayerCommand implements CommandExecutor {
 		        p.sendMessage(ChatColor.GREEN + "/mp leave " + ChatColor.WHITE + "Leave match");
 		        p.sendMessage(ChatColor.GREEN + "/mp stats [player] " + ChatColor.WHITE + "See a player statistics");
 		        p.sendMessage(ChatColor.GREEN + "/mp leaderboards [wins|credits] " + ChatColor.WHITE + "See the Leaderboards");
-		        p.sendMessage(ChatColor.GREEN + "/mp adminhelp " + ChatColor.WHITE + "Help for admins");
+		        if(sender.hasPermission("minecraftparty.admin.help") || sender.hasPermission("minecraftparty.admin.*")) {
+		        	p.sendMessage(ChatColor.GREEN + "/mpa help " + ChatColor.WHITE + "Help for admins");	
+		        }
 			}
 			return true;
 	}

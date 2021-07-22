@@ -127,6 +127,9 @@ public class Minigame {
 		if(p.hasPotionEffect(PotionEffectType.SPEED)){
 			p.removePotionEffect(PotionEffectType.SPEED);
 		}
+		if(p.getGameMode().equals(GameMode.SPECTATOR)) {
+			p.setGameMode(GameMode.SURVIVAL);
+		}
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(m, new Runnable() {
 			@Override
@@ -145,6 +148,10 @@ public class Minigame {
 				if(p.hasPotionEffect(PotionEffectType.SPEED)){
 					p.removePotionEffect(PotionEffectType.SPEED);
 				}
+				if(p.getGameMode().equals(GameMode.SPECTATOR)) {
+					p.setGameMode(GameMode.SURVIVAL);
+				}
+
 				
 			}
 		}, 5);
@@ -170,6 +177,7 @@ public class Minigame {
 				p.setFlying(true);
 				p.teleport(spectatorlobby);
 				p.getInventory().clear();
+				p.setGameMode(GameMode.SPECTATOR);
 			}
 		}, 5);
 	}

@@ -1,0 +1,16 @@
+strings:
+  you_left: You left the game.
+  next_round_30_seconds: Next round in 30 seconds! You can leave with /mp leave.
+  description:
+    colormatch: Jump to the color corresponding to the wool color in your inventory!
+    deadend: Don't fall while the blocks are disappearing behind you!
+    redalert: Don't fall while the floor is disappearing!
+    jumpnrun: Jump to the finish!
+    lastarcherstanding: Shoot the others with the bow!
+    minefield: Run to the finish without touching the mines!
+    sheepfreenzy: 'Shear as many Sheeps as possible! Attention: Some of them explode.'
+    smokemonster: Avoid the smoke monster!
+    spleef: Destroy the floor under your opponents to make them fall and lose!
+    slapfight: Slap the other players to fall! You can use Double Jump in case you
+      fall, too.
+  your_place: You are <place> place.

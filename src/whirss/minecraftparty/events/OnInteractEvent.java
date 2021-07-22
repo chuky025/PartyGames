@@ -17,16 +17,16 @@ import whirss.minecraftparty.Main;
 import whirss.minecraftparty.Shop;
 import whirss.minecraftparty.nms.NMSEffectManager;
 
-public class OnSignUse implements Listener {
+public class OnInteractEvent implements Listener {
 	
 	private Main main;
 	
-	public OnSignUse(Main main) {
+	public OnInteractEvent(Main main) {
 		this.main = main;
 	}
 	
 	@EventHandler
-	public void onSignUse(PlayerInteractEvent event)
+	public void onInteractEvent(PlayerInteractEvent event)
 	{	
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)
 		{
@@ -73,7 +73,7 @@ public class OnSignUse implements Listener {
 			if(event.getClickedBlock().getType() == Material.STONE_PLATE){
 				if(main.players.contains(event.getPlayer().getName())){
 					final Player p = event.getPlayer();
-					NMSEffectManager.createMinefieldEffect(p.getLocation());
+					p.getWorld().createExplosion(p.getLocation(), 0);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
 						@Override
 						public void run() {

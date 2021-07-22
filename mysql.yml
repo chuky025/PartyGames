@@ -1,0 +1,6 @@
+mysql:
+  enabled: false
+  host: 127.0.0.1
+  database: bukkit
+  user: root
+  pw: toor

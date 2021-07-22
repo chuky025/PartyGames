@@ -1,7 +1,3 @@
-# MinecraftParty Config #
-# rewards are always a random amount between max_reward and min_reward
-# if use_economy is true, the winner gets money,
-# otherwise the winner gets credits, which are saved in the config
 config:
   auto_updating: true
   min_players: 1

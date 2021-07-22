@@ -59,7 +59,7 @@ public class OnMove implements Listener {
 							if(current.name.equalsIgnoreCase("DeadEnd")){
 								World w = event.getPlayer().getWorld();
 								Location under = new Location(w, event.getPlayer().getLocation().getBlockX(), event.getPlayer().getLocation().getBlockY() - 1, event.getPlayer().getLocation().getBlockZ());
-								if(w.getBlockAt(under).getType() == Material.LAPIS_BLOCK){
+								if(w.getBlockAt(under).getType() == Material.GOLD_BLOCK){
 									
 									Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
 										public void run(){
@@ -145,7 +145,7 @@ public class OnMove implements Listener {
 									public void run() {
 										p.setAllowFlight(true);
 										p.setFlying(true);
-										p.teleport(new Location(p.getWorld(), p.getLocation().getBlockX(), mg.spectatorlobby.getBlockY(), p.getLocation().getBlockZ(), b, c));
+										//p.teleport(new Location(p.getWorld(), p.getLocation().getBlockX(), mg.spectatorlobby.getBlockY(), p.getLocation().getBlockZ(), b, c));
 										//p.getLocation().setYaw(b);
 										//p.getLocation().setPitch(c);
 									}

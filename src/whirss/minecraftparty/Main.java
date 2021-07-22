@@ -1,5 +1,10 @@
 package whirss.minecraftparty;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +23,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -39,6 +46,7 @@ import whirss.minecraftparty.events.OnDrop;
 import whirss.minecraftparty.events.OnEntityDamage;
 import whirss.minecraftparty.events.OnFlightAttempt;
 import whirss.minecraftparty.events.OnHunger;
+import whirss.minecraftparty.events.OnInteractEvent;
 import whirss.minecraftparty.events.OnInventoryClick;
 import whirss.minecraftparty.events.OnMove;
 import whirss.minecraftparty.events.OnPlayerCommand;
@@ -49,7 +57,6 @@ import whirss.minecraftparty.events.OnPlayerShearSheep;
 import whirss.minecraftparty.events.OnPlayerTeleport;
 import whirss.minecraftparty.events.OnProjectileLand;
 import whirss.minecraftparty.events.OnSignChange;
-import whirss.minecraftparty.events.OnSignUse;
 import whirss.minecraftparty.minigames.ColorMatch;
 import whirss.minecraftparty.minigames.DeadEnd;
 import whirss.minecraftparty.minigames.JumpnRun;
@@ -94,6 +101,15 @@ public class Main extends JavaPlugin implements Listener {
 
 	String currentversion = "1.6";
 	
+	private FileConfiguration messages = null;
+	private File messagesFile = null;
+	private FileConfiguration settings = null;
+	private File settingsFile = null;
+	private FileConfiguration scoreboard = null;
+	private File scoreboardFile = null;
+	private FileConfiguration mysql = null;
+	private File mysqlFile = null;
+	
 
 	@Override
 	public void onEnable(){
@@ -136,50 +152,14 @@ public class Main extends JavaPlugin implements Listener {
 				}
 			}
 		}, 20);
-
-		getConfig().options().header("I recommend you to set auto_updating to true for possible future bugfixes.");
 		
-		// I'm running on windows, just making sure for Linux users:
-		getConfig().addDefault("mysql.enabled", false);
-		getConfig().addDefault("mysql.host", "127.0.0.1");
-		getConfig().addDefault("mysql.database", "bukkit");
-		getConfig().addDefault("mysql.user", "root");
-		getConfig().addDefault("mysql.pw", "toor");
-		getConfig().addDefault("config.auto_updating", true);
-		getConfig().addDefault("config.min_players", 1);
-		getConfig().addDefault("config.max_players", 50);
-		getConfig().addDefault("config.game-on-join", false);
-		getConfig().addDefault("config.max_reward", 30);
-		getConfig().addDefault("config.min_reward", 10);
-		getConfig().addDefault("config.use_economy", false);
-		getConfig().addDefault("config.use_item_rewards", false);
-		getConfig().addDefault("config.item_reward_maxamount", 10);
-		getConfig().addDefault("config.item_reward_minamount", 3);
-		getConfig().addDefault("config.item_reward_id", 264);
-		getConfig().addDefault("config.scoreboardoutgame", true);
-		getConfig().addDefault("config.announcements", true);
-		getConfig().addDefault("config.seconds_for_each_minigame", 60); // ô.ô
+		registerConfig();
+		registerSettings();
+		registerMessages();
+		registerScoreboard();
+		registerMysql();
 		
-		getConfig().addDefault("strings.you_left", "You left the game.");
-		getConfig().addDefault("strings.next_round_30_seconds", "Next round in 30 seconds! You can leave with /mp leave.");
-		
-		getConfig().addDefault("strings.description.colormatch", "Jump to the color corresponding to the wool color in your inventory!");
-		getConfig().addDefault("strings.description.deadend", "Don't fall while the blocks are disappearing behind you!");
-		getConfig().addDefault("strings.description.redalert", "Don't fall while the floor is disappearing!");
-		getConfig().addDefault("strings.description.jumpnrun", "Jump to the finish!");
-		getConfig().addDefault("strings.description.lastarcherstanding", "Shoot the others with the bow!");
-		getConfig().addDefault("strings.description.minefield", "Run to the finish without touching the mines!");
-		getConfig().addDefault("strings.description.sheepfreenzy", "Shear as many Sheeps as possible! Attention: Some of them explode.");
-		getConfig().addDefault("strings.description.smokemonster", "Avoid the smoke monster!");
-		getConfig().addDefault("strings.description.spleef", "Destroy the floor under your opponents to make them fall and lose!");
-		getConfig().addDefault("strings.description.slapfight", "Slap the other players to fall! You can use Double Jump in case you fall, too.");
-
-		getConfig().addDefault("strings.your_place", "You are <place> place.");
-
 		Shop.initShop(this);
-		
-		getConfig().options().copyDefaults(true);
-		this.saveConfig();
 		
 		Shop.loadPrices(this);
 
@@ -277,11 +257,200 @@ public class Main extends JavaPlugin implements Listener {
 		pm.registerEvents(new OnPlayerShearSheep(this), this);
 		pm.registerEvents(new OnPlayerTeleport(this), this);
 		pm.registerEvents(new OnProjectileLand(this), this);
-		pm.registerEvents(new OnSignUse(this), this);
+		pm.registerEvents(new OnInteractEvent(this), this);
 		pm.registerEvents(new OnSignChange(), this);
 		
 	}
 	
+	//Config files
+	//config.yml
+	public void registerConfig(){
+		File config = new File(this.getDataFolder(),"config.yml");
+		if(!config.exists()){
+			this.getConfig().options().copyDefaults(true);
+			getConfig().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n"
+		                      + "\n"
+		                      + "by Whirss\n"
+		                      + "");
+			saveConfig();
+		}
+	}
+	
+	//settings.yml:
+	public FileConfiguration getSettings() {
+		if(settings == null) {
+			reloadSettings();
+		}
+		return settings;
+	}
+	
+	public void reloadSettings(){
+		if(settings == null){
+			settingsFile = new File(getDataFolder(),"settings.yml");
+		}
+		settings = YamlConfiguration.loadConfiguration(settingsFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("settings.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				settings.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveSettings(){
+		try{
+			settings.save(settingsFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerSettings(){
+		settingsFile = new File(this.getDataFolder(),"settings.yml");
+		if(!settingsFile.exists()){
+			this.getSettings().options().copyDefaults(true);
+			saveSettings();
+		}
+	}
+	
+	
+	
+	//messages.yml
+	public FileConfiguration getMessages() {
+		if(messages == null) {
+			reloadMessages();
+		}
+		return messages;
+	}
+	
+	public void reloadMessages(){
+		if(messages == null){
+			messagesFile = new File(getDataFolder(),"messages.yml");
+		}
+		messages = YamlConfiguration.loadConfiguration(messagesFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("messages.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				messages.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveMessages(){
+		try{
+			messages.save(messagesFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerMessages(){
+		messagesFile = new File(this.getDataFolder(),"messages.yml");
+		if(!messagesFile.exists()){
+			this.getMessages().options().copyDefaults(true);
+			saveMessages();
+		}
+	}
+	
+	
+	
+	//scoreboard.yml
+	public FileConfiguration getScoreboard() {
+		if(scoreboard == null) {
+			reloadScoreboard();
+		}
+		return scoreboard;
+	}
+	
+	public void reloadScoreboard(){
+		if(scoreboard == null){
+			scoreboardFile = new File(getDataFolder(),"scoreboard.yml");
+		}
+		scoreboard = YamlConfiguration.loadConfiguration(scoreboardFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("scoreboard.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				scoreboard.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveScoreboard(){
+		try{
+			scoreboard.save(scoreboardFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerScoreboard(){
+		scoreboardFile = new File(this.getDataFolder(),"scoreboard.yml");
+		if(!scoreboardFile.exists()){
+			this.getScoreboard().options().copyDefaults(true);
+			saveScoreboard();
+		}
+	}
+	
+	
+	
+	//mysql.yml
+	public FileConfiguration getMysql() {
+		if(mysql == null) {
+			reloadMysql();
+		}
+		return mysql;
+	}
+	
+	public void reloadMysql(){
+		if(mysql == null){
+			mysqlFile = new File(getDataFolder(),"mysql.yml");
+		}
+		mysql = YamlConfiguration.loadConfiguration(mysqlFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("mysql.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				mysql.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveMysql(){
+		try{
+			mysql.save(mysqlFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerMysql(){
+		mysqlFile = new File(this.getDataFolder(),"mysql.yml");
+		if(!mysqlFile.exists()){
+			this.getMysql().options().copyDefaults(true);
+			saveMysql();
+		}
+	}
 
 	/*public void nextMinigame(Player p){
 		// get current minigame and make winners

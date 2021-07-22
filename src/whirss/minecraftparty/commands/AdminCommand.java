@@ -143,7 +143,7 @@ public class AdminCommand implements CommandExecutor {
 					}
 				
 				}else if(args[0].equalsIgnoreCase("setlobby")){
-					if(sender.hasPermission("minecraftparty.admin.setlobby")){
+					if(sender.hasPermission("minecraftparty.admin.setlobby") || sender.hasPermission("minecraftparty.admin.*")){
 						main.getConfig().set("lobby.world", p.getLocation().getWorld().getName());
 						main.getConfig().set("lobby.location.x", p.getLocation().getBlockX());
 						main.getConfig().set("lobby.location.y", p.getLocation().getBlockY());
@@ -159,6 +159,8 @@ public class AdminCommand implements CommandExecutor {
 						if(args.length > 2){
 							main.saveComponentForMinigame(args[1], args[2], p.getLocation());
 							sender.sendMessage(ChatColor.GREEN + "Saved component");
+						} else {
+							sender.sendMessage(ChatColor.RED + "Use: /mpa setcomponent [game] [component]");
 						}
 					} else {
 						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
@@ -188,7 +190,7 @@ public class AdminCommand implements CommandExecutor {
 						if(args.length > 1) {
 							main.enableMinigame(sender, args[1]);
 						} else {
-							sender.sendMessage(ChatColor.RED + "Use: /mpa setup [colormatch, spleef, minefield, jumpnrun, deadend, redalert, lastarcherstanding, sheepfreenzy, smokemonster, slapfight]");
+							sender.sendMessage(ChatColor.RED + "Use: /mpa enable [colormatch, spleef, minefield, jumpnrun, deadend, redalert, lastarcherstanding, sheepfreenzy, smokemonster, slapfight]");
 						}
 					} else {
 						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");

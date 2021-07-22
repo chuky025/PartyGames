@@ -10,6 +10,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -139,7 +140,7 @@ public class ColorMatch extends Minigame implements Listener{
 					Wool w = new Wool();
 					w.setColor(colors.get(currentw));
 					
-					p.setExp(0.97F);
+					p.setExp(0);
 					if (!xpsecp.containsKey(p)) {
 						xpsecp.put(p, 1);
 					}
@@ -149,8 +150,32 @@ public class ColorMatch extends Minigame implements Listener{
 								xpsecp.put(p, 1);
 							}
 							int xpsec = xpsecp.get(p);
-							p.setExp(1 - (0.083F * xpsec));
 							xpsecp.put(p, xpsec + 1);
+							
+								if (xpsec == 2) {
+									p.setExp(1);
+								} else if (xpsec == 3) {
+									p.setExp((float) 0.9);
+								} else if (xpsec == 4) {
+									p.setExp((float) 0.8);
+								} else if (xpsec == 5) {
+									p.setExp((float) 0.7);
+								} else if (xpsec == 6) {
+									p.setExp((float) 0.6);
+								} else if (xpsec == 7) {
+									p.setExp((float) 0.5);
+								} else if (xpsec == 8) {
+									p.setExp((float) 0.4);
+								} else if (xpsec == 9) {
+									p.setExp((float) 0.3);
+								} else if (xpsec == 10) {
+									p.setExp((float) 0.2);
+								} else if (xpsec == 11) {
+									p.setExp((float) 0.1);
+								} else if (xpsec == 12) {
+									p.setExp(0);
+									p.getInventory().clear();
+								} 
 						}
 					}, (40L - n) / 12, (40L - n) / 12));
 
