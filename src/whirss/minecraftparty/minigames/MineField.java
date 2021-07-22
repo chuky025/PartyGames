@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,7 +18,7 @@ import whirss.minecraftparty.PluginUtil;
 public class MineField extends Minigame implements Listener{
 	
 	public MineField(Main arg2, Location arg3, Location arg4, Location arg5, Location arg6) {
-		super("MineField", MinigameUtil.getDescription(arg2, "MineField"), arg2, arg3, arg4, arg5, arg6);
+		super("MineField", null, arg2, arg3, arg4, arg5, arg6);
 	}
 	
 	@Override

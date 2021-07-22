@@ -1,0 +1,7 @@
+titles:
+  countdown:
+    title: '&a* &l%count% &a*'
+    subtitle: '&a✪ &l%minigame% &a✪'
+  after_countdown:
+    title: '&a* &lGO! &a*'
+    subtitle: '&a✪ &l%minigame% &a✪'

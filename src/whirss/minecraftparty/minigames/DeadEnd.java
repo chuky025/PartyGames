@@ -16,7 +16,7 @@ import whirss.minecraftparty.Shop;
 public class DeadEnd extends Minigame implements Listener{
 	
 	public DeadEnd(Main arg2, Location arg3, Location arg4, Location arg5) {
-		super("DeadEnd", MinigameUtil.getDescription(arg2, "DeadEnd"), arg2, arg3, arg4, arg5, null);
+		super("DeadEnd", null, arg2, arg3, arg4, arg5, null);
 	}
 	
 	@Override

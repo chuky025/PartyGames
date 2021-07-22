@@ -1,17 +1,17 @@
 package whirss.minecraftparty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
-
-import whirss.minecraftparty.minigames.MinigameUtil;
 
 public class Minigame {
 	
@@ -61,11 +61,19 @@ public class Minigame {
 				for(String p_ : m.players){
 					Player p = Bukkit.getPlayerExact(p_);
 					if(p.isOnline()){
-						p.sendMessage(ChatColor.GREEN + "Starting in " + ChatColor.GOLD + Integer.toString(count));
+						//p.sendMessage(ChatColor.GREEN + "Starting in " + ChatColor.GOLD + Integer.toString(count));
+						p.sendTitle(m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name).replace("&", "§"),m.getTitles().getString("titles.countdown.subtitle").replace("%minigame%", name).replace("&", "§"), 0, 30, 0);
 					}
 				}
 				count--;
 				if(count < 0){
+					for(String p_ : m.players){
+						Player p = Bukkit.getPlayerExact(p_);
+						if(p.isOnline()){
+							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 30.0F, 50.0F);
+							p.sendTitle(m.getTitles().getString("titles.after_countdown.title").replace("%minigame%", name).replace("&", "§"), m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name).replace("&", "§"), 0, 30, 10);
+						}
+					}
 					m.registerMinigameStart(m.minigames.get(m.currentmg).start());
 					m.ingame_started = true;
 					count = 5;
@@ -105,8 +113,13 @@ public class Minigame {
 				p.setGameMode(GameMode.SURVIVAL);
 				p.setAllowFlight(false);
 				p.setFlying(false);
-				p.sendMessage(MinigameUtil.nowPlaying(name));
-				p.sendMessage(MinigameUtil.description(m.minigames.get(m.currentmg), description));
+				
+				List<String> description = m.getMessages().getStringList("messages.minigames." + name.toLowerCase().replace("&", "§"));
+				for(int i=0;i<description.size();i++) {
+					String message = description.get(i);
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+				}
+				
 			}
 		}, 5);
 	}

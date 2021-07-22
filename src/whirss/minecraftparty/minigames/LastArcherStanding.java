@@ -17,7 +17,7 @@ import whirss.minecraftparty.Minigame;
 public class LastArcherStanding extends Minigame implements Listener{
 
 	public LastArcherStanding(Main arg2, Location arg3, Location arg4, Location arg5) {
-		super("LastArcherStanding", MinigameUtil.getDescription(arg2, "LastArcherStanding"), arg2, arg3, arg4, arg5, null);
+		super("LastArcherStanding", null, arg2, arg3, arg4, arg5, null);
 	}
 
 	

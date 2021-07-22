@@ -23,7 +23,7 @@ import whirss.minecraftparty.Shop;
 public class SlapFight extends Minigame implements Listener{
 	
 	public SlapFight(Main arg2, Location arg3, Location arg4, Location arg5) {
-		super("SlapFight", MinigameUtil.getDescription(arg2, "SlapFight"), arg2, arg3, arg4, arg5, null);
+		super("SlapFight", null, arg2, arg3, arg4, arg5, null);
 	}
 	
 	@Override

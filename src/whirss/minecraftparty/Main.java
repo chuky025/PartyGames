@@ -109,6 +109,8 @@ public class Main extends JavaPlugin implements Listener {
 	private File scoreboardFile = null;
 	private FileConfiguration shop = null;
 	private File shopFile = null;
+	private FileConfiguration titles = null;
+	private File titlesFile = null;
 	private FileConfiguration mysql = null;
 	private File mysqlFile = null;
 	
@@ -160,6 +162,7 @@ public class Main extends JavaPlugin implements Listener {
 		registerMessages();
 		registerScoreboard();
 		registerShop();
+		registerTitles();
 		registerMysql();
 		
 		
@@ -477,6 +480,56 @@ public class Main extends JavaPlugin implements Listener {
 	
 	
 	
+	//titles.yml
+	public FileConfiguration getTitles() {
+		if(titles == null) {
+			reloadTitles();
+		}
+		return titles;
+	}
+	
+	public void reloadTitles(){
+		if(titles == null){
+			titlesFile = new File(getDataFolder(),"titles.yml");
+		}
+		titles = YamlConfiguration.loadConfiguration(titlesFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("titles.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				titles.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveTitles(){
+		try{
+			titles.save(titlesFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerTitles(){
+		titlesFile = new File(this.getDataFolder(),"titles.yml");
+		if(!titlesFile.exists()){
+			this.getTitles().options().copyDefaults(true);
+			getTitles().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveTitles();
+		}
+	}
+	
+	
+	
 	//mysql.yml
 	public FileConfiguration getMysql() {
 		if(mysql == null) {
@@ -572,7 +625,7 @@ public class Main extends JavaPlugin implements Listener {
 				getServer().getPlayer(p.getName()).sendMessage(ChatColor.RED + String.format("An error occured: %s", r_.errorMessage));
             }
 		}
-		
+				
 		if(item_rewards){
 			int reward_ = r.nextInt((item_maxreward - item_minreward) + 1) + item_minreward;
 			if(p.hasPermission("minecraftparty.double_coins")){
@@ -614,6 +667,8 @@ public class Main extends JavaPlugin implements Listener {
 			rewardcount.remove(p.getName());
 		}
 	}
+	
+	
 
 
 	/**

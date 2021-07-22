@@ -24,7 +24,7 @@ import whirss.minecraftparty.nms.NMSEffectManager;
 public class SmokeMonster extends Minigame implements Listener {
 
 	public SmokeMonster(Main arg2, Location arg3, Location arg4, Location arg5) {
-		super("SmokeMonster", MinigameUtil.getDescription(arg2, "SmokeMonster"), arg2, arg3, arg4, arg5, null);
+		super("SmokeMonster", null, arg2, arg3, arg4, arg5, null);
 	}
 
 	public static ArrayList<Location> locs = new ArrayList<Location>();

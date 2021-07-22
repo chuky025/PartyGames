@@ -22,7 +22,7 @@ import whirss.minecraftparty.PluginUtil;
 public class SheepFreenzy extends Minigame implements Listener{
 
 	public SheepFreenzy(Main arg2, Location arg3, Location arg4, Location arg5) {
-		super("SheepFreenzy", MinigameUtil.getDescription(arg2, "SheepFreenzy"), arg2, arg3, arg4, arg5, null);
+		super("SheepFreenzy", null, arg2, arg3, arg4, arg5, null);
 	}
 	
 	
