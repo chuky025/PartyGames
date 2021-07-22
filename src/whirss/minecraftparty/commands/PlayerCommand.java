@@ -26,16 +26,16 @@ public class PlayerCommand implements CommandExecutor {
 
 			if(args.length > 0){
 				if(args[0].equalsIgnoreCase("stats")){
-					sender.sendMessage(ChatColor.DARK_AQUA + "-- " + ChatColor.GOLD + "Statistics " + ChatColor.DARK_AQUA + "--");
+					sender.sendMessage(main.getMessages().getString("messages.stats.stats_title").replace("&", "§"));
 					if(args.length > 1){
 						String player = args[1];
-						sender.sendMessage(ChatColor.GREEN + player + " has " + Integer.toString(main.getPlayerStats(player, "credits")) + " Credits.");
+						sender.sendMessage(main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")).replace("&", "§")));
 					}else{
 						String player = p.getName();
-						sender.sendMessage(ChatColor.GREEN + "You have " + Integer.toString(main.getPlayerStats(player, "credits")) + " Credits.");
+						sender.sendMessage(main.getMessages().getString("your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")).replace("&", "§")));
 					}
 				}else if(args[0].equalsIgnoreCase("leaderboards")){
-					sender.sendMessage(ChatColor.DARK_AQUA + "-- " + ChatColor.GOLD + "Leaderboards: " + ChatColor.DARK_AQUA + "--");
+					sender.sendMessage(main.getMessages().getString("messages.leaderboard_title").replace("&", "§"));
 					if(args.length > 1){
 						if(args[1].startsWith("credit")){
 							main.outputLeaderboardsByCredits(p);
@@ -68,7 +68,7 @@ public class PlayerCommand implements CommandExecutor {
 							main.minigames.get(main.currentmg).leave(p);
 						}
 						main.players.remove(p.getName());
-						p.sendMessage(ChatColor.RED + main.getConfig().getString("strings.you_left"));
+						sender.sendMessage(main.getMessages().getString("messages.you_left").replace("&", "§"));
 						if(main.players.size() < main.min_players){
 							Bukkit.getScheduler().runTaskLater(main, new Runnable(){
 								public void run(){
@@ -79,10 +79,10 @@ public class PlayerCommand implements CommandExecutor {
 					}
 				}else if(args[0].equalsIgnoreCase("join")){
 					if(main.players.contains(p.getName())){
-						p.sendMessage(ChatColor.GOLD + "Use /mp leave to leave!");
+						sender.sendMessage(main.getMessages().getString("messages.on_join").replace("&", "§"));
 					}else{
 						if(main.players.size() > main.getConfig().getInt("config.max_players") - 1){
-							p.sendMessage(ChatColor.RED + "You can't join because the minigames party is full!");
+							sender.sendMessage(main.getMessages().getString("messages.game_full").replace("&", "§"));
 							return true;
 						}
 						main.players.add(p.getName());
@@ -91,7 +91,7 @@ public class PlayerCommand implements CommandExecutor {
 							main.pinv.put(p.getName(), p.getInventory().getContents());
 							main.startNew();
 							if(main.min_players > 1){
-								p.sendMessage(ChatColor.GREEN + "You joined the queue. There are " + ChatColor.GOLD + Integer.toString(main.min_players) + ChatColor.GREEN + " players needed to start.");
+								sender.sendMessage(main.getMessages().getString("messages.joined_queue").replace("%minplayers%", Integer.toString(main.min_players)).replace("&", "§"));
 							}
 						}else{ // else: just join the minigame
 							try{
@@ -103,7 +103,7 @@ public class PlayerCommand implements CommandExecutor {
 									main.minigames.get(main.currentmg).join(p);
 								}
 							}catch(Exception e){}
-							p.sendMessage(ChatColor.GREEN + "You joined the queue. There are " + ChatColor.GOLD + Integer.toString(main.min_players) + ChatColor.GREEN + " players needed to start.");
+							sender.sendMessage(main.getMessages().getString("messages.joined_queue").replace("%minplayers%", Integer.toString(main.min_players)).replace("&", "§"));
 						}	
 					}
 				}else if(args[0].equalsIgnoreCase("shop")){
@@ -122,7 +122,7 @@ public class PlayerCommand implements CommandExecutor {
 						main.minigames.get(main.currentmg).join(p);
 					}
 				}else{
-					p.sendMessage(ChatColor.RED + "Unknown command");
+					sender.sendMessage(main.getMessages().getString("messages.unknown_command").replace("&", "§"));
 				}
 			}else{
 				p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Party " + ChatColor.GRAY + "- " + ChatColor.WHITE + "Help");

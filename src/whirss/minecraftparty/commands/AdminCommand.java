@@ -30,92 +30,92 @@ public class AdminCommand implements CommandExecutor {
 					if(p.hasPermission("minecraftparty.admin.setup") || sender.hasPermission("minecraftparty.admin.*")){
 						if (args.length > 1) {
 							if (args[1].equalsIgnoreCase("colormatch")) {
-								sender.sendMessage(ChatColor.GREEN + "Starting the creation of ColorMatch");
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "ColorMatch").replace("%", "§"));
 										main.setupColorMatch(p.getLocation());
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "ColorMatch").replace("%", "§"));
 									}
 								});
-								sender.sendMessage(ChatColor.GREEN + "Finished");
 							}
 							if (args[1].equalsIgnoreCase("spleef")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of Spleef");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "Spleef").replace("%", "§"));
 										main.setupSpleef(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "Spleef").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("minefield")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of MineField");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "MineField").replace("%", "§"));
 										main.setupMineField(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "MineField").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("jumpnrun")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of JumpnRun");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "JumpnRun").replace("%", "§"));
 										main.setupJumpnRun(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "JumpnRun").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("deadend")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of DeadEnd");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "JumpnRun").replace("%", "§"));
 										main.setupDeadEnd(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "JumpnRun").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("redalert")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of RedAlert");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "RedAlert").replace("%", "§"));
 										main.setupRedAlert(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "RedAlert").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("lastarcherstanding")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of LastArcherStanding");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "LastArcherStanding").replace("%", "§"));
 										main.setupLastArcherStanding(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "LastArcherStanding").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("sheepfreenzy")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of SheepFreenzy");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "SheepFreenzy").replace("%", "§"));
 										main.setupSheepFreenzy(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "SheepFreenzy").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("smokemonster")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of SmokeMonster");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "SmokeMonster").replace("%", "§"));
 										main.setupSmokeMonster(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "SmokeMonster").replace("%", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("slapfight")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.GREEN + "Starting the creation of SlapFight");
+										sender.sendMessage(main.getMessages().getString("messages.setup_start").replace("%minigame%", "SlapFight").replace("%", "§"));
 										main.setupSlapFight(p.getLocation());
-										sender.sendMessage(ChatColor.GREEN + "Finished");
+										sender.sendMessage(main.getMessages().getString("messages.setup_finish").replace("%minigame%", "SlapFight").replace("%", "§"));
 									}
 								});
 							}
@@ -123,7 +123,7 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use: /mpa setup [colormatch, spleef, minefield, jumpnrun, deadend, redalert, lastarcherstanding, sheepfreenzy, smokemonster, slapfight]");
 						}
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				}else if(args[0].equalsIgnoreCase("setuppoint")){
 					if(p.hasPermission("minecraftparty.admin.setup") || sender.hasPermission("minecraftparty.admin.*")){
@@ -139,7 +139,7 @@ public class AdminCommand implements CommandExecutor {
 							}, 5L);
 						}
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				
 				}else if(args[0].equalsIgnoreCase("setlobby")){
@@ -151,7 +151,7 @@ public class AdminCommand implements CommandExecutor {
 						main.saveConfig();
 						sender.sendMessage(ChatColor.GREEN + "Saved Main lobby.");	
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				}else if(args[0].equalsIgnoreCase("setcomponent")){
 					// /mp setcomponent [minigame] [component]
@@ -163,7 +163,7 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use: /mpa setcomponent [game] [component]");
 						}
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				}else if(args[0].equalsIgnoreCase("list")){
 					if(sender.hasPermission("minecraftparty.admin.list") || sender.hasPermission("minecraftparty.admin.*")) {
@@ -176,14 +176,14 @@ public class AdminCommand implements CommandExecutor {
 							}
 						}
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				}else if(args[0].equalsIgnoreCase("reload")){
 					if(sender.hasPermission("minecraftparty.admin.reload") || sender.hasPermission("minecraftparty.admin.*")) {
 						main.reloadConfig();
 						sender.sendMessage(ChatColor.GREEN + "Successfully reloaded config.");
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				}else if(args[0].equalsIgnoreCase("enable")){
 					if(sender.hasPermission("minecraftparty.admin.enable")) {
@@ -193,7 +193,7 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use: /mpa enable [colormatch, spleef, minefield, jumpnrun, deadend, redalert, lastarcherstanding, sheepfreenzy, smokemonster, slapfight]");
 						}
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				}else if(args[0].equalsIgnoreCase("disable")){
 					if(sender.hasPermission("minecraftparty.admin.disable") || sender.hasPermission("minecraftparty.admin.*")) {
@@ -203,10 +203,10 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use: /mp disable <colormatch/spleef/minefield/jumpnrun/deadend/redalert/lastarcherstanding/sheepfreenzy/smokemonster/slapfight>");
 						}
 					} else {
-						sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+						sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 					}
 				}else{
-					sender.sendMessage(ChatColor.RED + "Unknown command");
+					sender.sendMessage(main.getMessages().getString("messages.unknown_command").replace("&", "§"));
 				}
 			}else{
 				if(sender.hasPermission("minecraftparty.admin.help") || sender.hasPermission("minecraftparty.admin.*")) {
@@ -218,7 +218,7 @@ public class AdminCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.GREEN + "/mpa setcomponent [game] [component] " + ChatColor.WHITE + "See a player statistics");
 					sender.sendMessage(ChatColor.GREEN + "/mpa reload " + ChatColor.WHITE + "Reload the plugin configuration");
 				} else {
-					sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+					sender.sendMessage(main.getMessages().getString("messages.no_perms").replace("&", "§"));
 				}
 			}
 			return true;
