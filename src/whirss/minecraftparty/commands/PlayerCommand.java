@@ -91,7 +91,7 @@ public class PlayerCommand implements CommandExecutor {
 							main.pinv.put(p.getName(), p.getInventory().getContents());
 							main.startNew();
 							if(main.min_players > 1){
-								sender.sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%minplayers%", Integer.toString(main.min_players)).replace("&", "§"));
+								sender.sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)).replace("&", "§"));
 							}
 						}else{ // else: just join the minigame
 							try{
@@ -103,7 +103,7 @@ public class PlayerCommand implements CommandExecutor {
 									main.minigames.get(main.currentmg).join(p);
 								}
 							}catch(Exception e){}
-							sender.sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%minplayers%", Integer.toString(main.min_players)).replace("&", "§"));
+							sender.sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)).replace("&", "§"));
 						}	
 					}
 				}else if(args[0].equalsIgnoreCase("shop")){

@@ -78,7 +78,7 @@ public class Shop {
 						m.updatePlayerStats(p.getName(), "credits", currentcredits - grenades_price);
 						m.msql.updateShopperStats(p.getName(), grenades_price);
 						addToPlayerShopComponent(m, p.getName(), "grenades", 1);
-						p.sendMessage(m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.grenades")));
+						p.sendMessage(m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.grenades").replace("&", "§")));
 					} else {
 						p.sendMessage(m.getMessages().getString("messages.game.no_money").replace("&", "§"));
 					}
@@ -87,7 +87,7 @@ public class Shop {
 						m.updatePlayerStats(p.getName(), "credits", currentcredits - jumpboost_price);
 						m.msql.updateShopperStats(p.getName(), jumpboost_price);
 						addToPlayerShopComponent(m, p.getName(), "jump_boost", 1);
-						p.sendMessage(m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.jumpboost")));
+						p.sendMessage(m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.jumpboost").replace("&", "§")));
 					} else {
 						p.sendMessage(m.getMessages().getString("messages.game.no_money").replace("&", "§"));
 					}
@@ -97,20 +97,20 @@ public class Shop {
 						m.msql.updateShopperStats(p.getName(), deadendboost_price);
 						addToPlayerShopComponent(m, p.getName(), "speed_boost", 1);
 						p.sendMessage(ChatColor.GREEN + "You bought a Speed Boost!");
-						p.sendMessage(m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.deadendboost")));
+						p.sendMessage(m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.deadendboost").replace("&", "§")));
 					} else {
 						p.sendMessage(m.getMessages().getString("messages.game.no_money").replace("&", "§"));
 					}
 				}else if (d.equalsIgnoreCase(m.getShop().getString("shop.displayname.slapfight_knockback"))) {
-					Shop.t(m, p, slapfight_knockback_price, "slapfight_knockback", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.slapfight_knockback")));
+					Shop.t(m, p, slapfight_knockback_price, "slapfight_knockback", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.slapfight_knockback").replace("&", "§")));
 				}else if (d.equalsIgnoreCase(m.getShop().getString("shop.displayname.smokemonsterboost"))) {
-					Shop.t(m, p, smokemonsterboost_price, "smokemonster_boost", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.smokemonsterboost")));
+					Shop.t(m, p, smokemonsterboost_price, "smokemonster_boost", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.smokemonsterboost").replace("&", "§")));
 				}else if (d.equalsIgnoreCase(m.getShop().getString("shop.displayname.jumpnrun"))) {
-					Shop.t(m, p, jumpnrunboost_price, "jumpnrun_boost", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.jumpnrun")));
+					Shop.t(m, p, jumpnrunboost_price, "jumpnrun_boost", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.jumpnrun").replace("&", "§")));
 				}else if (d.equalsIgnoreCase(m.getShop().getString("shop.displayname.sheepfreenzyimmunity"))) {
-					Shop.t(m, p, sheepfreenzyimmunity_price, "sheepfreenzy_explosion_immunity", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.sheepfreenzyimmunity")));
+					Shop.t(m, p, sheepfreenzyimmunity_price, "sheepfreenzy_explosion_immunity", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.sheepfreenzyimmunity").replace("&", "§")));
 				}else if (d.equalsIgnoreCase(m.getShop().getString("shop.displayname.megagranades"))) {
-					Shop.t(m, p, megagrenades_price, "megagrenades", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.megagranades")));
+					Shop.t(m, p, megagrenades_price, "megagrenades", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.megagranades").replace("&", "§")));
 				}
 				m.updateScoreboardOUTGAME(p.getName());
 				event.setWillClose(true);

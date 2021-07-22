@@ -3,7 +3,7 @@ messages:
     countdown: '&aStarting in &6%count%'
     after_countdown: '&aLet''s go!'
     you_left: '&cYou left the game.'
-    next_round: '&6Next round in 30 seconds! You can leave with /pg leave.'
+    next_round: '&6Next round in 30 seconds! You can leave with /mp leave.'
     your_place: '&aYou are %place% place.'
     on_join: '&6Use /mp leave to leave!'
     game_full: '&cYou can''t join because the minigames party is full!'

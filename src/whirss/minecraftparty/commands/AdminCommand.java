@@ -32,90 +32,90 @@ public class AdminCommand implements CommandExecutor {
 							if (args[1].equalsIgnoreCase("colormatch")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch").replace("&", "§"));
 										main.setupColorMatch(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("spleef")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef").replace("&", "§"));
 										main.setupSpleef(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("minefield")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField").replace("&", "§"));
 										main.setupMineField(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("jumpnrun")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun").replace("&", "§"));
 										main.setupJumpnRun(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("deadend")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun").replace("&", "§"));
 										main.setupDeadEnd(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("redalert")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert").replace("&", "§"));
 										main.setupRedAlert(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("lastarcherstanding")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding").replace("&", "§"));
 										main.setupLastArcherStanding(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("sheepfreenzy")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy").replace("&", "§"));
 										main.setupSheepFreenzy(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("smokemonster")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster").replace("&", "§"));
 										main.setupSmokeMonster(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster").replace("&", "§"));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("slapfight")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight").replace("&", "§"));
 										main.setupSlapFight(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight").replace("%", "§"));
+										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight").replace("&", "§"));
 									}
 								});
 							}

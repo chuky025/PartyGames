@@ -559,10 +559,10 @@ public class Main extends JavaPlugin implements Listener {
 		this.updatePlayerStats(p.getName(), "credits", getPlayerStats(p.getName(), "credits") + reward);		
 
 		if(getSettings().getBoolean("config.announcements")){
-			getServer().broadcastMessage(getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward).replace("&", "§")));
+			getServer().broadcastMessage(getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)).replace("&", "§"));
 		}
 
-		p.sendMessage(getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward).replace("&", "§")));
+		p.sendMessage(getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)).replace("&", "§"));
 
 		msql.updateWinnerStats(p.getName(), reward);
 		
