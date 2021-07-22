@@ -42,7 +42,7 @@ public class OnPlayerJoin implements Listener {
 			main.players_left.remove(p.getName());
 		}
 
-		if (!main.getConfig().getBoolean("config.game-on-join")) return;
+		if (!main.getSettings().getBoolean("config.game-on-join")) return;
 
 		if(main.players.contains(event.getPlayer().getName())){
 			p.sendMessage(main.getMessages().getString("messages.game.alredy_ingame").replace("&", "§"));

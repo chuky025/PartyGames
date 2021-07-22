@@ -1,6 +1,7 @@
 mysql:
   enabled: false
   host: 127.0.0.1
+  port: 3306
   database: bukkit
   user: root
-  pw: toor
+  password: toor

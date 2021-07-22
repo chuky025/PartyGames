@@ -81,7 +81,7 @@ public class PlayerCommand implements CommandExecutor {
 					if(main.players.contains(p.getName())){
 						sender.sendMessage(main.getMessages().getString("messages.game.on_join").replace("&", "§"));
 					}else{
-						if(main.players.size() > main.getConfig().getInt("config.max_players") - 1){
+						if(main.players.size() > main.getSettings().getInt("config.max_players") - 1){
 							sender.sendMessage(main.getMessages().getString("messages.game.game_full").replace("&", "§"));
 							return true;
 						}

@@ -4,22 +4,22 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.bukkit.plugin.Plugin;
+import whirss.minecraftparty.Main;
 
 
 public class MainSQL {
 	
-	Plugin m;
+	private Main main;
 	
-	public MainSQL(Plugin pl){
-		this.m = pl;
+	public MainSQL(Main main) {
+		this.main = main;
 	}
 
 	public void updateWinnerStats(String p_, int reward){
-		if(!m.getConfig().getBoolean("mysql.enabled")){
+		if(!main.getSettings().getBoolean("mysql.enabled")){
 			return;
 		}
-		MySQL MySQL = new MySQL(m.getConfig().getString("mysql.host"), "3306", m.getConfig().getString("mysql.database"), m.getConfig().getString("mysql.user"), m.getConfig().getString("mysql.pw"));
+		MySQL MySQL = new MySQL(main.getSettings().getString("mysql.host"), main.getSettings().getString("mysql.port"), main.getSettings().getString("mysql.database"), main.getSettings().getString("mysql.user"), main.getSettings().getString("mysql.password"));
     	Connection c = null;
     	c = MySQL.open();
 		
@@ -43,10 +43,10 @@ public class MainSQL {
 	
 	
 	public int getCredits(String p_){
-		if(!m.getConfig().getBoolean("mysql.enabled")){
+		if(!main.getSettings().getBoolean("mysql.enabled")){
 			return -1;
 		}
-		MySQL MySQL = new MySQL(m.getConfig().getString("mysql.host"), "3306", m.getConfig().getString("mysql.database"), m.getConfig().getString("mysql.user"), m.getConfig().getString("mysql.pw"));
+		MySQL MySQL = new MySQL(main.getSettings().getString("mysql.host"), main.getSettings().getString("mysql.port"), main.getSettings().getString("mysql.database"), main.getSettings().getString("mysql.user"), main.getSettings().getString("mysql.password"));
     	Connection c = null;
     	c = MySQL.open();
 		
@@ -70,10 +70,10 @@ public class MainSQL {
 	}
 	
 	public int getWins(String p_){
-		if(!m.getConfig().getBoolean("mysql.enabled")){
+		if(!main.getSettings().getBoolean("mysql.enabled")){
 			return -1;
 		}
-		MySQL MySQL = new MySQL(m.getConfig().getString("mysql.host"), "3306", m.getConfig().getString("mysql.database"), m.getConfig().getString("mysql.user"), m.getConfig().getString("mysql.pw"));
+		MySQL MySQL = new MySQL(main.getSettings().getString("mysql.host"), main.getSettings().getString("mysql.port"), main.getSettings().getString("mysql.database"), main.getSettings().getString("mysql.user"), main.getSettings().getString("mysql.password"));
     	Connection c = null;
     	c = MySQL.open();
 		
@@ -90,10 +90,10 @@ public class MainSQL {
 	}
 	
 	public void updateShopperStats(String p_, int amount){
-		if(!m.getConfig().getBoolean("mysql.enabled")){
+		if(!main.getSettings().getBoolean("mysql.enabled")){
 			return;
 		}
-		MySQL MySQL = new MySQL(m.getConfig().getString("mysql.host"), "3306", m.getConfig().getString("mysql.database"), m.getConfig().getString("mysql.user"), m.getConfig().getString("mysql.pw"));
+		MySQL MySQL = new MySQL(main.getSettings().getString("mysql.host"), main.getSettings().getString("mysql.port"), main.getSettings().getString("mysql.database"), main.getSettings().getString("mysql.user"), main.getSettings().getString("mysql.password"));
     	Connection c = null;
     	c = MySQL.open();
 		

@@ -163,15 +163,15 @@ public class Main extends JavaPlugin implements Listener {
 		
 		Shop.loadPrices(this);
 
-		min_players = getConfig().getInt("config.min_players");
+		min_players = getSettings().getInt("config.min_players");
 
-		minreward = getConfig().getInt("config.min_reward");
-		maxreward = getConfig().getInt("config.max_reward");
-		item_minreward = getConfig().getInt("config.item_reward_minamount");
-		item_maxreward = getConfig().getInt("config.item_reward_maxamount");
+		minreward = getSettings().getInt("config.min_reward");
+		maxreward = getSettings().getInt("config.max_reward");
+		item_minreward = getSettings().getInt("config.item_reward_minamount");
+		item_maxreward = getSettings().getInt("config.item_reward_maxamount");
 
-		item_id = getConfig().getInt("config.item_reward_id"); 
-		seconds = getConfig().getInt("config.seconds_for_each_minigame");
+		item_id = getSettings().getInt("config.item_reward_id"); 
+		seconds = getSettings().getInt("config.seconds_for_each_minigame");
 		
 		if(minreward > maxreward){
 			int temp = maxreward;
@@ -185,13 +185,13 @@ public class Main extends JavaPlugin implements Listener {
 			item_minreward = temp;
 		}
 
-		economy = getConfig().getBoolean("config.use_economy");
-		item_rewards = getConfig().getBoolean("config.use_item_rewards");
+		economy = getSettings().getBoolean("config.use_economy");
+		item_rewards = getSettings().getBoolean("config.use_item_rewards");
 		
 		int pluginId = 9703;
         Metrics metrics = new Metrics(this, pluginId);
 
-		/*if(getConfig().getBoolean("config.auto_updating")){
+		/*if(getSettings().getBoolean("config.auto_updating")){
 			Updater updater = new Updater(this, 71596, this.getFile(), Updater.UpdateType.DEFAULT, false);
 		}*/
 
@@ -316,7 +316,7 @@ public class Main extends JavaPlugin implements Listener {
 		settingsFile = new File(this.getDataFolder(),"settings.yml");
 		if(!settingsFile.exists()){
 			this.getSettings().options().copyDefaults(true);
-			getConfig().options().header(
+			getSettings().options().header(
 		              "  __  __ _                            __ _   ____            _\n"
 		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
 		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
@@ -366,7 +366,7 @@ public class Main extends JavaPlugin implements Listener {
 		messagesFile = new File(this.getDataFolder(),"messages.yml");
 		if(!messagesFile.exists()){
 			this.getMessages().options().copyDefaults(true);
-			getConfig().options().header(
+			getMessages().options().header(
 		              "  __  __ _                            __ _   ____            _\n"
 		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
 		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
@@ -416,7 +416,7 @@ public class Main extends JavaPlugin implements Listener {
 		scoreboardFile = new File(this.getDataFolder(),"scoreboard.yml");
 		if(!scoreboardFile.exists()){
 			this.getScoreboard().options().copyDefaults(true);
-			getConfig().options().header(
+			getScoreboard().options().header(
 		              "  __  __ _                            __ _   ____            _\n"
 		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
 		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
@@ -466,7 +466,7 @@ public class Main extends JavaPlugin implements Listener {
 		mysqlFile = new File(this.getDataFolder(),"mysql.yml");
 		if(!mysqlFile.exists()){
 			this.getMysql().options().copyDefaults(true);
-			getConfig().options().header(
+			getMysql().options().header(
 		              "  __  __ _                            __ _   ____            _\n"
 		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
 		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
@@ -510,7 +510,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		this.updatePlayerStats(p.getName(), "credits", getPlayerStats(p.getName(), "credits") + reward);		
 
-		if(getConfig().getBoolean("config.announcements")){
+		if(getSettings().getBoolean("config.announcements")){
 			getServer().broadcastMessage(getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward).replace("&", "§")));
 		}
 
@@ -919,7 +919,7 @@ public class Main extends JavaPlugin implements Listener {
 
 	public void updateScoreboardOUTGAME(final String player){
 		
-		if(!getConfig().getBoolean("config.scoreboardoutgame")){
+		if(!getSettings().getBoolean("config.scoreboardoutgame")){
 			return;
 		}
 		
@@ -1067,7 +1067,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				}
 				
-				p.sendMessage(ChatColor.GOLD + getConfig().getString("strings.next_round_30_seconds"));
+				p.sendMessage(ChatColor.GOLD + getSettings().getString("strings.next_round_30_seconds"));
 				p.getInventory().clear();
 				p.updateInventory();
 			}else{
