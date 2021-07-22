@@ -511,10 +511,10 @@ public class Main extends JavaPlugin implements Listener {
 		this.updatePlayerStats(p.getName(), "credits", getPlayerStats(p.getName(), "credits") + reward);		
 
 		if(getConfig().getBoolean("config.announcements")){
-			getServer().broadcastMessage(getMessages().getString("messages.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward).replace("&", "§")));
+			getServer().broadcastMessage(getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward).replace("&", "§")));
 		}
 
-		p.sendMessage(getMessages().getString("messages.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward).replace("&", "§")));
+		p.sendMessage(getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward).replace("&", "§")));
 
 		msql.updateWinnerStats(p.getName(), reward);
 		
@@ -532,7 +532,7 @@ public class Main extends JavaPlugin implements Listener {
 			}else if(p.hasPermission("minecraftparty.triple_coins")){
 				reward_ = reward_ * 3;
 			}
-			p.sendMessage(getMessages().getString("messages.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name().replace("&", "§")));
+			p.sendMessage(getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name().replace("&", "§")));
 			if(rewardcount.containsKey(p.getName())){
 				reward_ += rewardcount.get(p.getName());
 			}
@@ -616,8 +616,7 @@ public class Main extends JavaPlugin implements Listener {
 				Player p = Bukkit.getPlayerExact(pl);
 				if(p.isOnline()){
 					minigames.get(minigames.size() - 1).leave(p);
-					p.sendMessage(ChatColor.GOLD + getConfig().getString("strings.next_round_30_seconds"));
-					p.sendMessage(getMessages().getString("messages.next_round").replace("&", "§"));
+					p.sendMessage(getMessages().getString("messages.game.next_round").replace("&", "§"));
 					p.getInventory().clear();
 					p.updateInventory();
 					updateScoreboardOUTGAME(pl);
@@ -1105,7 +1104,7 @@ public class Main extends JavaPlugin implements Listener {
 				}, 10L);
 				
 				minigames.get(minigames.size() - 1).leave(p);
-				p.sendMessage(getMessages().getString("messages.stopped_game").replace("%min_players%", Integer.toString(min_players)).replace("&", "§"));
+				p.sendMessage(getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players)).replace("&", "§"));
 			}
 		}
 
@@ -1359,7 +1358,7 @@ public class Main extends JavaPlugin implements Listener {
 		}else if(count == 2){
 			place = Integer.toString(count + 1) + "rd";
 		}
-		p.sendMessage(getMessages().getString("messages.your_place").replace("%place%", place).replace("&", "§"));
+		p.sendMessage(getMessages().getString("messages.game.your_place").replace("%place%", place).replace("&", "§"));
 	}
 	
 	
@@ -1372,10 +1371,10 @@ public class Main extends JavaPlugin implements Listener {
 					return;
 				}
 			}
-			sender.sendMessage(getMessages().getString("messages.disable_error1").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame).replace("&", "§"));
 			
 		}else{
-			sender.sendMessage(getMessages().getString("messages.disable_error2").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame).replace("&", "§"));
 		}
 	}
 	
@@ -1389,10 +1388,10 @@ public class Main extends JavaPlugin implements Listener {
 				}
 			}
 			sender.sendMessage(ChatColor.RED + "Could not find given Minigame.");
-			sender.sendMessage(getMessages().getString("messages.enable_error1").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(getMessages().getString("messages.setup.nable_error1").replace("%minigame%", minigame).replace("&", "§"));
 		}else{
 			sender.sendMessage(ChatColor.RED + "You cannot change the state of a minigame while a game is running.");
-			sender.sendMessage(getMessages().getString("messages.enable_error1").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(getMessages().getString("messages.setup.enable_error1").replace("%minigame%", minigame).replace("&", "§"));
 		}
 	}
 	
