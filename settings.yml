@@ -1,5 +1,5 @@
 settings:
-  update-check: true
+  update_check: true
   min_players: 3
   game-on-join: false
   max_reward: 30

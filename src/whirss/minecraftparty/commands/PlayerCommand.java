@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 import whirss.minecraftparty.Main;
 import whirss.minecraftparty.Shop;
 
@@ -49,16 +50,17 @@ public class PlayerCommand implements CommandExecutor {
 					}
 				}else if(args[0].equalsIgnoreCase("leave")){
 					if(main.players.contains(p.getName())){
+						p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 						p.teleport(main.getLobby());
 						Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
 							public void run(){
 								p.teleport(main.getLobby());
+								p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 							}
-						}, 5);
-						main.updateScoreboardOUTGAME(p.getName());
+						}, 20);
 						p.getInventory().clear();
 						p.updateInventory();
-						Bukkit.getScheduler().runTaskLater(main, new Runnable(){
+						Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
 							public void run(){
 								p.getInventory().setContents(main.pinv.get(p.getName()));
 								p.updateInventory();
@@ -69,12 +71,14 @@ public class PlayerCommand implements CommandExecutor {
 						}
 						main.players.remove(p.getName());
 						sender.sendMessage(main.getMessages().getString("messages.game.you_left").replace("&", "§"));
+						
 						if(main.players.size() < main.min_players){
-							Bukkit.getScheduler().runTaskLater(main, new Runnable(){
+							Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
 								public void run(){
 									main.stopFull(p);
+									p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 								}
-							}, 15);
+							}, 20);
 						}
 					}
 				}else if(args[0].equalsIgnoreCase("join")){
@@ -92,6 +96,12 @@ public class PlayerCommand implements CommandExecutor {
 							main.startNew();
 							if(main.min_players > 1){
 								sender.sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)).replace("&", "§"));
+								
+								//scoreboard:
+								if(main.getScoreboard().getBoolean("scoreboard.toggle")){
+									
+						           }
+								
 							}
 						}else{ // else: just join the minigame
 							try{

@@ -30,7 +30,7 @@ public class OnPlayerCommand implements Listener {
 						p.teleport(main.getLobby());
 					}
 				}, 5);
-				main.updateScoreboardOUTGAME(p.getName());
+				p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 				p.getInventory().clear();
 				p.updateInventory();
 				Bukkit.getScheduler().runTaskLater(main, new Runnable(){

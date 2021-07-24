@@ -15,6 +15,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -640,7 +642,7 @@ public class Main extends JavaPlugin implements Listener {
 			rewardcount.put(p.getName(), reward_);
 		}
 		
-		updateScoreboardOUTGAME(p.getName());
+		//updateScoreboardOUTGAME(p.getName());
 	}
 	
 	public final HashMap<String, Integer> rewardcount = new HashMap<String, Integer>();
@@ -689,6 +691,7 @@ public class Main extends JavaPlugin implements Listener {
 		
 		// update scoreboard
 		//updateScoreboard(seconds - c); The scoreboard produces lag, I will soon make a new system.
+		updateActionbar(seconds - c); //this is temporal
 
 		// stop the whole party after some rounds
 		if(c_ > (minigames.size() - disabledMinigamesC) * seconds - 3){
@@ -722,7 +725,7 @@ public class Main extends JavaPlugin implements Listener {
 					p.sendMessage(getMessages().getString("messages.game.next_round").replace("&", "§"));
 					p.getInventory().clear();
 					p.updateInventory();
-					updateScoreboardOUTGAME(pl);
+					//updateScoreboardOUTGAME(pl);
 				}else{
 					remove.add(p.getName());
 				}
@@ -929,8 +932,15 @@ public class Main extends JavaPlugin implements Listener {
 	public HashMap<String, Integer> currentscore = new HashMap<String, Integer>();
 
 	public Main main;
+	
+	public void updateActionbar(int c){
+		for(String pl : players){
+			Player p = Bukkit.getPlayerExact(pl);
+			p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GREEN + "[" + Integer.toString(currentmg + 1) + "/" + Integer.toString(minigames.size()) + "] [" + Integer.toString(c) + "]"));
+		}
+	}
 
-	public void updateScoreboard(int c){
+	/*public void updateScoreboard(int c){
 
 		ScoreboardManager manager = Bukkit.getScoreboardManager();
 
@@ -1017,10 +1027,10 @@ public class Main extends JavaPlugin implements Listener {
 
 			p.setScoreboard(board);
 		}
-	}
+	}*/
 
 
-	public void updateScoreboardOUTGAME(final String player){
+	/*public void updateScoreboardOUTGAME(final String player){
 		
 		if(!getSettings().getBoolean("config.scoreboardoutgame")){
 			return;
@@ -1049,9 +1059,9 @@ public class Main extends JavaPlugin implements Listener {
 	    
 		Bukkit.getScheduler().scheduleSyncDelayedTask(this, r, 20 * 10);
 
-	}
+	}*/
 
-	public void removeScoreboard(Player p) {
+	/*public void removeScoreboard(Player p) {
 		try {
 			ScoreboardManager manager = Bukkit.getScoreboardManager();
 			Scoreboard sc = manager.getNewScoreboard();
@@ -1061,7 +1071,7 @@ public class Main extends JavaPlugin implements Listener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}/*
 
 	/*public void start(){
 		// if not running -> start
@@ -1223,7 +1233,7 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public void stopFull(Player p_){
 		stopFull();
-		updateScoreboardOUTGAME(p_.getName());
+		//updateScoreboardOUTGAME(p_.getName());
 	}
 
 	public Location getLobby(){

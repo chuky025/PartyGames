@@ -1,0 +1,13 @@
+scoreboard: 
+  toggle: true
+  title: '&d&lMinecraft &b&lParty'
+  lines:
+  - '&a'
+  - '&fGame:'
+  - '&b%game%'
+  - '&b'
+  - '&fTime: &a%time%'
+  - '&fRound: &a%round%&7/&a%max_round%'
+  - '&fPlayers: &a%players%'
+  - '&c'
+  - '&ewww.servername.com'

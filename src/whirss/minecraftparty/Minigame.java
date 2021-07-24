@@ -53,6 +53,8 @@ public class Minigame {
 	BukkitTask cooldown = null;
 	
 	public void startCooldown(){
+		//scoreboard.cancelScoreboardWaiting();
+				
 		//final BukkitTask id__ = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(m, new Runnable() {
 
 		final BukkitTask id__ = Bukkit.getServer().getScheduler().runTaskTimer(m, new Runnable() {
@@ -143,6 +145,7 @@ public class Minigame {
 		if(p.getGameMode().equals(GameMode.SPECTATOR)) {
 			p.setGameMode(GameMode.SURVIVAL);
 		}
+		p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(m, new Runnable() {
 			@Override
@@ -152,6 +155,7 @@ public class Minigame {
 					p.eject();
 					t.remove();
 				}
+				p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 				p.teleport(lobby);
 				p.setAllowFlight(false);
 				p.setFlying(false);
@@ -167,13 +171,13 @@ public class Minigame {
 
 				
 			}
-		}, 5);
+		}, 20);
 		
-		Bukkit.getScheduler().runTaskLater(m, new Runnable(){
+		Bukkit.getScheduler().scheduleSyncDelayedTask(m, new Runnable(){
 			public void run(){
 				m.giveItemRewards(p, true);
 			}
-		}, 15L);
+		}, 20L);
 		
 	}
 	

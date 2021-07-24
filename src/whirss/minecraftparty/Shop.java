@@ -112,7 +112,6 @@ public class Shop {
 				}else if (d.equalsIgnoreCase(m.getShop().getString("shop.displayname.megagranades"))) {
 					Shop.t(m, p, megagrenades_price, "megagrenades", m.getMessages().getString("messages.game.purchased_product").replace("%product%", m.getShop().getString("shop.displayname.megagranades").replace("&", "§")));
 				}
-				m.updateScoreboardOUTGAME(p.getName());
 				event.setWillClose(true);
 			}
 		}, m)
