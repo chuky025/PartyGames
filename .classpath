@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="C:/Users/dnlbl/Desktop/jars/spigot-1.10.2-R0.1-SNAPSHOT-latest.jar"/>
 	<classpathentry kind="lib" path="C:/Users/dnlbl/Desktop/jars/spigot-1.10-R0.1-SNAPSHOT-latest.jar"/>
 	<classpathentry kind="lib" path="C:/Users/dnlbl/Desktop/jars/spigot-1.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dnlbl/Desktop/jars/PlaceholderAPI-2.10.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -43,7 +43,7 @@ public class OnPlayerCommand implements Listener {
 					main.minigames.get(main.currentmg).leave(p);
 				}
 				main.players.remove(p.getName());
-				p.sendMessage(main.getMessages().getString("messages.game.you_left").replace("&", "§"));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
 				if(main.players.size() < main.min_players){
 					Bukkit.getScheduler().runTaskLater(main, new Runnable(){
 						public void run(){
@@ -65,7 +65,7 @@ public class OnPlayerCommand implements Listener {
 					// nothing
 				}else{
 					event.setCancelled(true);
-					event.getPlayer().sendMessage(main.getMessages().getString("messages.game.ingame_commands").replace("&", "§"));
+					event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.ingame_commands")));
 				}
 			}
 		}

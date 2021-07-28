@@ -38,7 +38,7 @@ public class OnFlightAttempt implements Listener {
 			        	}
 			        }, 20 * 10);
 	    		}else{
-	    			p.sendMessage(main.getMessages().getString("messages.game.double_jump").replace("&", "§"));
+	    			p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.double_jump")));
 	    			p.setAllowFlight(false);
 			        p.setFlying(false);
 			        event.setCancelled(true);

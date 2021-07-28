@@ -100,7 +100,7 @@ public class Main extends JavaPlugin implements Listener {
 	Main m;
 	public MainSQL msql;
 
-	String currentversion = "1.6";
+	String currentversion = "1.7";
 	
 	private FileConfiguration messages = null;
 	private File messagesFile = null;
@@ -158,6 +158,12 @@ public class Main extends JavaPlugin implements Listener {
 			}
 		}, 20);
 		
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MinecraftParty by Whirss");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version " + currentversion + " (Spigot " + Bukkit.getBukkitVersion() + " )");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
+		
+        
 		registerConfig();
 		registerSettings();
 		registerMessages();
@@ -165,6 +171,9 @@ public class Main extends JavaPlugin implements Listener {
 		registerShop();
 		registerTitles();
 		registerMysql();
+		
+		RegisterCommands();
+		RegisterEvents();
 		
 		
 		Shop.loadPrices(this);
@@ -204,13 +213,14 @@ public class Main extends JavaPlugin implements Listener {
 	        }
 		}
 		
-		RegisterCommands();
-		RegisterEvents();
-
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MinecraftParty by Whirss");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version " + currentversion + " (Spigot " + Bukkit.getBukkitVersion() + " )");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
+		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			//getSettings().set("settings.enable_placeholderapi", true);
+        } else {
+            if(getSettings().getBoolean("settings.enable_placeholderapi")){
+            	Bukkit.getConsoleSender().sendMessage("[MinecraftParty] PlaceholderAPI plugin has not been detected on this server. Deactivating...");
+            	getSettings().set("settings.enable_placeholderapi", false);
+            }
+        }
 		
 		//Update Checker
         if(getSettings().getBoolean("settings.update_check")){
@@ -614,11 +624,11 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		this.updatePlayerStats(p.getName(), "credits", getPlayerStats(p.getName(), "credits") + reward);		
 
-		if(getSettings().getBoolean("config.announcements")){
-			getServer().broadcastMessage(getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)).replace("&", "§"));
+		if(getSettings().getBoolean("settings.announcements")){
+			getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
 		}
 
-		p.sendMessage(getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)).replace("&", "§"));
+		p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
 
 		msql.updateWinnerStats(p.getName(), reward);
 		
@@ -636,7 +646,7 @@ public class Main extends JavaPlugin implements Listener {
 			}else if(p.hasPermission("minecraftparty.triple_coins")){
 				reward_ = reward_ * 3;
 			}
-			p.sendMessage(getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name().replace("&", "§")));
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name())));
 			if(rewardcount.containsKey(p.getName())){
 				reward_ += rewardcount.get(p.getName());
 			}
@@ -722,7 +732,7 @@ public class Main extends JavaPlugin implements Listener {
 				Player p = Bukkit.getPlayerExact(pl);
 				if(p.isOnline()){
 					minigames.get(minigames.size() - 1).leave(p);
-					p.sendMessage(getMessages().getString("messages.game.next_round").replace("&", "§"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round")));
 					p.getInventory().clear();
 					p.updateInventory();
 					//updateScoreboardOUTGAME(pl);
@@ -1080,7 +1090,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				}
 				
-				p.sendMessage(ChatColor.GOLD + getSettings().getString("messages.game.next_round"));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getSettings().getString("messages.game.next_round")));
 				p.getInventory().clear();
 				p.updateInventory();
 			}else{
@@ -1117,7 +1127,7 @@ public class Main extends JavaPlugin implements Listener {
 				}, 10L);
 				
 				minigames.get(minigames.size() - 1).leave(p);
-				p.sendMessage(getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players)).replace("&", "§"));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players))));
 			}
 		}
 
@@ -1372,7 +1382,7 @@ public class Main extends JavaPlugin implements Listener {
 		}else if(count == 2){
 			place = Integer.toString(count + 1) + "rd";
 		}
-		p.sendMessage(getMessages().getString("messages.game.your_place").replace("%place%", place).replace("&", "§"));
+		p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place)));
 	}
 	
 	
@@ -1385,10 +1395,10 @@ public class Main extends JavaPlugin implements Listener {
 					return;
 				}
 			}
-			sender.sendMessage(getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame)));
 			
 		}else{
-			sender.sendMessage(getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame)));
 		}
 	}
 	
@@ -1401,9 +1411,9 @@ public class Main extends JavaPlugin implements Listener {
 					return;
 				}
 			}
-			sender.sendMessage(getMessages().getString("messages.setup.enable_error1").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.enable_error1").replace("%minigame%", minigame)));
 		}else{
-			sender.sendMessage(getMessages().getString("messages.setup.enable_error2").replace("%minigame%", minigame).replace("&", "§"));
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.enable_error2").replace("%minigame%", minigame)));
 		}
 	}
 	

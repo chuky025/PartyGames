@@ -24,7 +24,7 @@ public class OnSignChange implements Listener {
 				event.setLine(1, ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Party " + ChatColor.GRAY + "- " + ChatColor.WHITE + "Help");
 				event.setLine(2, ChatColor.BLACK + "Join");
 				event.setLine(3, "");
-				event.getPlayer().sendMessage(main.getMessages().getString("messages.setup.sign_added").replace("&", "§"));
+				event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.sign_added")));
 			}
 		}
 	}

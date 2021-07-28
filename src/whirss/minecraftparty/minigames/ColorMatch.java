@@ -7,10 +7,8 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -174,7 +172,11 @@ public class ColorMatch extends Minigame implements Listener{
 									p.setExp((float) 0.1);
 								} else if (xpsec == 12) {
 									p.setExp(0);
-									p.getInventory().clear();
+									if(m.getConfig().getString("ag") != "colormatch"){
+						            } else {
+						            	p.getInventory().clear();
+						            }
+									
 								} 
 						}
 					}, (40L - n) / 12, (40L - n) / 12));

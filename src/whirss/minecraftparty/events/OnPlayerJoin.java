@@ -45,11 +45,11 @@ public class OnPlayerJoin implements Listener {
 		if (!main.getSettings().getBoolean("settings.game-on-join")) return;
 
 		if(main.players.contains(event.getPlayer().getName())){
-			p.sendMessage(main.getMessages().getString("messages.game.alredy_ingame").replace("&", "§"));
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.alredy_ingame")));
 			return;
 		}
 		main.players.add(p.getName());
-		event.setJoinMessage(main.getMessages().getString("messages.game.player_joined").replace("&", "§"));
+		event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.player_joined").replace("&", "§")));
 
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
@@ -69,7 +69,7 @@ public class OnPlayerJoin implements Listener {
 						p.teleport(main.minigames.get(main.currentmg).spawn);
 					}
 				} catch (Exception ex) {
-					p.sendMessage(main.getMessages().getString("messages.other.error").replace("&", "§"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.error")));
 				}
 			}
 		}, 6);

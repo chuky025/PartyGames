@@ -1,6 +1,7 @@
 package whirss.minecraftparty.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,7 +34,7 @@ public class OnPlayerPortalEnter implements Listener {
 					main.minigames.get(main.currentmg).leave(p);
 				}
 				main.players.remove(p.getName());
-				p.sendMessage(main.getMessages().getString("messages.game.you_left").replace("&", "§"));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
 				if(main.players.size() < main.min_players){
 					Bukkit.getScheduler().runTaskLater(main, new Runnable(){
 						public void run(){

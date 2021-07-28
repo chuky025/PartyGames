@@ -69,7 +69,7 @@ public class Minigame {
 						m.saveConfig();
 						m.reloadConfig();
 						//p.sendMessage(ChatColor.GREEN + "Starting in " + ChatColor.GOLD + Integer.toString(count));
-						p.sendTitle(m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name).replace("&", "§"),m.getTitles().getString("titles.countdown.subtitle").replace("%minigame%", name).replace("&", "§"), 0, 30, 0);
+						p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name)),ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.subtitle").replace("%minigame%", name)), 0, 30, 0);
 					}
 				}
 				count--;
@@ -78,7 +78,7 @@ public class Minigame {
 						Player p = Bukkit.getPlayerExact(p_);
 						if(p.isOnline()){
 							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 30.0F, 50.0F);
-							p.sendTitle(m.getTitles().getString("titles.after_countdown.title").replace("%minigame%", name).replace("&", "§"), m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name).replace("&", "§"), 0, 30, 10);
+							p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%minigame%", name)), ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name)), 0, 30, 10);
 						}
 					}
 					m.registerMinigameStart(m.minigames.get(m.currentmg).start());
@@ -121,7 +121,7 @@ public class Minigame {
 				p.setAllowFlight(false);
 				p.setFlying(false);
 				
-				List<String> description = m.getMessages().getStringList("messages.minigames." + name.toLowerCase().replace("&", "§"));
+				List<String> description = m.getMessages().getStringList("messages.minigames." + name.toLowerCase());
 				for(int i=0;i<description.size();i++) {
 					String message = description.get(i);
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));

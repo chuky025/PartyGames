@@ -32,90 +32,90 @@ public class AdminCommand implements CommandExecutor {
 							if (args[1].equalsIgnoreCase("colormatch")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch")));
 										main.setupColorMatch(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("spleef")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef")));
 										main.setupSpleef(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("minefield")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&',  main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField")));
 										main.setupMineField(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("jumpnrun")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun")));
 										main.setupJumpnRun(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("deadend")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "DeadEnd")));
 										main.setupDeadEnd(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "DeadEnd")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("redalert")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert")));
 										main.setupRedAlert(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("lastarcherstanding")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding")));
 										main.setupLastArcherStanding(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("sheepfreenzy")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy")));
 										main.setupSheepFreenzy(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("smokemonster")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster")));
 										main.setupSmokeMonster(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster")));
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("slapfight")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight")));
 										main.setupSlapFight(p.getLocation());
-										sender.sendMessage(main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight").replace("&", "§"));
+										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight")));
 									}
 								});
 							}
@@ -123,7 +123,7 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use: /mpa setup [colormatch, spleef, minefield, jumpnrun, deadend, redalert, lastarcherstanding, sheepfreenzy, smokemonster, slapfight]");
 						}
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				}else if(args[0].equalsIgnoreCase("setuppoint")){
 					if(p.hasPermission("minecraftparty.admin.setup") || sender.hasPermission("minecraftparty.admin.*")){
@@ -139,7 +139,7 @@ public class AdminCommand implements CommandExecutor {
 							}, 5L);
 						}
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				
 				}else if(args[0].equalsIgnoreCase("setlobby")){
@@ -149,25 +149,25 @@ public class AdminCommand implements CommandExecutor {
 						main.getConfig().set("lobby.location.y", p.getLocation().getBlockY());
 						main.getConfig().set("lobby.location.z", p.getLocation().getBlockZ());
 						main.saveConfig();
-						sender.sendMessage(main.getMessages().getString("messages.setup.saved_lobby").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.saved_lobby")));
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				}else if(args[0].equalsIgnoreCase("setcomponent")){
 					// /mp setcomponent [minigame] [component]
 					if(sender.hasPermission("minecraftparty.admin.setup") || sender.hasPermission("minecraftparty.admin.*")){
 						if(args.length > 2){
 							main.saveComponentForMinigame(args[1], args[2], p.getLocation());
-							sender.sendMessage(main.getMessages().getString("messages.setup.saved_component").replace("&", "§"));
+							sender.sendMessage(main.getMessages().getString("messages.setup.saved_component"));
 						} else {
 							sender.sendMessage(ChatColor.RED + "Use: /mpa setcomponent [game] [component]");
 						}
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				}else if(args[0].equalsIgnoreCase("list")){
 					if(sender.hasPermission("minecraftparty.admin.list") || sender.hasPermission("minecraftparty.admin.*")) {
-						sender.sendMessage(main.getMessages().getString("messages.other.minigames_title").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.minigames_title")));
 						for(Minigame m : main.minigames) {
 							if(m.isEnabled()) {
 								sender.sendMessage(ChatColor.GREEN + m.name);
@@ -176,14 +176,14 @@ public class AdminCommand implements CommandExecutor {
 							}
 						}
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				}else if(args[0].equalsIgnoreCase("reload")){
 					if(sender.hasPermission("minecraftparty.admin.reload") || sender.hasPermission("minecraftparty.admin.*")) {
 						main.reloadConfig();
-						sender.sendMessage(main.getMessages().getString("messages.setup.reload").replace("&", "§"));
+						sender.sendMessage(main.getMessages().getString("messages.setup.reload"));
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				}else if(args[0].equalsIgnoreCase("enable")){
 					if(sender.hasPermission("minecraftparty.admin.enable")) {
@@ -193,20 +193,20 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use: /mpa enable [colormatch, spleef, minefield, jumpnrun, deadend, redalert, lastarcherstanding, sheepfreenzy, smokemonster, slapfight]");
 						}
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				}else if(args[0].equalsIgnoreCase("disable")){
 					if(sender.hasPermission("minecraftparty.admin.disable") || sender.hasPermission("minecraftparty.admin.*")) {
 						if(args.length > 1) {
 							main.disableMinigame(sender, args[1]);
 						} else {
-							sender.sendMessage(ChatColor.RED + "Use: /mp disable <colormatch/spleef/minefield/jumpnrun/deadend/redalert/lastarcherstanding/sheepfreenzy/smokemonster/slapfight>");
+							sender.sendMessage(ChatColor.RED + "Use: /mpa disable <colormatch/spleef/minefield/jumpnrun/deadend/redalert/lastarcherstanding/sheepfreenzy/smokemonster/slapfight>");
 						}
 					} else {
-						sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 					}
 				}else{
-					sender.sendMessage(main.getMessages().getString("messages.other.unknown_command").replace("&", "§"));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.unknown_command")));
 				}
 			}else{
 				if(sender.hasPermission("minecraftparty.admin.help") || sender.hasPermission("minecraftparty.admin.*")) {
@@ -218,7 +218,7 @@ public class AdminCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.GREEN + "/mpa setcomponent [game] [component] " + ChatColor.WHITE + "See a player statistics");
 					sender.sendMessage(ChatColor.GREEN + "/mpa reload " + ChatColor.WHITE + "Reload the plugin configuration");
 				} else {
-					sender.sendMessage(main.getMessages().getString("messages.other.no_perms").replace("&", "§"));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
 				}
 			}
 			return true;

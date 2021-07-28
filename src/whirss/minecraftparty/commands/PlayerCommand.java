@@ -27,16 +27,16 @@ public class PlayerCommand implements CommandExecutor {
 
 			if(args.length > 0){
 				if(args[0].equalsIgnoreCase("stats")){
-					sender.sendMessage(main.getMessages().getString("messages.other.stats_title").replace("&", "§"));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.stats_title")));
 					if(args.length > 1){
 						String player = args[1];
-						sender.sendMessage(main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")).replace("&", "§")));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
 					}else{
 						String player = p.getName();
-						sender.sendMessage(main.getMessages().getString("messages.game.your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")).replace("&", "§")));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
 					}
 				}else if(args[0].equalsIgnoreCase("leaderboards")){
-					sender.sendMessage(main.getMessages().getString("messages.other.leaderboard_title").replace("&", "§"));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.leaderboard_title")));
 					if(args.length > 1){
 						if(args[1].startsWith("credit")){
 							main.outputLeaderboardsByCredits(p);
@@ -70,7 +70,7 @@ public class PlayerCommand implements CommandExecutor {
 							main.minigames.get(main.currentmg).leave(p);
 						}
 						main.players.remove(p.getName());
-						sender.sendMessage(main.getMessages().getString("messages.game.you_left").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
 						
 						if(main.players.size() < main.min_players){
 							Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
@@ -83,10 +83,10 @@ public class PlayerCommand implements CommandExecutor {
 					}
 				}else if(args[0].equalsIgnoreCase("join")){
 					if(main.players.contains(p.getName())){
-						sender.sendMessage(main.getMessages().getString("messages.game.on_join").replace("&", "§"));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join")));
 					}else{
 						if(main.players.size() > main.getSettings().getInt("settings.max_players") - 1){
-							sender.sendMessage(main.getMessages().getString("messages.game.game_full").replace("&", "§"));
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full")));
 							return true;
 						}
 						main.players.add(p.getName());
@@ -95,7 +95,7 @@ public class PlayerCommand implements CommandExecutor {
 							main.pinv.put(p.getName(), p.getInventory().getContents());
 							main.startNew();
 							if(main.min_players > 1){
-								sender.sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)).replace("&", "§"));
+								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
 								
 								//scoreboard:
 								if(main.getScoreboard().getBoolean("scoreboard.toggle")){
@@ -113,7 +113,7 @@ public class PlayerCommand implements CommandExecutor {
 									main.minigames.get(main.currentmg).join(p);
 								}
 							}catch(Exception e){}
-							sender.sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)).replace("&", "§"));
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
 						}	
 					}
 				}else if(args[0].equalsIgnoreCase("shop")){
@@ -132,7 +132,7 @@ public class PlayerCommand implements CommandExecutor {
 						main.minigames.get(main.currentmg).join(p);
 					}
 				}else{
-					sender.sendMessage(main.getMessages().getString("messages.other.unknown_command").replace("&", "§"));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.unknown_command")));
 				}
 			}else{
 				p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Party " + ChatColor.GRAY + "- " + ChatColor.WHITE + "Help");

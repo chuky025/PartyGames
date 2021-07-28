@@ -36,10 +36,10 @@ public class OnInteractEvent implements Listener {
 					final Sign s = (Sign) event.getClickedBlock().getState();
 					if (s.getLine(1).equalsIgnoreCase(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Party " + ChatColor.GRAY + "- " + ChatColor.WHITE + "Help")){
 						if(main.players.contains(event.getPlayer().getName())){
-							event.getPlayer().sendMessage(main.getMessages().getString("messages.game.on_join").replace("&", "§"));
+							event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join")));
 						}else{
 							if(main.players.size() > main.getSettings().getInt("settings.max_players") - 1){
-								event.getPlayer().sendMessage(main.getMessages().getString("messages.game.game_full").replace("&", "§"));
+								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full")));
 								return;
 							}
 							main.players.add(event.getPlayer().getName());
@@ -48,7 +48,7 @@ public class OnInteractEvent implements Listener {
 								main.pinv.put(event.getPlayer().getName(), event.getPlayer().getInventory().getContents());
 								main.startNew();
 								if(main.min_players > 1){
-									event.getPlayer().sendMessage(main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)).replace("&", "§"));
+									event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
 								}
 							}else{ // else: just join the minigame
 								try{
@@ -62,7 +62,7 @@ public class OnInteractEvent implements Listener {
 										}
 									}
 								}catch(Exception e){
-									event.getPlayer().sendMessage(ChatColor.RED + "An error occured.");
+									event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.error")));
 								}
 							}
 						}
