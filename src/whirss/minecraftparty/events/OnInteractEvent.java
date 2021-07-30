@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import whirss.minecraftparty.Main;
+import whirss.minecraftparty.Minigame;
 import whirss.minecraftparty.Shop;
 import whirss.minecraftparty.nms.NMSEffectManager;
 
@@ -27,7 +28,8 @@ public class OnInteractEvent implements Listener {
 	
 	@EventHandler
 	public void onInteractEvent(PlayerInteractEvent event)
-	{	
+	{
+		final Minigame current = main.minigames.get(main.currentmg);
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)
 		{
 			if(event.hasBlock()){
@@ -70,17 +72,19 @@ public class OnInteractEvent implements Listener {
 				}	
 			}
 		}else if(event.getAction().equals(Action.PHYSICAL)){
-			if(event.getClickedBlock().getType() == Material.STONE_PLATE){
-				if(main.players.contains(event.getPlayer().getName())){
-					final Player p = event.getPlayer();
-					p.getWorld().createExplosion(p.getLocation(), 0);
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
-						@Override
-						public void run() {
-							p.teleport(main.minigames.get(main.currentmg).spawn);
-						}
-					}, 5);
-					event.getClickedBlock().setType(Material.AIR);
+			if(current.name.equalsIgnoreCase("MineField")) {
+				if(event.getClickedBlock().getType() == Material.STONE_PLATE){
+					if(main.players.contains(event.getPlayer().getName())){
+						final Player p = event.getPlayer();
+						p.getWorld().createExplosion(p.getLocation(), 0);
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+							@Override
+							public void run() {
+								p.teleport(main.minigames.get(main.currentmg).spawn);
+								event.getClickedBlock().setType(Material.AIR);
+							}
+						}, 5);
+					}
 				}
 			}
 		}

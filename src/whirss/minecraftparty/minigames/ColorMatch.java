@@ -172,10 +172,6 @@ public class ColorMatch extends Minigame implements Listener{
 									p.setExp((float) 0.1);
 								} else if (xpsec == 12) {
 									p.setExp(0);
-									if(m.getConfig().getString("ag") != "colormatch"){
-						            } else {
-						            	p.getInventory().clear();
-						            }
 									
 								} 
 						}

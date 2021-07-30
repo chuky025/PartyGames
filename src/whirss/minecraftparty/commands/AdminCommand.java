@@ -7,6 +7,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import me.clip.placeholderapi.PlaceholderAPI;
 import whirss.minecraftparty.Main;
 import whirss.minecraftparty.Minigame;
 
@@ -32,90 +34,170 @@ public class AdminCommand implements CommandExecutor {
 							if (args[1].equalsIgnoreCase("colormatch")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch")));
+										}
 										main.setupColorMatch(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("spleef")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef")));
+										}
 										main.setupSpleef(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("minefield")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&',  main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField")));
+										}
 										main.setupMineField(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("jumpnrun")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun")));
+										}
 										main.setupJumpnRun(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("deadend")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "DeadEnd")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "DeadEnd"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "DeadEnd")));
+										}
 										main.setupDeadEnd(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "DeadEnd")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "DeadEnd"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "DeadEnd")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("redalert")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert")));
+										}
 										main.setupRedAlert(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("lastarcherstanding")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding")));
+										}
 										main.setupLastArcherStanding(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("sheepfreenzy")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy")));
+										}
 										main.setupSheepFreenzy(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("smokemonster")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster")));
+										}
 										main.setupSmokeMonster(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster")));
+										}
 									}
 								});
 							}
 							if (args[1].equalsIgnoreCase("slapfight")) {
 								Bukkit.getServer().getScheduler().runTask(main, new Runnable(){
 									public void run(){
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight")));
+										}
 										main.setupSlapFight(p.getLocation());
-										sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight")));
+										if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight"))));
+										} else {
+											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight")));
+										}
 									}
 								});
 							}
@@ -181,6 +263,14 @@ public class AdminCommand implements CommandExecutor {
 				}else if(args[0].equalsIgnoreCase("reload")){
 					if(sender.hasPermission("minecraftparty.admin.reload") || sender.hasPermission("minecraftparty.admin.*")) {
 						main.reloadConfig();
+						main.reloadMessages();
+						main.reloadMessages();
+						main.reloadMysql();
+						main.reloadScoreboard();
+						main.reloadSettings();
+						main.reloadSettings();
+						main.reloadShop();
+						main.reloadTitles();
 						sender.sendMessage(main.getMessages().getString("messages.setup.reload"));
 					} else {
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
@@ -193,7 +283,7 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(ChatColor.RED + "Use: /mpa enable [colormatch, spleef, minefield, jumpnrun, deadend, redalert, lastarcherstanding, sheepfreenzy, smokemonster, slapfight]");
 						}
 					} else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
+						sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms"))));
 					}
 				}else if(args[0].equalsIgnoreCase("disable")){
 					if(sender.hasPermission("minecraftparty.admin.disable") || sender.hasPermission("minecraftparty.admin.*")) {
@@ -218,7 +308,11 @@ public class AdminCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.GREEN + "/mpa setcomponent [game] [component] " + ChatColor.WHITE + "See a player statistics");
 					sender.sendMessage(ChatColor.GREEN + "/mpa reload " + ChatColor.WHITE + "Reload the plugin configuration");
 				} else {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
+					if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+						sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms"))));
+					} else {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.no_perms")));
+					}
 				}
 			}
 			return true;

@@ -2,11 +2,13 @@ package whirss.minecraftparty.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import whirss.minecraftparty.Main;
 import whirss.minecraftparty.Shop;
 
@@ -27,13 +29,26 @@ public class PlayerCommand implements CommandExecutor {
 
 			if(args.length > 0){
 				if(args[0].equalsIgnoreCase("stats")){
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.stats_title")));
+					if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.stats_title"))));
+					} else {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.stats_title")));
+					}
+					
 					if(args.length > 1){
 						String player = args[1];
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
+						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits"))))));
+						} else {
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
+						}
 					}else{
 						String player = p.getName();
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
+						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits"))))));
+						} else {
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
+						}
 					}
 				}else if(args[0].equalsIgnoreCase("leaderboards")){
 					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.leaderboard_title")));
@@ -70,7 +85,11 @@ public class PlayerCommand implements CommandExecutor {
 							main.minigames.get(main.currentmg).leave(p);
 						}
 						main.players.remove(p.getName());
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
+						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left"))));
+						} else {
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
+						}
 						
 						if(main.players.size() < main.min_players){
 							Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
@@ -83,10 +102,18 @@ public class PlayerCommand implements CommandExecutor {
 					}
 				}else if(args[0].equalsIgnoreCase("join")){
 					if(main.players.contains(p.getName())){
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join")));
+						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join"))));
+						} else {
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join")));
+						}
 					}else{
 						if(main.players.size() > main.getSettings().getInt("settings.max_players") - 1){
-							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full")));
+							if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+								sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full"))));
+							} else {
+								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full")));
+							}
 							return true;
 						}
 						main.players.add(p.getName());
@@ -95,12 +122,11 @@ public class PlayerCommand implements CommandExecutor {
 							main.pinv.put(p.getName(), p.getInventory().getContents());
 							main.startNew();
 							if(main.min_players > 1){
-								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
-								
-								//scoreboard:
-								if(main.getScoreboard().getBoolean("scoreboard.toggle")){
-									
-						           }
+								if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+									sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)))));
+								} else {
+									sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
+								}
 								
 							}
 						}else{ // else: just join the minigame
@@ -113,7 +139,11 @@ public class PlayerCommand implements CommandExecutor {
 									main.minigames.get(main.currentmg).join(p);
 								}
 							}catch(Exception e){}
-							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
+							if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+								sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)))));
+							} else {
+								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
+							}
 						}	
 					}
 				}else if(args[0].equalsIgnoreCase("shop")){
@@ -132,7 +162,11 @@ public class PlayerCommand implements CommandExecutor {
 						main.minigames.get(main.currentmg).join(p);
 					}
 				}else{
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.unknown_command")));
+					if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.unknown_command"))));
+					} else {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.unknown_command")));
+					}
 				}
 			}else{
 				p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "Minecraft" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "Party " + ChatColor.GRAY + "- " + ChatColor.WHITE + "Help");

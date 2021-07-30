@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import whirss.minecraftparty.Main;
 import whirss.minecraftparty.Minigame;
 import whirss.minecraftparty.minigames.SmokeMonster;
+import whirss.minecraftparty.nms.NMSEffectManager;
 
 public class OnMove implements Listener {
 	
@@ -59,11 +60,18 @@ public class OnMove implements Listener {
 							if(current.name.equalsIgnoreCase("DeadEnd")){
 								World w = event.getPlayer().getWorld();
 								Location under = new Location(w, event.getPlayer().getLocation().getBlockX(), event.getPlayer().getLocation().getBlockY() - 1, event.getPlayer().getLocation().getBlockZ());
+								Location under2 = new Location(w, event.getPlayer().getLocation().getBlockX() - 1, event.getPlayer().getLocation().getBlockY() - 1, event.getPlayer().getLocation().getBlockZ() -1);
+								Location under3 = new Location(w, event.getPlayer().getLocation().getBlockX() + 1, event.getPlayer().getLocation().getBlockY() - 1, event.getPlayer().getLocation().getBlockZ() +1);
 								if(w.getBlockAt(under).getType() == Material.GOLD_BLOCK){
 									
 									Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable(){
 										public void run(){
 											w.getBlockAt(under).setType(Material.AIR);
+											w.getBlockAt(under2).setType(Material.AIR);
+											w.getBlockAt(under3).setType(Material.AIR);
+											NMSEffectManager.createSmokeNormalEffect(under);
+											NMSEffectManager.createSmokeNormalEffect(under2);
+											NMSEffectManager.createSmokeNormalEffect(under3);
 										}
 									}, 10);
 								}

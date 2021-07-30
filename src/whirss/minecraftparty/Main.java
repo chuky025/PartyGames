@@ -22,6 +22,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -39,6 +40,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import whirss.minecraftparty.commands.AdminCommand;
 import whirss.minecraftparty.commands.PlayerCommand;
 import whirss.minecraftparty.events.OnBlockBreak;
@@ -219,6 +221,8 @@ public class Main extends JavaPlugin implements Listener {
             if(getSettings().getBoolean("settings.enable_placeholderapi")){
             	Bukkit.getConsoleSender().sendMessage("[MinecraftParty] PlaceholderAPI plugin has not been detected on this server. Deactivating...");
             	getSettings().set("settings.enable_placeholderapi", false);
+            	saveSettings();
+            	reloadSettings();
             }
         }
 		
@@ -627,8 +631,12 @@ public class Main extends JavaPlugin implements Listener {
 		if(getSettings().getBoolean("settings.announcements")){
 			getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
 		}
-
-		p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
+		
+		if(getSettings().getBoolean("settings.enable_placeholderapi")){
+			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)))));
+		} else {
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
+		}
 
 		msql.updateWinnerStats(p.getName(), reward);
 		
@@ -646,7 +654,12 @@ public class Main extends JavaPlugin implements Listener {
 			}else if(p.hasPermission("minecraftparty.triple_coins")){
 				reward_ = reward_ * 3;
 			}
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name())));
+			if(getSettings().getBoolean("settings.enable_placeholderapi")){
+				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name()))));
+			} else {
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name())));
+			}
+			
 			if(rewardcount.containsKey(p.getName())){
 				reward_ += rewardcount.get(p.getName());
 			}
@@ -701,7 +714,10 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		
 		// update scoreboard
-		updateScoreboard();
+		if(getScoreboard().getBoolean("scoreboard.toggle")) {
+			updateScoreboard();
+		}
+		
 
 		// stop the whole party after some rounds
 		if(c_ > (minigames.size() - disabledMinigamesC) * seconds - 3){
@@ -732,7 +748,11 @@ public class Main extends JavaPlugin implements Listener {
 				Player p = Bukkit.getPlayerExact(pl);
 				if(p.isOnline()){
 					minigames.get(minigames.size() - 1).leave(p);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round")));
+					if(getSettings().getBoolean("settings.enable_placeholderapi")){
+						p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round"))));
+					} else {
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round")));
+					}
 					p.getInventory().clear();
 					p.updateInventory();
 					//updateScoreboardOUTGAME(pl);
@@ -950,7 +970,25 @@ public class Main extends JavaPlugin implements Listener {
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		objective.setDisplayName(ChatColor.translateAlternateColorCodes('&', getScoreboard().getString("scoreboard.title")));
 		List<String> lines = getScoreboard().getStringList("scoreboard.lines");
-		for(Minigame mg : minigames){
+		for(String pl : players) {
+		Player p = Bukkit.getPlayerExact(pl);
+		if(getSettings().getBoolean("settings.enable_placeholderapi")) {
+			for(int i=0;i<lines.size();i++) {
+				Score score = objective.getScore(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', lines.get(i)
+						.replace("%players%", Integer.toString(players.size()) )
+						.replace("%min_players%", Integer.toString(min_players))
+						.replace("%minigame%", m.getConfig().getString("ag"))
+						.replace("%time%", Integer.toString(seconds - c))
+						.replace("%round%", Integer.toString(currentmg + 1))
+						.replace("%max_round%", Integer.toString(minigames.size()))
+						.replace("%players%", Integer.toString(players.size()))
+						)));
+				
+				score.setScore(lines.size()-(i));
+					
+					p.setScoreboard(scoreboard);
+			}
+		} else {
 			for(int i=0;i<lines.size();i++) {
 				Score score = objective.getScore(ChatColor.translateAlternateColorCodes('&', lines.get(i)
 						.replace("%players%", Integer.toString(players.size()) )
@@ -963,8 +1001,6 @@ public class Main extends JavaPlugin implements Listener {
 						));
 				
 				score.setScore(lines.size()-(i));
-				for(String pl : players) {
-					Player p = Bukkit.getPlayerExact(pl);
 					p.setScoreboard(scoreboard);
 				}
 			}
@@ -1090,7 +1126,11 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				}
 				
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getSettings().getString("messages.game.next_round")));
+				if(getSettings().getBoolean("settings.enable_placeholderapi")){
+					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round"))));
+				} else {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round")));
+				}
 				p.getInventory().clear();
 				p.updateInventory();
 			}else{
@@ -1127,7 +1167,11 @@ public class Main extends JavaPlugin implements Listener {
 				}, 10L);
 				
 				minigames.get(minigames.size() - 1).leave(p);
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players))));
+				if(getSettings().getBoolean("settings.enable_placeholderapi")){
+					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players)))));
+				} else {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players))));
+				}
 			}
 		}
 
@@ -1148,10 +1192,10 @@ public class Main extends JavaPlugin implements Listener {
 
 	public Location getLobby(){
 		if(!getConfig().isSet("lobby.location")){
-			getLogger().severe(ChatColor.BLUE + "A LOBBY COULD NOT BE FOUND. PLEASE FIX THIS WITH /mp setlobby.");
+			getLogger().severe(ChatColor.BLUE + "A LOBBY COULD NOT BE FOUND. PLEASE FIX THIS WITH /mpa setlobby.");
 			for(Player p : Bukkit.getOnlinePlayers()){
 				if(p.isOp()){
-					p.sendMessage(ChatColor.BLUE + "[MinecraftParty] " + ChatColor.RED + "A lobby could NOT be found, which leads to errors in the console. Please fix this with " + ChatColor.GOLD + "/mp setlobby.");
+					p.sendMessage(ChatColor.BLUE + "[MinecraftParty] " + ChatColor.RED + "A lobby could NOT be found, which leads to errors in the console. Please fix this with " + ChatColor.GOLD + "/mpa setlobby.");
 				}
 			}
 		}
@@ -1382,7 +1426,11 @@ public class Main extends JavaPlugin implements Listener {
 		}else if(count == 2){
 			place = Integer.toString(count + 1) + "rd";
 		}
-		p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place)));
+		if(getSettings().getBoolean("settings.enable_placeholderapi")){
+			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place))));
+		} else {
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place)));
+		}
 	}
 	
 	
@@ -1391,14 +1439,26 @@ public class Main extends JavaPlugin implements Listener {
 			for(Minigame mg : minigames){
 				if(mg.name.toLowerCase().equalsIgnoreCase(minigame)){
 					mg.setEnabled(false);
-					sender.sendMessage(ChatColor.RED + "Disabled " + mg.name + ".");
+					if(getSettings().getBoolean("settings.enable_placeholderapi")){
+						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_minigame").replace("%minigame%", mg.name))));
+					} else {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_minigame").replace("%minigame%", mg.name)));
+					}
 					return;
 				}
 			}
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame)));
+			if(getSettings().getBoolean("settings.enable_placeholderapi")){
+				sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame))));
+			} else {
+				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame)));
+			}
 			
 		}else{
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame)));
+			if(getSettings().getBoolean("settings.enable_placeholderapi")){
+				sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame))));
+			} else {
+				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame)));
+			}
 		}
 	}
 	
@@ -1407,7 +1467,11 @@ public class Main extends JavaPlugin implements Listener {
 			for(Minigame mg : minigames){
 				if(mg.name.toLowerCase().equalsIgnoreCase(minigame)){
 					mg.setEnabled(true);
-					sender.sendMessage(ChatColor.GREEN + "Enabled " + mg.name + ".");
+					if(getSettings().getBoolean("settings.enable_placeholderapi")){
+						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.enable_minigame").replace("%minigame%", mg.name))));
+					} else {
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.enable_minigame").replace("%minigame%", mg.name)));
+					}
 					return;
 				}
 			}

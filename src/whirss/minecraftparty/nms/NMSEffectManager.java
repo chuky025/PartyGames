@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -85,6 +86,16 @@ public class NMSEffectManager {
 		t.getWorld().playEffect(t, Effect.POTION_BREAK, 1);
 	}
 	
+	public static void createFlameEffect(Location t){
+		//t.getWorld().playEffect(t, Effect.FLAME, 1);
+		t.getWorld().spawnParticle(Particle.FLAME, t, 1);
+	}
+	
+	public static void createSmokeNormalEffect(Location t){
+		//t.getWorld().playEffect(t, Effect.FLAME, 1);
+		t.getWorld().spawnParticle(Particle.SMOKE_NORMAL, t, 1);
+	}
+	
 	public static void createMinefieldEffect(Location t){
 		try{
 			String version = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1);
@@ -138,4 +149,5 @@ public class NMSEffectManager {
 			}
 		}, 20);
 	}
+	
 }

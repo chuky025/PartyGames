@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+
 public class Minigame {
 	
 	public ArrayList<Player> lost = new ArrayList<Player>();
@@ -69,7 +71,12 @@ public class Minigame {
 						m.saveConfig();
 						m.reloadConfig();
 						//p.sendMessage(ChatColor.GREEN + "Starting in " + ChatColor.GOLD + Integer.toString(count));
-						p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name)),ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.subtitle").replace("%minigame%", name)), 0, 30, 0);
+						
+						if(m.getSettings().getBoolean("settings.enable_placeholderapi")) {
+							p.sendTitle(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name))),PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name))), 0, 30, 0);
+						} else {
+							p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name)),ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name)), 0, 30, 0);
+						}
 					}
 				}
 				count--;
@@ -78,7 +85,11 @@ public class Minigame {
 						Player p = Bukkit.getPlayerExact(p_);
 						if(p.isOnline()){
 							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 30.0F, 50.0F);
-							p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%minigame%", name)), ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name)), 0, 30, 10);
+							if(m.getSettings().getBoolean("settings.enable_placeholderapi")) {
+								p.sendTitle(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name))),PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name))), 0, 30, 0);
+							} else {
+								p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name)),ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name)), 0, 30, 0);
+							}
 						}
 					}
 					m.registerMinigameStart(m.minigames.get(m.currentmg).start());
