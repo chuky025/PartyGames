@@ -2,8 +2,7 @@ name: MinecraftParty
 main: whirss.minecraftparty.Main
 version: 1.7
 author: Whirss, InstanceLabs
-depend: [Vault]
-softdepend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI, Vault]
 commands:
    minecraftparty:
       aliases: [mp, mcparty, mcp]

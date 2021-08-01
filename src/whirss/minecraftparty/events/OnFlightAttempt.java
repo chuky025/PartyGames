@@ -39,7 +39,7 @@ public class OnFlightAttempt implements Listener {
 			        	}
 			        }, 20 * 10);
 	    		}else{
-	    			if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+	    			if(main.placeholderapi) {
 	    				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.double_jump"))));
 					} else {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.double_jump")));

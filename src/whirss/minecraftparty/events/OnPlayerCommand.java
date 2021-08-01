@@ -44,7 +44,7 @@ public class OnPlayerCommand implements Listener {
 					main.minigames.get(main.currentmg).leave(p);
 				}
 				main.players.remove(p.getName());
-				if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+				if(main.placeholderapi) {
 					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left"))));
 				} else {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
@@ -70,7 +70,7 @@ public class OnPlayerCommand implements Listener {
 					// nothing
 				}else{
 					event.setCancelled(true);
-					if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
+					if(main.placeholderapi) {
 						event.getPlayer().sendMessage(PlaceholderAPI.setPlaceholders(event.getPlayer(), ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.ingame_commands"))));
 					} else {
 						event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.ingame_commands")));

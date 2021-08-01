@@ -1,15 +1,25 @@
 settings:
-  update_check: true
-  min_players: 3
-  game-on-join: false
-  max_reward: 30
-  min_reward: 10
-  use_economy: false
-  use_item_rewards: false
-  item_reward_maxamount: 10
-  item_reward_minamount: 3
-  item_reward_id: 264
-  max_players: 50
-  announcements: true
-  seconds_for_each_minigame: 60
-  enable_placeholderapi: false
+  plugin:
+    update_check: true
+    enable_placeholderapi: false
+    bungee:
+      enable: false
+      connect_to_hub: true
+      hub: 'lobbyserver'
+      shutdown_when_game_ends: true
+  game:
+    min_players: 3
+    max_players: 50
+    announcements: true
+    seconds_for_each_minigame: 60
+  rewards:
+    credits:
+      enable: true
+      use_economy: false
+      max_amount: 30
+      min_amount: 10
+    items:
+      enable: false
+      item_id: 264
+      max_amount: 10
+      min_amount: 3

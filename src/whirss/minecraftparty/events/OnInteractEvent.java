@@ -45,7 +45,7 @@ public class OnInteractEvent implements Listener {
 								event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join")));
 							}
 						}else{
-							if(main.players.size() > main.getSettings().getInt("settings.max_players") - 1){
+							if(main.players.size() > main.max_players - 1){
 								if(main.getSettings().getBoolean("settings.enable_placeholderapi")) {
 									event.getPlayer().sendMessage(PlaceholderAPI.setPlaceholders(event.getPlayer(), ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full"))));
 								} else {
@@ -90,19 +90,17 @@ public class OnInteractEvent implements Listener {
 			}
 		}else if(event.getAction().equals(Action.PHYSICAL)){
 			if(current.name.equalsIgnoreCase("MineField")) {
-				if(main.ingame_started) {
-					if(event.getClickedBlock().getType() == Material.STONE_PLATE){
-						if(main.players.contains(event.getPlayer().getName())){
-							final Player p = event.getPlayer();
-							p.getWorld().createExplosion(p.getLocation(), 0);
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
-								@Override
-								public void run() {
-									p.teleport(main.minigames.get(main.currentmg).spawn);
-									event.getClickedBlock().setType(Material.AIR);
-								}
-							}, 5);
-						}
+				if(event.getClickedBlock().getType() == Material.STONE_PLATE){
+					if(main.players.contains(event.getPlayer().getName())){
+						final Player p = event.getPlayer();
+						p.getWorld().createExplosion(p.getLocation(), 0);
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+							@Override
+							public void run() {
+								p.teleport(main.minigames.get(main.currentmg).spawn);
+								event.getClickedBlock().setType(Material.AIR);
+							}
+						}, 5);
 					}
 				}
 			}

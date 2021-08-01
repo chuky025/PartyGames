@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import whirss.minecraftparty.Main;
 
 public class OnPlayerPortalEnter implements Listener {
@@ -34,7 +35,11 @@ public class OnPlayerPortalEnter implements Listener {
 					main.minigames.get(main.currentmg).leave(p);
 				}
 				main.players.remove(p.getName());
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
+				if(main.placeholderapi) {
+					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left"))));
+				} else {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
+				}
 				if(main.players.size() < main.min_players){
 					Bukkit.getScheduler().runTaskLater(main, new Runnable(){
 						public void run(){

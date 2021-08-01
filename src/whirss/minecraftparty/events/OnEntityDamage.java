@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import whirss.minecraftparty.Main;
 import whirss.minecraftparty.Minigame;
 import whirss.minecraftparty.nms.NMSEffectManager;
@@ -79,7 +80,11 @@ public class OnEntityDamage implements Listener {
 										main.c = main.seconds; // just skips all the remaining seconds and sets to 60, current timer will do the rest
 									}
 									
-									damager.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_shot").replace("%player%", p.getName())));
+									if(main.placeholderapi) {
+										damager.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_shot").replace("%player%", p.getName()))));
+									} else {
+										damager.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_shot").replace("%player%", p.getName())));
+									}
 								}
 							}
 						}

@@ -1,5 +1,7 @@
 package whirss.minecraftparty;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,6 +35,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -82,22 +85,37 @@ public class Main extends JavaPlugin implements Listener {
 	public ArrayList<String> players_outgame = new ArrayList<String>();
 	public ArrayList<String> players_left = new ArrayList<String>();
 	public HashMap<String, ItemStack[]> pinv = new HashMap<String, ItemStack[]>();
-	public int min_players = 1;
+	
 	public boolean running = false;
+	
+	//plugin
+	public boolean update = true;
+	public boolean placeholderapi = false;
+	
+	public boolean bungee = false;
+	public boolean connect_hub = true;
+	public boolean shutdown = true;
+	public String hub = null;
+	
+	//game
+	public int min_players = 1;
+	public int max_players = 50;
+	public boolean announcements = true;
+	public int seconds = 60;
+	
+	//rewards
 
-	public int minreward = 0;
-	public int maxreward = 0;
+	public boolean credits_enable = true;
+	public boolean economy = true;
+	public int credits_minreward = 0;
+	public int credits_maxreward = 0;
 	public int item_minreward = 0;
 	public int item_maxreward = 0;
-	
 	public int item_id = 264;
-	
-	boolean economy = true;
 	boolean item_rewards = true;
 	
+	
 	public Location mainlobby = null;
-
-	public int seconds = 60;
 	
 	Main m;
 	public MainSQL msql;
@@ -179,21 +197,35 @@ public class Main extends JavaPlugin implements Listener {
 		
 		
 		Shop.loadPrices(this);
-
-		min_players = getSettings().getInt("settings.min_players");
-
-		minreward = getSettings().getInt("settings.min_reward");
-		maxreward = getSettings().getInt("settings.max_reward");
-		item_minreward = getSettings().getInt("settings.item_reward_minamount");
-		item_maxreward = getSettings().getInt("settings.item_reward_maxamount");
-
-		item_id = getSettings().getInt("settings.item_reward_id"); 
-		seconds = getSettings().getInt("settings.seconds_for_each_minigame");
 		
-		if(minreward > maxreward){
-			int temp = maxreward;
-			maxreward = minreward;
-			minreward = temp;
+		//plugin
+		update = getSettings().getBoolean("settings.plugin.update_check");
+		placeholderapi = getSettings().getBoolean("settings.plugin.enable_placeholderapi");
+		bungee = getSettings().getBoolean("settings.plugin.bungee.enable");
+		connect_hub = getSettings().getBoolean("settings.plugin.bungee.connect_to_hub");
+		shutdown = getSettings().getBoolean("settings.plugin.bungee.shutdown_when_game_ends");
+		
+		//game
+		min_players = getSettings().getInt("settings.game.min_players");
+		max_players = getSettings().getInt("settings.game.max_players");
+		announcements = getSettings().getBoolean("settings.game.announcements");
+		seconds = getSettings().getInt("settings.game.seconds_for_each_minigame");
+		
+		//rewards
+		credits_enable = getSettings().getBoolean("settings.rewards.credits.enable");
+		economy = getSettings().getBoolean("settings.rewards.credits.use_economy");
+		credits_minreward = getSettings().getInt("settings.rewards.credits.min_amount");
+		credits_maxreward = getSettings().getInt("settings.rewards.credits.max_amount");
+		
+		item_rewards = getSettings().getBoolean("config.use_item_rewards");
+		item_minreward = getSettings().getInt("settings.rewards.items.min_amount");
+		item_maxreward = getSettings().getInt("settings.rewards.items.max_amount");
+		item_id = getSettings().getInt("settings.rewards.items.item_id"); 
+		
+		if(credits_minreward > credits_maxreward){
+			int temp = credits_maxreward;
+			credits_maxreward = credits_minreward;
+			credits_minreward = temp;
 		}
 		
 		if(item_minreward > item_maxreward){
@@ -202,8 +234,6 @@ public class Main extends JavaPlugin implements Listener {
 			item_minreward = temp;
 		}
 
-		economy = getSettings().getBoolean("config.use_economy");
-		item_rewards = getSettings().getBoolean("config.use_item_rewards");
 		
 		int pluginId = 9703;
         Metrics metrics = new Metrics(this, pluginId);
@@ -218,7 +248,7 @@ public class Main extends JavaPlugin implements Listener {
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			new PAPIVariables(this).register();
         } else {
-            if(getSettings().getBoolean("settings.enable_placeholderapi")){
+            if(placeholderapi){
             	Bukkit.getConsoleSender().sendMessage("[MinecraftParty] PlaceholderAPI plugin has not been detected on this server. Deactivating...");
             	getSettings().set("settings.enable_placeholderapi", false);
             	saveSettings();
@@ -227,7 +257,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 		
 		//Update Checker
-        if(getSettings().getBoolean("settings.update_check")){
+        if(update){
 		new UpdateChecker(this, 86837).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
             	//Bukkit.getConsoleSender().sendMessage("There is not a new update available.");
@@ -620,33 +650,53 @@ public class Main extends JavaPlugin implements Listener {
 		//p.sendMessage(ChatColor.GOLD + "You won this round!");
 		this.updatePlayerStats(p.getName(), "wins", getPlayerStats(p.getName(), "wins") + 1);
 		Random r = new Random();
-		int reward = r.nextInt((maxreward - minreward) + 1) + minreward;
-		if(p.hasPermission("minecraftparty.double_coins")){
-			reward = reward * 2;
-		}else if(p.hasPermission("minecraftparty.triple_coins")){
-			reward = reward * 3;
-		}
-		this.updatePlayerStats(p.getName(), "credits", getPlayerStats(p.getName(), "credits") + reward);		
-
-		if(getSettings().getBoolean("settings.announcements")){
-			getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
-		}
 		
-		if(getSettings().getBoolean("settings.enable_placeholderapi")){
-			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)))));
+		if(credits_enable) {
+			int reward = r.nextInt((credits_maxreward - credits_minreward) + 1) + credits_minreward;
+			if(p.hasPermission("minecraftparty.double_coins")){
+				reward = reward * 2;
+			}else if(p.hasPermission("minecraftparty.triple_coins")){
+				reward = reward * 3;
+			}
+			this.updatePlayerStats(p.getName(), "credits", getPlayerStats(p.getName(), "credits") + reward);		
+
+			if(announcements){
+				if(getSettings().getBoolean("settings.plugin.enable_placeholderapi")){
+					getServer().broadcastMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)))));
+				} else {
+					getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
+				}
+			}
+			
+			if(getSettings().getBoolean("settings.plugin.enable_placeholderapi")){
+				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward)))));
+			} else {
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
+			}
+
+			msql.updateWinnerStats(p.getName(), reward);
+			
+			if(economy){
+				EconomyResponse r_ = econ.depositPlayer(p.getName(), reward);
+				if(!r_.transactionSuccess()) {
+					getServer().getPlayer(p.getName()).sendMessage(ChatColor.RED + String.format("An error occured: %s", r_.errorMessage));
+	            }
+			}
 		} else {
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()).replace("%credits%", Integer.toString(reward))));
+			if(announcements){
+				if(getSettings().getBoolean("settings.plugin.enable_placeholderapi")){
+					getServer().broadcastMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName()))));
+				} else {
+					getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.winner_broadcast").replace("%player%", p.getName())));
+				}
+			}
+			
+			if(getSettings().getBoolean("settings.plugin.enable_placeholderapi")){
+				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName()))));
+			} else {
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.credits_earned").replace("%player%", p.getName())));
+			}
 		}
-
-		msql.updateWinnerStats(p.getName(), reward);
-		
-		if(economy){
-			EconomyResponse r_ = econ.depositPlayer(p.getName(), reward);
-			if(!r_.transactionSuccess()) {
-				getServer().getPlayer(p.getName()).sendMessage(ChatColor.RED + String.format("An error occured: %s", r_.errorMessage));
-            }
-		}
-				
 		if(item_rewards){
 			int reward_ = r.nextInt((item_maxreward - item_minreward) + 1) + item_minreward;
 			if(p.hasPermission("minecraftparty.double_coins")){
@@ -654,7 +704,7 @@ public class Main extends JavaPlugin implements Listener {
 			}else if(p.hasPermission("minecraftparty.triple_coins")){
 				reward_ = reward_ * 3;
 			}
-			if(getSettings().getBoolean("settings.enable_placeholderapi")){
+			if(placeholderapi){
 				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name()))));
 			} else {
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.reward_earned").replace("%number%", Integer.toString(reward_)).replace("%material%", Material.getMaterial(item_id).name())));
@@ -748,7 +798,7 @@ public class Main extends JavaPlugin implements Listener {
 				Player p = Bukkit.getPlayerExact(pl);
 				if(p.isOnline()){
 					minigames.get(minigames.size() - 1).leave(p);
-					if(getSettings().getBoolean("settings.enable_placeholderapi")){
+					if(placeholderapi){
 						p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round"))));
 					} else {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round")));
@@ -756,6 +806,15 @@ public class Main extends JavaPlugin implements Listener {
 					p.getInventory().clear();
 					p.updateInventory();
 					//updateScoreboardOUTGAME(pl);
+					if(bungee) {
+						if(connect_hub) {
+							sendServer(p, m.getSettings().getString("settings.plugin.bungee.hub"));
+						}
+						if(shutdown) {
+							Bukkit.getServer().shutdown();
+							Bukkit.broadcastMessage("hola");
+						}
+					}
 				}else{
 					remove.add(p.getName());
 				}
@@ -972,7 +1031,7 @@ public class Main extends JavaPlugin implements Listener {
 		List<String> lines = getScoreboard().getStringList("scoreboard.lines");
 		for(String pl : players) {
 		Player p = Bukkit.getPlayerExact(pl);
-		if(getSettings().getBoolean("settings.enable_placeholderapi")) {
+		if(placeholderapi) {
 			for(int i=0;i<lines.size();i++) {
 				Score score = objective.getScore(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', lines.get(i)
 						.replace("%players%", Integer.toString(players.size()) )
@@ -1124,7 +1183,17 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				}
 				
-				if(getSettings().getBoolean("settings.enable_placeholderapi")){
+				if(bungee) {
+					if(connect_hub) {
+						sendServer(p, m.getSettings().getString("settings.plugin.bungee.hub"));
+					}
+					if(shutdown) {
+						Bukkit.getServer().shutdown();
+						Bukkit.broadcastMessage("hola");
+					}
+				}
+				
+				if(placeholderapi){
 					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round"))));
 				} else {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round")));
@@ -1165,7 +1234,7 @@ public class Main extends JavaPlugin implements Listener {
 				}, 10L);
 				
 				minigames.get(minigames.size() - 1).leave(p);
-				if(getSettings().getBoolean("settings.enable_placeholderapi")){
+				if(placeholderapi){
 					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players)))));
 				} else {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.stopped_game").replace("%min_players%", Integer.toString(min_players))));
@@ -1424,7 +1493,7 @@ public class Main extends JavaPlugin implements Listener {
 		}else if(count == 2){
 			place = Integer.toString(count + 1) + "rd";
 		}
-		if(getSettings().getBoolean("settings.enable_placeholderapi")){
+		if(placeholderapi){
 			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place))));
 		} else {
 			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place)));
@@ -1437,7 +1506,7 @@ public class Main extends JavaPlugin implements Listener {
 			for(Minigame mg : minigames){
 				if(mg.name.toLowerCase().equalsIgnoreCase(minigame)){
 					mg.setEnabled(false);
-					if(getSettings().getBoolean("settings.enable_placeholderapi")){
+					if(placeholderapi){
 						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_minigame").replace("%minigame%", mg.name))));
 					} else {
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_minigame").replace("%minigame%", mg.name)));
@@ -1445,14 +1514,14 @@ public class Main extends JavaPlugin implements Listener {
 					return;
 				}
 			}
-			if(getSettings().getBoolean("settings.enable_placeholderapi")){
+			if(placeholderapi){
 				sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame))));
 			} else {
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error1").replace("%minigame%", minigame)));
 			}
 			
 		}else{
-			if(getSettings().getBoolean("settings.enable_placeholderapi")){
+			if(placeholderapi){
 				sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame))));
 			} else {
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.disable_error2").replace("%minigame%", minigame)));
@@ -1465,7 +1534,7 @@ public class Main extends JavaPlugin implements Listener {
 			for(Minigame mg : minigames){
 				if(mg.name.toLowerCase().equalsIgnoreCase(minigame)){
 					mg.setEnabled(true);
-					if(getSettings().getBoolean("settings.enable_placeholderapi")){
+					if(placeholderapi){
 						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.enable_minigame").replace("%minigame%", mg.name))));
 					} else {
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.setup.enable_minigame").replace("%minigame%", mg.name)));
@@ -1482,7 +1551,6 @@ public class Main extends JavaPlugin implements Listener {
 	public void shuffleMinigames(){
 		Collections.shuffle(minigames);
 	}
-	
 	
 	
 	// Teleportation fix
@@ -1517,4 +1585,18 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		return res;
 	}
+	
+	public void sendServer(Player p, String server){
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(b);
+ 
+        try {
+            out.writeUTF("Connect");
+            out.writeUTF(server);
+        } catch (IOException eee) {
+            // Fehler
+        }
+ 
+        p.sendPluginMessage(this, "BungeeCord", b.toByteArray());
+    }
 }

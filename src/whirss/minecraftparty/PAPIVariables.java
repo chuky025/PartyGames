@@ -1,5 +1,7 @@
 package whirss.minecraftparty;
 
+import org.bukkit.entity.Player;
+
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PAPIVariables extends PlaceholderExpansion {
@@ -24,8 +26,13 @@ public class PAPIVariables extends PlaceholderExpansion {
     public String getVersion() {
         return main.currentversion;
     }
-    
-    public String onRequest(String player, String params) {
+        
+    @Override
+    public String onPlaceholderRequest(Player player, String params) {
+    	if(player == null){
+            return "";
+        }
+    	
         if(params.equalsIgnoreCase("players_ingame")) {
             return Integer.toString(main.players.size());
         }
@@ -50,13 +57,13 @@ public class PAPIVariables extends PlaceholderExpansion {
             return Integer.toString(main.minigames.size());
         }
         
-        if(params.equalsIgnoreCase("credits")) {
+        /*if(params.equalsIgnoreCase("credits")) {
             return Integer.toString(main.getPlayerStats(player, "credits"));
         }
         
         if(params.equalsIgnoreCase("wins")) {
             return Integer.toString(main.getPlayerStats(player, "wins"));
-        }
+        }*/
         
         return null; // Placeholder is unknown by the Expansion
     }

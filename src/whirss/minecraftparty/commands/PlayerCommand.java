@@ -29,7 +29,7 @@ public class PlayerCommand implements CommandExecutor {
 
 			if(args.length > 0){
 				if(args[0].equalsIgnoreCase("stats")){
-					if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+					if(main.placeholderapi){
 						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.stats_title"))));
 					} else {
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.stats_title")));
@@ -37,14 +37,14 @@ public class PlayerCommand implements CommandExecutor {
 					
 					if(args.length > 1){
 						String player = args[1];
-						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+						if(main.placeholderapi){
 							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits"))))));
 						} else {
 							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
 						}
 					}else{
 						String player = p.getName();
-						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+						if(main.placeholderapi){
 							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits"))))));
 						} else {
 							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.your_credits").replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
@@ -85,7 +85,7 @@ public class PlayerCommand implements CommandExecutor {
 							main.minigames.get(main.currentmg).leave(p);
 						}
 						main.players.remove(p.getName());
-						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+						if(main.placeholderapi){
 							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left"))));
 						} else {
 							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.you_left")));
@@ -102,14 +102,14 @@ public class PlayerCommand implements CommandExecutor {
 					}
 				}else if(args[0].equalsIgnoreCase("join")){
 					if(main.players.contains(p.getName())){
-						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+						if(main.placeholderapi){
 							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join"))));
 						} else {
 							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join")));
 						}
 					}else{
-						if(main.players.size() > main.getSettings().getInt("settings.max_players") - 1){
-							if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+						if(main.players.size() > main.max_players - 1){
+							if(main.placeholderapi){
 								sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full"))));
 							} else {
 								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full")));
@@ -122,7 +122,7 @@ public class PlayerCommand implements CommandExecutor {
 							main.pinv.put(p.getName(), p.getInventory().getContents());
 							main.startNew();
 							if(main.min_players > 1){
-								if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+								if(main.placeholderapi){
 									sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)))));
 								} else {
 									sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
@@ -139,7 +139,7 @@ public class PlayerCommand implements CommandExecutor {
 									main.minigames.get(main.currentmg).join(p);
 								}
 							}catch(Exception e){}
-							if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+							if(main.placeholderapi){
 								sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)))));
 							} else {
 								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
@@ -162,7 +162,7 @@ public class PlayerCommand implements CommandExecutor {
 						main.minigames.get(main.currentmg).join(p);
 					}
 				}else{
-					if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
+					if(main.placeholderapi){
 						sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.unknown_command"))));
 					} else {
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.unknown_command")));

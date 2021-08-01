@@ -2,7 +2,6 @@ package whirss.minecraftparty;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -72,7 +71,7 @@ public class Minigame {
 						m.reloadConfig();
 						//p.sendMessage(ChatColor.GREEN + "Starting in " + ChatColor.GOLD + Integer.toString(count));
 						
-						if(m.getSettings().getBoolean("settings.enable_placeholderapi")) {
+						if(m.placeholderapi) {
 							p.sendTitle(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name))),PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name))), 0, 30, 0);
 						} else {
 							p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name)),ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name)), 0, 30, 0);
@@ -85,7 +84,7 @@ public class Minigame {
 						Player p = Bukkit.getPlayerExact(p_);
 						if(p.isOnline()){
 							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 30.0F, 50.0F);
-							if(m.getSettings().getBoolean("settings.enable_placeholderapi")) {
+							if(m.placeholderapi) {
 								p.sendTitle(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name))),PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name))), 0, 30, 0);
 							} else {
 								p.sendTitle(ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name)),ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name)), 0, 30, 0);
@@ -183,6 +182,22 @@ public class Minigame {
 				}
 				if(p.getGameMode().equals(GameMode.SPECTATOR)) {
 					p.setGameMode(GameMode.SURVIVAL);
+				}
+				if(m.bungee) {
+					if(m.connect_hub) {
+						if(m.placeholderapi) {
+							p.kickPlayer(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("messages.game.you_left"))));
+						} else {
+							p.kickPlayer(ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("messages.game.you_left")));
+						}
+						m.sendServer(p, m.getSettings().getString("settings.plugin.bungee.hub"));
+					} else {
+						if(m.placeholderapi) {
+							p.kickPlayer(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("messages.game.you_left"))));
+						} else {
+							p.kickPlayer(ChatColor.translateAlternateColorCodes('&', m.getMessages().getString("messages.game.you_left")));
+						}
+					}
 				}
 
 				
