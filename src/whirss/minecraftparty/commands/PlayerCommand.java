@@ -38,9 +38,9 @@ public class PlayerCommand implements CommandExecutor {
 					if(args.length > 1){
 						String player = args[1];
 						if(main.getSettings().getBoolean("settings.enable_placeholderapi")){
-							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits"))))));
+							sender.sendMessage(PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits"))))));
 						} else {
-							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.stats.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.player_credits").replace("%player%", player).replace("%credits%", Integer.toString(main.getPlayerStats(player, "credits")))));
 						}
 					}else{
 						String player = p.getName();

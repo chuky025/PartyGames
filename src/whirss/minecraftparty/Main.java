@@ -216,7 +216,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-			//getSettings().set("settings.enable_placeholderapi", true);
+			new PAPIVariables(this).register();
         } else {
             if(getSettings().getBoolean("settings.enable_placeholderapi")){
             	Bukkit.getConsoleSender().sendMessage("[MinecraftParty] PlaceholderAPI plugin has not been detected on this server. Deactivating...");
@@ -981,7 +981,6 @@ public class Main extends JavaPlugin implements Listener {
 						.replace("%time%", Integer.toString(seconds - c))
 						.replace("%round%", Integer.toString(currentmg + 1))
 						.replace("%max_round%", Integer.toString(minigames.size()))
-						.replace("%players%", Integer.toString(players.size()))
 						)));
 				
 				score.setScore(lines.size()-(i));
@@ -997,7 +996,6 @@ public class Main extends JavaPlugin implements Listener {
 						.replace("%time%", Integer.toString(seconds - c))
 						.replace("%round%", Integer.toString(currentmg + 1))
 						.replace("%max_round%", Integer.toString(minigames.size()))
-						.replace("%players%", Integer.toString(players.size()))
 						));
 				
 				score.setScore(lines.size()-(i));
