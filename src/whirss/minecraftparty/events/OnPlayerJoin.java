@@ -2,7 +2,6 @@ package whirss.minecraftparty.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,53 +43,7 @@ public class OnPlayerJoin implements Listener {
 			main.players_left.remove(p.getName());
 		}
 
-		if (main.bungee) {
-			if(main.players.contains(p.getName())){
-				if(main.placeholderapi){
-					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join"))));
-				} else {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.on_join")));
-				}
-			}else{
-				if(main.players.size() > main.max_players - 1){
-					if(main.placeholderapi){
-						p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full"))));
-					} else {
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.game_full")));
-					}
-					return;
-				}
-				main.players.add(p.getName());
-				// if its the first player to join, start the whole minigame
-				if(main.players.size() < main.min_players + 1){
-					main.pinv.put(p.getName(), p.getInventory().getContents());
-					main.startNew();
-					if(main.min_players > 1){
-						if(main.placeholderapi){
-							p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)))));
-						} else {
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
-						}
-						
-					}
-				}else{ // else: just join the minigame
-					try{
-						main.pinv.put(p.getName(), p.getInventory().getContents());
-						if(main.ingame_started){
-							main.minigames.get(main.currentmg).lost.add(p);
-							main.minigames.get(main.currentmg).spectate(p);
-						}else{
-							main.minigames.get(main.currentmg).join(p);
-						}
-					}catch(Exception e){}
-					if(main.placeholderapi){
-						p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players)))));
-					} else {
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.joined_queue").replace("%min_players%", Integer.toString(main.min_players))));
-					}
-				}	
-			}
-		}
+		if (!main.bungee) return;
 
 		if(main.players.contains(event.getPlayer().getName())){
 			if(main.placeholderapi) {
@@ -125,11 +78,7 @@ public class OnPlayerJoin implements Listener {
 						p.teleport(main.minigames.get(main.currentmg).spawn);
 					}
 				} catch (Exception ex) {
-					if(main.placeholderapi) {
-						p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.error"))));
-					} else {
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.other.error")));
-					}
+					p.sendMessage(main.getMessages().getString("messages.other.error"));
 				}
 			}
 		}, 6);
