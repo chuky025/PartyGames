@@ -120,8 +120,9 @@ public class Main extends JavaPlugin implements Listener {
 	Main m;
 	public MainSQL msql;
 
-	String currentversion = "1.7";
+	String currentversion = "1.8";
 	
+	//config files
 	private FileConfiguration messages = null;
 	private File messagesFile = null;
 	private FileConfiguration settings = null;
@@ -135,6 +136,27 @@ public class Main extends JavaPlugin implements Listener {
 	private FileConfiguration mysql = null;
 	private File mysqlFile = null;
 	
+	//minigames folder
+	private FileConfiguration colormatch = null;
+	private File colormatchFile = null;
+	private FileConfiguration deadend = null;
+	private File deadendFile = null;
+	private FileConfiguration redalert = null;
+	private File redalertFile = null;
+	private FileConfiguration jumpnrun = null;
+	private File jumpnrunFile = null;
+	private FileConfiguration lastarcherstanding = null;
+	private File lastarcherstandingFile = null;
+	private FileConfiguration minefield = null;
+	private File minefieldFile = null;
+	private FileConfiguration sheepfreenzy = null;
+	private File sheepfreenzyFile = null;
+	private FileConfiguration slapfight = null;
+	private File slapfightFile = null;
+	private FileConfiguration smokemonster = null;
+	private File smokemonsterFile = null;
+	private FileConfiguration spleef = null;
+	private File spleefFile = null;
 
 	@Override
 	public void onEnable(){
@@ -184,7 +206,6 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
         
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		
         
 		registerConfig();
 		registerSettings();
@@ -626,6 +647,491 @@ public class Main extends JavaPlugin implements Listener {
 			saveMysql();
 		}
 	}
+	
+	
+	
+	
+	//minigames folder
+	//colormatch
+	public FileConfiguration getColorMatch() {
+		if(colormatch == null) {
+			reloadColorMatch();
+		}
+		return colormatch;
+	}
+	
+	public void reloadColorMatch(){
+		if(colormatch == null){
+			colormatchFile = new File(getDataFolder()+"/minigames","colormatch.yml");
+		}
+		colormatch = YamlConfiguration.loadConfiguration(colormatchFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("colormatch.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				colormatch.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveColorMatch(){
+		try{
+			colormatch.save(colormatchFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerColorMatch(){
+		colormatchFile = new File(getDataFolder()+"/minigames","colormatch.yml");
+		if(!colormatchFile.exists()){
+			this.getColorMatch().options().copyDefaults(true);
+			getColorMatch().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveColorMatch();
+		}
+	}
+	
+	//deadend
+	public FileConfiguration getDeadEnd() {
+		if(deadend == null) {
+			reloadDeadEnd();
+		}
+		return deadend;
+	}
+	
+	public void reloadDeadEnd(){
+		if(deadend == null){
+			deadendFile = new File(getDataFolder()+"/minigames","deadend.yml");
+		}
+		deadend = YamlConfiguration.loadConfiguration(deadendFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("deadend.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				deadend.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveDeadEnd(){
+		try{
+			deadend.save(deadendFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerDeadEnd(){
+		deadendFile = new File(getDataFolder()+"/minigames","deadend.yml");
+		if(!deadendFile.exists()){
+			this.getDeadEnd().options().copyDefaults(true);
+			getDeadEnd().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveDeadEnd();
+		}
+	}
+	
+	//redalert
+	public FileConfiguration getRedAlert() {
+		if(redalert == null) {
+			reloadRedAlert();
+		}
+		return redalert;
+	}
+	
+	public void reloadRedAlert(){
+		if(redalert == null){
+			redalertFile = new File(getDataFolder()+"/minigames","redalert.yml");
+		}
+		redalert = YamlConfiguration.loadConfiguration(redalertFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("redalert.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				redalert.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveRedAlert(){
+		try{
+			redalert.save(redalertFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerRedAlert(){
+		redalertFile = new File(getDataFolder()+"/minigames","redalert.yml");
+		if(!redalertFile.exists()){
+			this.getRedAlert().options().copyDefaults(true);
+			getRedAlert().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveRedAlert();
+		}
+	}
+	
+	//jumpnrun
+	public FileConfiguration getJumpnRun() {
+		if(jumpnrun == null) {
+			reloadJumpnRun();
+		}
+		return jumpnrun;
+	}
+	
+	public void reloadJumpnRun(){
+		if(jumpnrun == null){
+			jumpnrunFile = new File(getDataFolder()+"/minigames","jumpnrun.yml");
+		}
+		jumpnrun = YamlConfiguration.loadConfiguration(jumpnrunFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("jumpnrun.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				jumpnrun.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveJumpnRun(){
+		try{
+			jumpnrun.save(jumpnrunFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerJumpnRun(){
+		jumpnrunFile = new File(getDataFolder()+"/minigames","jumpnrun.yml");
+		if(!jumpnrunFile.exists()){
+			this.getJumpnRun().options().copyDefaults(true);
+			getJumpnRun().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveJumpnRun();
+		}
+	}
+	
+	//lastarcherstanding
+	public FileConfiguration getLastArcherStanding() {
+		if(lastarcherstanding == null) {
+			reloadLastArcherStanding();
+		}
+		return lastarcherstanding;
+	}
+	
+	public void reloadLastArcherStanding(){
+		if(lastarcherstanding == null){
+			lastarcherstandingFile = new File(getDataFolder()+"/minigames","lastarcherstanding.yml");
+		}
+		lastarcherstanding = YamlConfiguration.loadConfiguration(lastarcherstandingFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("lastarcherstanding.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				lastarcherstanding.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveLastArcherStanding(){
+		try{
+			lastarcherstanding.save(lastarcherstandingFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerLastArcherStanding(){
+		lastarcherstandingFile = new File(getDataFolder()+"/minigames","lastarcherstanding.yml");
+		if(!lastarcherstandingFile.exists()){
+			this.getLastArcherStanding().options().copyDefaults(true);
+			getLastArcherStanding().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveLastArcherStanding();
+		}
+	}
+	
+	//minefield
+	public FileConfiguration getMineField() {
+		if(minefield == null) {
+			reloadMineField();
+		}
+		return minefield;
+	}
+	
+	public void reloadMineField(){
+		if(minefield == null){
+			minefieldFile = new File(getDataFolder()+"/minigames","minefield.yml");
+		}
+		minefield = YamlConfiguration.loadConfiguration(minefieldFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("minefield.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				minefield.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveMineField(){
+		try{
+			minefield.save(minefieldFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerMineField(){
+		minefieldFile = new File(getDataFolder()+"/minigames","minefield.yml");
+		if(!minefieldFile.exists()){
+			this.getMineField().options().copyDefaults(true);
+			getMineField().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveMineField();
+		}
+	}
+	
+	//sheepfreenzy
+	public FileConfiguration getSheepFreenzy() {
+		if(sheepfreenzy == null) {
+			reloadSheepFreenzy();
+		}
+		return sheepfreenzy;
+	}
+	
+	public void reloadSheepFreenzy(){
+		if(sheepfreenzy == null){
+			sheepfreenzyFile = new File(getDataFolder()+"/minigames","sheepfreenzy.yml");
+		}
+		sheepfreenzy = YamlConfiguration.loadConfiguration(sheepfreenzyFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("sheepfreenzy.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				sheepfreenzy.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveSheepFreenzy(){
+		try{
+			sheepfreenzy.save(sheepfreenzyFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerSheepFreenzy(){
+		sheepfreenzyFile = new File(getDataFolder()+"/minigames","sheepfreenzy.yml");
+		if(!sheepfreenzyFile.exists()){
+			this.getSheepFreenzy().options().copyDefaults(true);
+			getSheepFreenzy().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveSheepFreenzy();
+		}
+	}
+	
+	//slapfight
+	public FileConfiguration getSlapFight() {
+		if(slapfight == null) {
+			reloadSlapFight();
+		}
+		return slapfight;
+	}
+	
+	public void reloadSlapFight(){
+		if(slapfight == null){
+			slapfightFile = new File(getDataFolder()+"/minigames","slapfight.yml");
+		}
+		slapfight = YamlConfiguration.loadConfiguration(slapfightFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("slapfight.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				slapfight.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveSlapFight(){
+		try{
+			slapfight.save(slapfightFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerSlapFight(){
+		slapfightFile = new File(getDataFolder()+"/minigames","slapfight.yml");
+		if(!slapfightFile.exists()){
+			this.getSlapFight().options().copyDefaults(true);
+			getSlapFight().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveSlapFight();
+		}
+	}
+	
+	//smokemonster
+	public FileConfiguration getSmokeMonster() {
+		if(smokemonster == null) {
+			reloadSmokeMonster();
+		}
+		return smokemonster;
+	}
+	
+	public void reloadSmokeMonster(){
+		if(smokemonster == null){
+			smokemonsterFile = new File(getDataFolder()+"/minigames","smokemonster.yml");
+		}
+		smokemonster = YamlConfiguration.loadConfiguration(smokemonsterFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("smokemonster.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				smokemonster.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveSmokeMonster(){
+		try{
+			smokemonster.save(smokemonsterFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerSmokeMonster(){
+		smokemonsterFile = new File(getDataFolder()+"/minigames","smokemonster.yml");
+		if(!smokemonsterFile.exists()){
+			this.getSmokeMonster().options().copyDefaults(true);
+			getSmokeMonster().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveSmokeMonster();
+		}
+	}
+	
+	//spleef
+	public FileConfiguration getSpleef() {
+		if(spleef == null) {
+			reloadSpleef();
+		}
+		return spleef;
+	}
+	
+	public void reloadSpleef(){
+		if(spleef == null){
+			spleefFile = new File(getDataFolder()+"/minigames","spleef.yml");
+		}
+		spleef = YamlConfiguration.loadConfiguration(spleefFile);
+		Reader defConfigStream;
+		try{
+			defConfigStream = new InputStreamReader(this.getResource("spleef.yml"),"UTF8");
+			if(defConfigStream != null){
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+				spleef.setDefaults(defConfig);
+			}			
+		}catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveSpleef(){
+		try{
+			spleef.save(spleefFile);			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+ 
+	public void registerSpleef(){
+		spleefFile = new File(getDataFolder()+"/minigames","spleef.yml");
+		if(!spleefFile.exists()){
+			this.getSpleef().options().copyDefaults(true);
+			getSpleef().options().header(
+		              "  __  __ _                            __ _   ____            _\n"
+		                      + " |  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _\n"
+		                      + " | |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |\n"
+		                      + " | |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |\n"
+		                      + " |_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |\n"
+		                      + "                                                                  |___/\n");
+			saveSpleef();
+		}
+	}
+	
 
 	/*public void nextMinigame(Player p){
 		// get current minigame and make winners
@@ -1360,7 +1866,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void setupSlapFight(Location start) {
 		SlapFight.setup(start, this, "SlapFight");
 		minigames.add(new SlapFight(this, this.getComponentForMinigame("SlapFight", "spawn"), this.getComponentForMinigame("SlapFight", "lobby"), this.getComponentForMinigame("SlapFight", "spectatorlobby")));
-		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished SlapFlight Setup.");
+		Bukkit.getConsoleSender().sendMessage("[MinecraftParty] Finished SlapFight Setup.");
 	}
 	
 	public void clearMinigames() {

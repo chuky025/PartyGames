@@ -1,6 +1,6 @@
 name: MinecraftParty
 main: whirss.minecraftparty.Main
-version: 1.7
+version: 1.8
 author: Whirss, InstanceLabs
 softdepend: [PlaceholderAPI, Vault]
 commands:
