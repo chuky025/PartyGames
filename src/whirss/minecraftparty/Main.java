@@ -35,7 +35,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -207,9 +206,7 @@ public class Main extends JavaPlugin implements Listener {
         
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
-        
-        registerColorMatch();
-        
+        //config
 		registerConfig();
 		registerSettings();
 		registerMessages();
@@ -218,11 +215,26 @@ public class Main extends JavaPlugin implements Listener {
 		registerTitles();
 		registerMysql();
 		
+		//minigames folder
+        registerColorMatch();
+        registerDeadEnd();
+        registerJumpnRun();
+        registerLastArcherStanding();
+        registerMineField();
+        registerRedAlert();
+        registerSheepFreenzy();
+        registerSlapFight();
+        registerSmokeMonster();
+        registerSpleef();
+        
+		//Other
 		RegisterCommands();
 		RegisterEvents();
-		
-		
 		Shop.loadPrices(this);
+		
+		
+		
+		
 		
 		//plugin
 		update = getSettings().getBoolean("settings.plugin.update_check");
