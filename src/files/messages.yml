@@ -25,10 +25,27 @@ messages:
     double_jump: '&cYou can only use Double Jump after a cooldown of 10 seconds.'
     no_money: '&cYou dont have enough money!'
     purchased_product: '&aYou have purchased a %product% successfully.'
+    summary:
+      minigame:
+      - '&8&m----------------------------------------------'
+      - ''
+      - '  &a#1st place: &6%place_1%'
+      - '  &a#2nd place: &6%place_2%'
+      - '  &a#3rd place: &6%place_3%'
+      - ''
+      - '  &6⛁ &e+%credits_earned%  %7|  &aYour place: &6%place_player%'
+      - ''
+      - '&8&m----------------------------------------------'
+      final:
+      - '&8&m----------------------------------------------'
+      - ''
+      - '&cPlanned feature for MCParty1.9'
+      - ''
+      - '&8&m----------------------------------------------'
   minigames:
     colormatch:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Color Match'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fJump to the color corresponding to the wool'
@@ -37,7 +54,7 @@ messages:
     - '&2&m=============================================='
     deadend:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Dead End'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fDont fall while the blocks are disappearing'
@@ -46,7 +63,7 @@ messages:
     - '&2&m=============================================='
     redalert:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Red Alert'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fDont fall while the floor is disappearing!'
@@ -54,7 +71,7 @@ messages:
     - '&2&m=============================================='
     jumpnrun:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Jump and run'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fJump to the finish!'
@@ -62,7 +79,7 @@ messages:
     - '&2&m=============================================='
     lastarcherstanding:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Last Archer Standing'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fShoot the others with the bow!'
@@ -70,7 +87,7 @@ messages:
     - '&2&m=============================================='
     minefield:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Mine Field'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fRun to the finish without touching the mines!'
@@ -78,7 +95,7 @@ messages:
     - '&2&m=============================================='
     sheepfreenzy:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Sheep Freenzy'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fShear as many Sheeps as possible!'
@@ -87,7 +104,7 @@ messages:
     - '&2&m=============================================='
     smokemonster:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Smoke Monster'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fAvoid the smoke monster!'
@@ -95,7 +112,7 @@ messages:
     - '&2&m=============================================='
     spleef:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Spleef'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fDestroy the floor under your opponents to'
@@ -104,7 +121,7 @@ messages:
     - '&2&m=============================================='
     slapfight:
     - '&2&m=============================================='
-    - '&aGame &7&m-&e&l Slapfight'
+    - '&aGame &7&m-&e&l %display_name%'
     - ''
     - '&fGame description:'
     - '&fSlap the other players to fall! You can use'

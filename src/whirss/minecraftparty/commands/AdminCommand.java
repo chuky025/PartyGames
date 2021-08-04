@@ -287,6 +287,8 @@ public class AdminCommand implements CommandExecutor {
 					}
 				}else if(args[0].equalsIgnoreCase("reload")){
 					if(sender.hasPermission("minecraftparty.admin.reload") || sender.hasPermission("minecraftparty.admin.*")) {
+						
+						//config files
 						main.reloadConfig();
 						main.reloadMessages();
 						main.reloadMessages();
@@ -296,6 +298,18 @@ public class AdminCommand implements CommandExecutor {
 						main.reloadSettings();
 						main.reloadShop();
 						main.reloadTitles();
+						
+						//minigames folder
+						main.reloadColorMatch();
+						main.reloadDeadEnd();
+						main.reloadJumpnRun();
+						main.reloadLastArcherStanding();
+						main.reloadMineField();
+						main.reloadRedAlert();
+						main.reloadSheepFreenzy();
+						main.reloadSlapFight();
+						main.reloadSmokeMonster();
+						main.reloadSpleef();
 						
 						if(main.placeholderapi) {
 							sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.reload"))));

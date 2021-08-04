@@ -114,6 +114,12 @@ public class Main extends JavaPlugin implements Listener {
 	boolean item_rewards = true;
 	
 	
+	//in game
+	public String place1 = null;
+	public String place2 = null;
+	public String place3 = null;
+	
+	
 	public Location mainlobby = null;
 	
 	Main m;
@@ -2008,18 +2014,44 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public void sendPlace(int count, Player p){
 		String place = Integer.toString(count + 1) + "th";
-		if(count == 0){
-			place = Integer.toString(count + 1) + "st";
-		}else if(count == 1){
-			place = Integer.toString(count + 1) + "nd";
-		}else if(count == 2){
-			place = Integer.toString(count + 1) + "rd";
+		
+		List<String> description = m.getMessages().getStringList("messages.summary.minigame");
+		for(int i=0;i<description.size();i++) {
+			String message = description.get(i);
+			
+			if(count == 0){
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
+						.replace("%place_1%", place1)
+						.replace("%place_2%", place2)
+						.replace("%place_3", place3)
+						.replace("%place_player%", Integer.toString(count + 1)+"st"));
+				place1 = Integer.toString(count + 1);
+			}else if(count == 1){
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
+						.replace("%place_1%", place1)
+						.replace("%place_2%", place2)
+						.replace("%place_3", place3)
+						.replace("%place_player%", Integer.toString(count + 1)+"nd"));
+				place2 = Integer.toString(count + 1);
+			}else if(count == 2){
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
+						.replace("%place_1%", place1)
+						.replace("%place_2%", place2)
+						.replace("%place_3", place3)
+						.replace("%place_player%", Integer.toString(count + 1)+"rd"));
+				place3 = Integer.toString(count + 1);
+			}
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
+					.replace("%place_1%", place1)
+					.replace("%place_2%", place2)
+					.replace("%place_3", place3)
+					.replace("%place_player%", place+"th"));
 		}
-		if(placeholderapi){
+		/*if(placeholderapi){
 			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place))));
 		} else {
 			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place)));
-		}
+		}*/
 	}
 	
 	
