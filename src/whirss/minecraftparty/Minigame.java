@@ -131,7 +131,7 @@ public class Minigame {
 				p.setAllowFlight(false);
 				p.setFlying(false);
 				
-				List<String> description = m.getMessages().getStringList("messages.minigames." + name.toLowerCase());
+				List<String> description = m.getMessages().getStringList("messages.game.minigames." + name.toLowerCase());
 				for(int i=0;i<description.size();i++) {
 					String message = description.get(i);
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));

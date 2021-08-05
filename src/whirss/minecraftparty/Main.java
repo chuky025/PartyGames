@@ -118,6 +118,7 @@ public class Main extends JavaPlugin implements Listener {
 	public String place1 = null;
 	public String place2 = null;
 	public String place3 = null;
+	public int reward = 0;
 	
 	
 	public Location mainlobby = null;
@@ -688,7 +689,7 @@ public class Main extends JavaPlugin implements Listener {
 		colormatch = YamlConfiguration.loadConfiguration(colormatchFile);
 		Reader defConfigStream;
 		try{
-			defConfigStream = new InputStreamReader(this.getResource("files/files/colormatch.yml"),"UTF8");
+			defConfigStream = new InputStreamReader(this.getResource("files/colormatch.yml"),"UTF8");
 			if(defConfigStream != null){
 				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
 				colormatch.setDefaults(defConfig);
@@ -1181,7 +1182,7 @@ public class Main extends JavaPlugin implements Listener {
 		Random r = new Random();
 		
 		if(credits_enable) {
-			int reward = r.nextInt((credits_maxreward - credits_minreward) + 1) + credits_minreward;
+			reward = r.nextInt((credits_maxreward - credits_minreward) + 1) + credits_minreward;
 			if(p.hasPermission("minecraftparty.double_coins")){
 				reward = reward * 2;
 			}else if(p.hasPermission("minecraftparty.triple_coins")){
@@ -2012,41 +2013,26 @@ public class Main extends JavaPlugin implements Listener {
 
 	
 	
-	public void sendPlace(int count, Player p){
-		String place = Integer.toString(count + 1) + "th";
-		
-		List<String> description = m.getMessages().getStringList("messages.summary.minigame");
+	public void getPlace(int count, Player p){
+		String place = Integer.toString(count + 1);
+		if(count == 0){
+			place1 = p.getName();
+		}else if(count == 1){
+			place2 = p.getName();
+		}else if(count == 2){
+			place3 = p.getName();
+		}
+		List<String> description = m.getMessages().getStringList("messages.game.summary.minigame");
 		for(int i=0;i<description.size();i++) {
 			String message = description.get(i);
-			
-			if(count == 0){
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
-						.replace("%place_1%", place1)
-						.replace("%place_2%", place2)
-						.replace("%place_3", place3)
-						.replace("%place_player%", Integer.toString(count + 1)+"st"));
-				place1 = Integer.toString(count + 1);
-			}else if(count == 1){
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
-						.replace("%place_1%", place1)
-						.replace("%place_2%", place2)
-						.replace("%place_3", place3)
-						.replace("%place_player%", Integer.toString(count + 1)+"nd"));
-				place2 = Integer.toString(count + 1);
-			}else if(count == 2){
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
-						.replace("%place_1%", place1)
-						.replace("%place_2%", place2)
-						.replace("%place_3", place3)
-						.replace("%place_player%", Integer.toString(count + 1)+"rd"));
-				place3 = Integer.toString(count + 1);
-			}
 			p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
-					.replace("%place_1%", place1)
-					.replace("%place_2%", place2)
-					.replace("%place_3", place3)
-					.replace("%place_player%", place+"th"));
+					.replace("%place_1%", String.valueOf(place1))
+					.replace("%place_2%", String.valueOf(place2))
+					.replace("%place_3%", String.valueOf(place3))
+					.replace("%place_player%", String.valueOf(place))
+					.replace("%credits_earned%", Integer.valueOf(reward)+""));
 		}
+		
 		/*if(placeholderapi){
 			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place))));
 		} else {
