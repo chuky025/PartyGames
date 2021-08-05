@@ -1377,7 +1377,18 @@ public class Main extends JavaPlugin implements Listener {
 				currentid.cancel();
 			}
 			//currentid = nextMinigame();
-			nextMinigame();
+			for(String pl : players) {
+				Player p = Bukkit.getPlayerExact(pl);
+				sendSummary(p);	
+			}
+			
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(m, new Runnable() {
+				@Override
+				public void run() {
+					nextMinigame();
+				}
+			}, 100);
+			
 		}
 
 
@@ -1713,15 +1724,6 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				}
 				
-				/*if(bungee) {
-					if(connect_hub) {
-						sendServer(p, m.getSettings().getString("settings.plugin.bungee.hub"));
-					}
-					if(shutdown) {
-						Bukkit.getServer().shutdown();
-					}
-				}*/
-				
 				if(placeholderapi){
 					p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.next_round"))));
 				} else {
@@ -2013,8 +2015,10 @@ public class Main extends JavaPlugin implements Listener {
 
 	
 	
-	public void getPlace(int count, Player p){
+	public void sendPlace(int count, Player p){
 		String place = Integer.toString(count + 1);
+		
+		
 		if(count == 0){
 			place1 = p.getName();
 		}else if(count == 1){
@@ -2022,6 +2026,16 @@ public class Main extends JavaPlugin implements Listener {
 		}else if(count == 2){
 			place3 = p.getName();
 		}
+		
+		
+		if(placeholderapi){
+			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place))));
+		} else {
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place)));
+		}
+	}
+	
+	public void sendSummary(Player p) {
 		List<String> description = m.getMessages().getStringList("messages.game.summary.minigame");
 		for(int i=0;i<description.size();i++) {
 			String message = description.get(i);
@@ -2029,15 +2043,9 @@ public class Main extends JavaPlugin implements Listener {
 					.replace("%place_1%", String.valueOf(place1))
 					.replace("%place_2%", String.valueOf(place2))
 					.replace("%place_3%", String.valueOf(place3))
-					.replace("%place_player%", String.valueOf(place))
-					.replace("%credits_earned%", Integer.valueOf(reward)+""));
+					.replace("%credits_earned%", Integer.valueOf(reward)+"")
+					.replace("%stars_earned%", "0"));
 		}
-		
-		/*if(placeholderapi){
-			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place))));
-		} else {
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place)));
-		}*/
 	}
 	
 	

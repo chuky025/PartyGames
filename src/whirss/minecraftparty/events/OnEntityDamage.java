@@ -72,7 +72,7 @@ public class OnEntityDamage implements Listener {
 											}
 										}
 									}
-									main.getPlace(count, p);
+									main.sendPlace(count, p);
 									current.spectate(p);
 									// there's only one man standing
 									if(count < 2){

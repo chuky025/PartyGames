@@ -89,7 +89,7 @@ public class OnMove implements Listener {
 												}
 											}
 										}
-										main.getPlace(count, event.getPlayer());
+										main.sendPlace(count, event.getPlayer());
 										current.spectate(event.getPlayer());
 										if(count < 2){
 											main.c_ += main.seconds-main.c;
@@ -131,7 +131,7 @@ public class OnMove implements Listener {
 										}
 									}
 								}
-								main.getPlace(count, event.getPlayer());
+								main.sendPlace(count, event.getPlayer());
 								current.spectate(event.getPlayer());
 								// there's only one man standing
 								if(count < 2){

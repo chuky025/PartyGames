@@ -83,6 +83,9 @@ public class Minigame {
 					for(String p_ : m.players){
 						Player p = Bukkit.getPlayerExact(p_);
 						if(p.isOnline()){
+							m.place1 = null;
+							m.place2 = null;
+							m.place3 = null;
 							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 30.0F, 50.0F);
 							if(m.placeholderapi) {
 								p.sendTitle(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name))),PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name))), 0, 30, 0);
@@ -106,7 +109,7 @@ public class Minigame {
 		return null;
 	}
 	
-	public void join(final Player p){
+	public void join(Player p){
 		if(p.hasPotionEffect(PotionEffectType.JUMP)){
 			p.removePotionEffect(PotionEffectType.JUMP);
 		}
