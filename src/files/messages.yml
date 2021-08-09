@@ -33,7 +33,7 @@ messages:
       - '  &a#2nd place: &6%place_2%'
       - '  &a#3rd place: &6%place_3%'
       - ''
-      - '  &6⛁ &e+%credits_earned%  &7|  &6✯ &e+%stars_earned%'
+      - '  &6⛁ &e+%credits_earned%  &7|  &6✯ &e+%stars_earned%  &7|  &aYour place: &6%place_player%'
       - ''
       - '&8&m----------------------------------------------'
       final:

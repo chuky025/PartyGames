@@ -22,6 +22,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -206,11 +207,25 @@ public class Main extends JavaPlugin implements Listener {
 			}
 		}, 20);
 		
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MinecraftParty by Whirss");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version " + currentversion + " (Spigot " + Bukkit.getBukkitVersion() + " )");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------");
-        
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------------------------------------------------------");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + " __  __ _                            __ _   ____            _");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "|  \\/  (_)_ __   ___  ___ _ __ __ _ / _| |_|  _ \\ __ _ _ __| |_ _   _");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "| |\\/| | | '_ \\ / _ \\/ __| '__/ _` | |_| __| |_) / _` | '__| __| | | |");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "| |  | | | | | |  __| (__| | | (_| |  _| |_|  __| (_| | |  | |_| |_| |");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "|_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "                                                                |___/");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version:");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + currentversion);
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Source Code");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "https://github.com/Whirss/MinecraftParty");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Contributors:");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Whirss"); //I will put all the names of all the people who collaborate here.
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------------------------------------------------------");
+		
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
         //config
@@ -1372,7 +1387,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		// start the next minigame after 60 seconds
 		if(c == seconds || c > seconds){
-			c = 0;
+			c = -6;
 			if(currentid != null){
 				currentid.cancel();
 			}
@@ -1455,6 +1470,7 @@ public class Main extends JavaPlugin implements Listener {
 					currentscore.clear();
 					for(Minigame mg : minigames){
 						mg.lost.clear();
+						mg.winners.clear();
 					}
 					//System.out.println(c_ + " " + (minigames.size() - disabledMinigamesCount) * seconds);
 					//c_ += seconds;
@@ -1467,6 +1483,7 @@ public class Main extends JavaPlugin implements Listener {
 		currentscore.clear();
 		for(Minigame mg : minigames){
 			mg.lost.clear();
+			mg.winners.clear();
 		}
 
 		//System.out.println(currentmg);
@@ -1476,6 +1493,7 @@ public class Main extends JavaPlugin implements Listener {
 				currentscore.clear();
 				for(Minigame mg : minigames){
 					mg.lost.clear();
+					mg.winners.clear();
 				}
 				//System.out.println(c_ + " " + (minigames.size() - disabledMinigamesCount) * seconds);
 				//c_ += seconds;
@@ -1524,6 +1542,7 @@ public class Main extends JavaPlugin implements Listener {
 				// reset all
 				for(Minigame m : minigames){
 					m.lost.clear();
+					m.winners.clear();
 				}
 				currentmg = -1;
 				currentid = null;
@@ -1697,6 +1716,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		for(Minigame mg : minigames){
 			mg.lost.clear();
+			mg.winners.clear();
 		}
 		players_doublejumped.clear();
 		
@@ -2017,8 +2037,6 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public void sendPlace(int count, Player p){
 		String place = Integer.toString(count + 1);
-		
-		
 		if(count == 0){
 			place1 = p.getName();
 		}else if(count == 1){
@@ -2026,8 +2044,7 @@ public class Main extends JavaPlugin implements Listener {
 		}else if(count == 2){
 			place3 = p.getName();
 		}
-		
-		
+
 		if(placeholderapi){
 			p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', getMessages().getString("messages.game.your_place").replace("%place%", place))));
 		} else {

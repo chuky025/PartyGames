@@ -18,6 +18,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 public class Minigame {
 	
 	public ArrayList<Player> lost = new ArrayList<Player>();
+	public ArrayList<Player> winners = new ArrayList<Player>();
 	
 	public String name = "";
 	public static Main m;
@@ -49,6 +50,7 @@ public class Minigame {
 		}
 		
 		lost.clear();
+		winners.clear();
 	}
 	
 	int count = 5;
@@ -86,6 +88,7 @@ public class Minigame {
 							m.place1 = null;
 							m.place2 = null;
 							m.place3 = null;
+							m.reward = 0;
 							p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 30.0F, 50.0F);
 							if(m.placeholderapi) {
 								p.sendTitle(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.title").replace("%count%", Integer.toString(count)).replace("%minigame%", name))),PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', m.getTitles().getString("titles.after_countdown.subtitle").replace("%minigame%", name))), 0, 30, 0);
@@ -109,7 +112,7 @@ public class Minigame {
 		return null;
 	}
 	
-	public void join(Player p){
+	public void join(final Player p){
 		if(p.hasPotionEffect(PotionEffectType.JUMP)){
 			p.removePotionEffect(PotionEffectType.JUMP);
 		}
@@ -137,7 +140,17 @@ public class Minigame {
 				List<String> description = m.getMessages().getStringList("messages.game.minigames." + name.toLowerCase());
 				for(int i=0;i<description.size();i++) {
 					String message = description.get(i);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
+							.replace("%displayname_colormatch%", m.getColorMatch().getString("minigame.displayname"))
+							.replace("%displayname_deadend%", m.getDeadEnd().getString("minigame.displayname"))
+							.replace("%displayname_jumpnrun%", m.getJumpnRun().getString("minigame.displayname"))
+							.replace("%displayname_lastarcherstanding%", m.getLastArcherStanding().getString("minigame.displayname"))
+							.replace("%displayname_minefield%", m.getMineField().getString("minigame.displayname"))
+							.replace("%displayname_redalert%", m.getRedAlert().getString("minigame.displayname"))
+							.replace("%displayname_sheepfreenzy%", m.getSheepFreenzy().getString("minigame.displayname"))
+							.replace("%displayname_slapfight%", m.getSlapFight().getString("minigame.displayname"))
+							.replace("%displayname_smokemonster%", m.getSmokeMonster().getString("minigame.displayname"))
+							.replace("%displayname_spleef%", m.getSpleef().getString("minigame.displayname")));
 				}
 				
 			}

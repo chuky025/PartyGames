@@ -1,6 +1,7 @@
 package whirss.minecraftparty.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -103,6 +104,8 @@ public class OnMove implements Listener {
 								if(p.getLocation().getBlockZ() > current.finish.getBlockZ()){
 									main.c_ += main.seconds-main.c;
 									main.c = main.seconds; // just skips all the remaining seconds and sets to 60, current timer will do the rest
+									current.winners.add(p);
+									current.spectate(event.getPlayer());
 									return;
 								}
 							}
