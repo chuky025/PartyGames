@@ -225,6 +225,11 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Whirss"); //I will put all the names of all the people who collaborate here.
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------------------------------------------------------");
+		if(getConfig().getInt("no_modify") == 17) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MinecraftParty] Your configuration is outdated and will probably not work in this version of the plugin.");
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MinecraftParty] Update your configuration or use an older version of the plugin.");
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MinecraftParty] Tutorial to update the configuration: youtu.be/soon");
+		}
 		
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
@@ -293,7 +298,6 @@ public class Main extends JavaPlugin implements Listener {
 			item_maxreward = item_minreward;
 			item_minreward = temp;
 		}
-
 		
 		int pluginId = 9703;
         Metrics metrics = new Metrics(this, pluginId);
@@ -2056,12 +2060,21 @@ public class Main extends JavaPlugin implements Listener {
 		List<String> description = m.getMessages().getStringList("messages.game.summary.minigame");
 		for(int i=0;i<description.size();i++) {
 			String message = description.get(i);
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
-					.replace("%place_1%", String.valueOf(place1))
-					.replace("%place_2%", String.valueOf(place2))
-					.replace("%place_3%", String.valueOf(place3))
-					.replace("%credits_earned%", Integer.valueOf(reward)+"")
-					.replace("%stars_earned%", "0"));
+			if(placeholderapi) {
+				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', message)
+						.replace("%place_1%", String.valueOf(place1))
+						.replace("%place_2%", String.valueOf(place2))
+						.replace("%place_3%", String.valueOf(place3))
+						.replace("%credits_earned%", Integer.valueOf(reward)+"")
+						.replace("%stars_earned%", "0")));
+			} else {
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', message)
+						.replace("%place_1%", String.valueOf(place1))
+						.replace("%place_2%", String.valueOf(place2))
+						.replace("%place_3%", String.valueOf(place3))
+						.replace("%credits_earned%", Integer.valueOf(reward)+"")
+						.replace("%stars_earned%", "0"));
+			}
 		}
 	}
 	
