@@ -58,9 +58,9 @@ public class Spleef extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 64; j++){
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y - 4, z + j));
-				b_.setType(Material.BEDROCK);
+				b_.setType(Material.valueOf(m.getSpleef().getString("minigame.material.finish_floor")));
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.SNOW_BLOCK);
+				b.setType(Material.valueOf(m.getSpleef().getString("minigame.material.game_floor")));
 			}
 		}
 	}
@@ -74,7 +74,7 @@ public class Spleef extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 64; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.SNOW_BLOCK);
+				b.setType(Material.valueOf(m.getSpleef().getString("minigame.material.game_floor")));
 			}
 		}
 	}

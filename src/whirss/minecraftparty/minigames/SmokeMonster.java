@@ -19,7 +19,6 @@ import org.bukkit.util.Vector;
 import whirss.minecraftparty.Main;
 import whirss.minecraftparty.Minigame;
 import whirss.minecraftparty.Shop;
-import whirss.minecraftparty.nms.NMSEffectManager;
 
 public class SmokeMonster extends Minigame implements Listener {
 
@@ -101,7 +100,7 @@ public class SmokeMonster extends Minigame implements Listener {
 		    for(int z_ = -radius; z_ <= radius; z_++) {
 		        if( (x_*x_) + (z_*z_) <= radiusSquared) {
 		        	Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x - x_, y, z - z_));
-					b.setType(Material.NETHER_BRICK);
+					b.setType(Material.valueOf(m.getSmokeMonster().getString("minigame.material.game")));
 		        }
 		    }
 		}

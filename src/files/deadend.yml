@@ -1,3 +1,6 @@
 minigame:
   enabled: false
   displayname: 'Dead End'
+  materials:
+    game_floor: 'GOLD_BLOCK'
+    finish_floor: 'BEDROCK'

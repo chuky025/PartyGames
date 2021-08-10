@@ -94,7 +94,7 @@ public class SlapFight extends Minigame implements Listener{
 		    for(int z_ = -radius; z_ <= radius; z_++) {
 		        if( (x_*x_) + (z_*z_) <= radiusSquared) {
 		        	Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x - x_, y, z - z_));
-					b.setType(Material.WOOL);
+					b.setType(Material.valueOf(m.getSlapFight().getString("minigame.material.game")));
 					b.setData((byte)r.nextInt(15));
 		        }
 		    }

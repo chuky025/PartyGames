@@ -46,8 +46,8 @@ public class RedAlert extends Minigame implements Listener{
 
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y_, z + j));
-				b_.setType(Material.BEDROCK);
-				b.setType(Material.WOOL);
+				b_.setType(Material.valueOf(main.getRedAlert().getString("minigame.material.finish_floor")));
+				b.setType(Material.valueOf(main.getRedAlert().getString("minigame.material.game_floor")));
 			}
 		}
 	}
@@ -130,7 +130,7 @@ public class RedAlert extends Minigame implements Listener{
 					//mbu.setBlock(x + i, y, z + j, 35, current);
 					//mbu.setBlock(x + i, y_, z + j, 89);
 					
-					b.setType(Material.WOOL);
+					b.setType(Material.valueOf(m.getRedAlert().getString("minigame.material.game_floor")));
 					b.setData((byte)current);
 				}
 			}

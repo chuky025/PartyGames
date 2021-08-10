@@ -1,3 +1,6 @@
 minigame:
   enabled: false
   displayname: 'Sheep Freenzy'
+  materials:
+    game_floor: 'WOOL' 
+    finish_floor: 'BEDROCK'

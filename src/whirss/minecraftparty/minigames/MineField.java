@@ -2,6 +2,7 @@ package whirss.minecraftparty.minigames;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -48,7 +49,7 @@ public class MineField extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 64; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.GRASS);
+				b.setType(Material.valueOf(m.getMineField().getString("minigame.material.game_floor")));
 			}
 		}
 		
@@ -56,7 +57,7 @@ public class MineField extends Minigame implements Listener{
 			for(int j = 0; j < 56; j++){
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y + 1, z + j + 4));
 				if(r.nextBoolean()){
-					b_.setType(Material.STONE_PLATE);
+					b_.setType(Material.valueOf(m.getMineField().getString("minigame.material.plates")));
 				}else{
 					b_.setType(Material.AIR);
 				}
@@ -76,7 +77,7 @@ public class MineField extends Minigame implements Listener{
 			for(int j = 0; j < 56; j++){
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y + 1, z + j + 4));
 				if(r.nextBoolean()){
-					b_.setType(Material.STONE_PLATE);
+					b_.setType(Material.valueOf(m.getMineField().getString("minigame.material.plates")));
 				}else{
 					b_.setType(Material.AIR);
 				}
@@ -87,14 +88,14 @@ public class MineField extends Minigame implements Listener{
 	@Override
 	public void getWinner(){
 		HashMap<String, Integer> currentscore_ = m.currentscore;
-		Map<String, Integer> currentscore__ = PluginUtil.sortByValue(currentscore_);
+		Map<?, ?> currentscore__ = PluginUtil.sortByValue(currentscore_);
 
-		Map.Entry<String, Integer> max = null;
+		Entry<?, ?> max = null;
 		
-		for (Map.Entry<String, Integer> entry : currentscore__.entrySet())
+		for (Entry<?, ?> entry : currentscore__.entrySet())
 		{
-			if(!lost.contains(Bukkit.getPlayerExact(entry.getKey()))){
-				if (max == null || entry.getValue().compareTo(max.getValue()) > 0)
+			if(!lost.contains(Bukkit.getPlayerExact((String) entry.getKey()))){
+				if (max == null || ((Integer) entry.getValue()).compareTo((Integer) max.getValue()) > 0)
 			    {
 			    	max = entry;
 			    }	
@@ -102,7 +103,7 @@ public class MineField extends Minigame implements Listener{
 		}
 		
 		if(max != null){
-			m.win(Bukkit.getPlayerExact(max.getKey()));
+			m.win(Bukkit.getPlayerExact((String) max.getKey()));
 		}
 	}
 }

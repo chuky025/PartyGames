@@ -42,10 +42,8 @@ public class Minigame {
 	public void getWinner(){
 		for(String pl : m.players){
 			Player p = Bukkit.getPlayerExact(pl);
-			if(p.isOnline()){
-				if(!lost.contains(p)){
-					m.win(p);
-				}
+			if(p.isOnline() && !lost.contains(p)){
+				m.win(p);
 			}
 		}
 		
@@ -259,50 +257,50 @@ public class Minigame {
 	
 	public void setEnabled(boolean f){
 		enabled = f;
-		if(name == "ColorMatch") {
+		if(name.equals("ColorMatch")) {
 			m.getColorMatch().set("minigame.enabled", f);
 			m.saveColorMatch();
 		}
-		if(name == "DeadEnd") {
+		if(name.equals("DeadEnd")) {
 			m.getDeadEnd().set("minigame.enabled", f);
 			m.saveDeadEnd();
 		}
-		if(name == "JumpnRun") {
+		if(name.equals("JumpnRun")) {
 			m.getJumpnRun().set("minigame.enabled", f);
 			m.saveJumpnRun();
 		}
-		if(name == "LastArcherStanding") {
+		if(name.equals("LastArcherStanding")) {
 			m.getLastArcherStanding().set("minigame.enabled", f);
 			m.saveLastArcherStanding();
 		}
-		if(name == "MineField") {
+		if(name.equals("MineField")) {
 			m.getMineField().set("minigame.enabled", f);
 			m.saveMineField();
 		}
-		if(name == "RedAlert") {
+		if(name.equals("RedAlert")) {
 			m.getRedAlert().set("minigame.enabled", f);
 			m.saveRedAlert();
 		}
-		if(name == "SheepFreenzy") {
+		if(name.equals("SheepFreenzy")) {
 			m.getSheepFreenzy().set("minigame.enabled", f);
 			m.saveSheepFreenzy();
 		}
-		if(name == "SlapFight") {
+		if(name.equals("SlapFight")) {
 			m.getSlapFight().set("minigame.enabled", f);
 			m.saveSlapFight();
 		}
-		if(name == "SmokeMonster") {
+		if(name.equals("SmokeMonster")) {
 			m.getSmokeMonster().set("minigame.enabled", f);
 			m.saveSmokeMonster();
 		}
-		if(name == "Spleef") {
+		if(name.equals("Spleef")) {
 			m.getSpleef().set("minigame.enabled", f);
 			m.saveSpleef();
 		}
 	}
 	
 	public boolean isEnabled(){
-		if(name == "ColorMatch") {
+		if(name.equals("ColorMatch")) {
 			if(!m.getColorMatch().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -310,7 +308,7 @@ public class Minigame {
 				return m.getColorMatch().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "DeadEnd") {
+		if(name.equals("DeadEnd")) {
 			if(!m.getDeadEnd().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -318,7 +316,7 @@ public class Minigame {
 				return m.getDeadEnd().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "JumpnRun") {
+		if(name.equals("JumpnRun")) {
 			if(!m.getJumpnRun().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -326,7 +324,7 @@ public class Minigame {
 				return m.getJumpnRun().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "LastArcherStanding") {
+		if(name.equals("LastArcherStanding")) {
 			if(!m.getLastArcherStanding().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -334,7 +332,7 @@ public class Minigame {
 				return m.getLastArcherStanding().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "MineField") {
+		if(name.equals("MineField")) {
 			if(!m.getMineField().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -342,7 +340,7 @@ public class Minigame {
 				return m.getMineField().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "RedAlert") {
+		if(name.equals("RedAlert")) {
 			if(!m.getRedAlert().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -350,7 +348,7 @@ public class Minigame {
 				return m.getRedAlert().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "SheepFreenzy") {
+		if(name.equals("SheepFreenzy")) {
 			if(!m.getSheepFreenzy().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -358,7 +356,7 @@ public class Minigame {
 				return m.getSheepFreenzy().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "SlapFight") {
+		if(name.equals("SlapFight")) {
 			if(!m.getSlapFight().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -366,7 +364,7 @@ public class Minigame {
 				return m.getSlapFight().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "SmokeMonster") {
+		if(name.equals("SmokeMonster")) {
 			if(!m.getSmokeMonster().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;
@@ -374,7 +372,7 @@ public class Minigame {
 				return m.getSmokeMonster().getBoolean("minigame.enabled");
 			}
 		}
-		if(name == "Spleef") {
+		if(name.equals("Spleef")) {
 			if(!m.getSpleef().isSet("minigame.enabled")){
 				setEnabled(true);
 				return true;

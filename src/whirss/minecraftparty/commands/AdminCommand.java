@@ -42,7 +42,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupColorMatch(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "ColorMatch"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "ColorMatch")));
 										}
@@ -59,7 +59,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupSpleef(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "Spleef"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "Spleef")));
 										}
@@ -76,7 +76,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupMineField(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "MineField"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "MineField")));
 										}
@@ -93,7 +93,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupJumpnRun(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "JumpnRun"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "JumpnRun")));
 										}
@@ -110,7 +110,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupDeadEnd(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "DeadEnd"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "DeadEnd"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "DeadEnd")));
 										}
@@ -127,7 +127,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupRedAlert(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "RedAlert"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "RedAlert")));
 										}
@@ -144,7 +144,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupLastArcherStanding(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "LastArcherStanding"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "LastArcherStanding")));
 										}
@@ -161,7 +161,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupSheepFreenzy(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SheepFreenzy"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SheepFreenzy")));
 										}
@@ -178,7 +178,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupSmokeMonster(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SmokeMonster"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SmokeMonster")));
 										}
@@ -195,7 +195,7 @@ public class AdminCommand implements CommandExecutor {
 										}
 										main.setupSlapFight(p.getLocation());
 										if(main.placeholderapi) {
-											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_start").replace("%minigame%", "SlapFight"))));
+											sender.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight"))));
 										} else {
 											sender.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.setup.setup_finish").replace("%minigame%", "SlapFight")));
 										}

@@ -169,7 +169,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable(){
 		m = this;
 		msql = new MainSQL(this);
-		int id = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
 			@Override
 			public void run(){
 				if(isValidMinigame("ColorMatch") && isValidMinigame("Spleef") && isValidMinigame("MineField") && isValidMinigame("JumpnRun") && isValidMinigame("DeadEnd")){
@@ -300,13 +300,11 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		
 		int pluginId = 9703;
-        Metrics metrics = new Metrics(this, pluginId);
+        new Metrics(this, pluginId);
 
-		if(economy){
-			if (!setupEconomy()) {
-	            getLogger().severe(String.format("[%s] - No iConomy dependency found! Disabling Economy.", getDescription().getName()));
-	            economy = false;
-	        }
+		if(economy && !setupEconomy()){
+			getLogger().severe(String.format("[%s] - No iConomy dependency found! Disabling Economy.", getDescription().getName()));
+            economy = false;
 		}
 		
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {

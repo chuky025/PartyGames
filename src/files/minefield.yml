@@ -1,3 +1,6 @@
 minigame:
   enabled: false
   displayname: 'Mine Field'
+  materials:
+    game_floor: 'GRASS'
+    plates: 'STONE_PLATE'

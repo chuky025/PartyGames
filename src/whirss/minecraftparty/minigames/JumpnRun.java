@@ -2,6 +2,7 @@ package whirss.minecraftparty.minigames;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -70,7 +71,7 @@ public class JumpnRun extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 4; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.WOOL);
+				b.setType(Material.valueOf(m.getJumpnRun().getString("minigame.material.start_floor")));
 				b.setData((byte)r.nextInt(15));
 			}
 		}
@@ -78,8 +79,7 @@ public class JumpnRun extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 4; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + 64 - j));
-				b.setType(Material.WOOL);
-				b.setData((byte)r.nextInt(15));
+				b.setType(Material.valueOf(m.getJumpnRun().getString("minigame.material.finish_floor")));
 			}
 		}
 
@@ -88,14 +88,14 @@ public class JumpnRun extends Minigame implements Listener{
 	@Override
 	public void getWinner(){
 		HashMap<String, Integer> currentscore_ = m.currentscore;
-		Map<String, Integer> currentscore__ = PluginUtil.sortByValue(currentscore_);
+		Map<?, ?> currentscore__ = PluginUtil.sortByValue(currentscore_);
 
-		Map.Entry<String, Integer> max = null;
+		Entry<?, ?> max = null;
 		
-		for (Map.Entry<String, Integer> entry : currentscore__.entrySet())
+		for (Entry<?, ?> entry : currentscore__.entrySet())
 		{
-			if(!lost.contains(Bukkit.getPlayerExact(entry.getKey()))){
-				if (max == null || entry.getValue().compareTo(max.getValue()) > 0)
+			if(!lost.contains(Bukkit.getPlayerExact((String) entry.getKey()))){
+				if (max == null || ((Integer) entry.getValue()).compareTo((Integer) max.getValue()) > 0)
 			    {
 			    	max = entry;
 			    }	
@@ -103,7 +103,7 @@ public class JumpnRun extends Minigame implements Listener{
 		}
 		
 		if(max != null){
-			m.win(Bukkit.getPlayerExact(max.getKey()));
+			m.win(Bukkit.getPlayerExact((String) max.getKey()));
 		}
 	}
 	
