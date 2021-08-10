@@ -334,11 +334,11 @@ public class Main extends JavaPlugin implements Listener {
 	}
 	
 	private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault").equals(null)) {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
         }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp.equals(null)) {
+        if (rsp == null) {
             return false;
         }
         econ = rsp.getProvider();
@@ -393,14 +393,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//settings.yml:
 	public FileConfiguration getSettings() {
-		if(settings.equals(null)) {
+		if(settings == null) {
 			reloadSettings();
 		}
 		return settings;
 	}
 	
 	public void reloadSettings(){
-		if(settings.equals(null)){
+		if(settings == null){
 			settingsFile = new File(getDataFolder(),"settings.yml");
 		}
 		settings = YamlConfiguration.loadConfiguration(settingsFile);
@@ -443,14 +443,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//messages.yml
 	public FileConfiguration getMessages() {
-		if(messages.equals(null)) {
+		if(messages == null) {
 			reloadMessages();
 		}
 		return messages;
 	}
 	
 	public void reloadMessages(){
-		if(messages.equals(null)){
+		if(messages == null){
 			messagesFile = new File(getDataFolder(),"messages.yml");
 		}
 		messages = YamlConfiguration.loadConfiguration(messagesFile);
@@ -493,14 +493,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//scoreboard.yml
 	public FileConfiguration getScoreboard() {
-		if(scoreboard.equals(null)) {
+		if(scoreboard == null) {
 			reloadScoreboard();
 		}
 		return scoreboard;
 	}
 	
 	public void reloadScoreboard(){
-		if(scoreboard.equals(null)){
+		if(scoreboard == null){
 			scoreboardFile = new File(getDataFolder(),"scoreboard.yml");
 		}
 		scoreboard = YamlConfiguration.loadConfiguration(scoreboardFile);
@@ -543,14 +543,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//shop.yml
 	public FileConfiguration getShop() {
-		if(shop.equals(null)) {
+		if(shop == null) {
 			reloadShop();
 		}
 		return shop;
 	}
 	
 	public void reloadShop(){
-		if(shop.equals(null)){
+		if(shop == null){
 			shopFile = new File(getDataFolder(),"shop.yml");
 		}
 		shop = YamlConfiguration.loadConfiguration(shopFile);
@@ -593,14 +593,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//titles.yml
 	public FileConfiguration getTitles() {
-		if(titles.equals(null)) {
+		if(titles == null) {
 			reloadTitles();
 		}
 		return titles;
 	}
 	
 	public void reloadTitles(){
-		if(titles.equals(null)){
+		if(titles == null){
 			titlesFile = new File(getDataFolder(),"titles.yml");
 		}
 		titles = YamlConfiguration.loadConfiguration(titlesFile);
@@ -643,14 +643,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//mysql.yml
 	public FileConfiguration getMysql() {
-		if(mysql.equals(null)) {
+		if(mysql == null) {
 			reloadMysql();
 		}
 		return mysql;
 	}
 	
 	public void reloadMysql(){
-		if(mysql.equals(null)){
+		if(mysql == null){
 			mysqlFile = new File(getDataFolder(),"mysql.yml");
 		}
 		mysql = YamlConfiguration.loadConfiguration(mysqlFile);
@@ -695,14 +695,14 @@ public class Main extends JavaPlugin implements Listener {
 	//minigames folder
 	//colormatch
 	public FileConfiguration getColorMatch() {
-		if(colormatch.equals(null)) {
+		if(colormatch == null) {
 			reloadColorMatch();
 		}
 		return colormatch;
 	}
 	
 	public void reloadColorMatch(){
-		if(colormatch.equals(null)){
+		if(colormatch == null){
 			colormatchFile = new File(getDataFolder()+"/minigames","colormatch.yml");
 		}
 		colormatch = YamlConfiguration.loadConfiguration(colormatchFile);
@@ -743,14 +743,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//deadend
 	public FileConfiguration getDeadEnd() {
-		if(deadend.equals(null)) {
+		if(deadend == null) {
 			reloadDeadEnd();
 		}
 		return deadend;
 	}
 	
 	public void reloadDeadEnd(){
-		if(deadend.equals(null)){
+		if(deadend == null){
 			deadendFile = new File(getDataFolder()+"/minigames","deadend.yml");
 		}
 		deadend = YamlConfiguration.loadConfiguration(deadendFile);
@@ -791,14 +791,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//redalert
 	public FileConfiguration getRedAlert() {
-		if(redalert.equals(null)) {
+		if(redalert == null) {
 			reloadRedAlert();
 		}
 		return redalert;
 	}
 	
 	public void reloadRedAlert(){
-		if(redalert.equals(null)){
+		if(redalert == null){
 			redalertFile = new File(getDataFolder()+"/minigames","redalert.yml");
 		}
 		redalert = YamlConfiguration.loadConfiguration(redalertFile);
@@ -839,14 +839,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//jumpnrun
 	public FileConfiguration getJumpnRun() {
-		if(jumpnrun.equals(null)) {
+		if(jumpnrun == null) {
 			reloadJumpnRun();
 		}
 		return jumpnrun;
 	}
 	
 	public void reloadJumpnRun(){
-		if(jumpnrun.equals(null)){
+		if(jumpnrun == null){
 			jumpnrunFile = new File(getDataFolder()+"/minigames","jumpnrun.yml");
 		}
 		jumpnrun = YamlConfiguration.loadConfiguration(jumpnrunFile);
@@ -887,14 +887,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//lastarcherstanding
 	public FileConfiguration getLastArcherStanding() {
-		if(lastarcherstanding.equals(null)) {
+		if(lastarcherstanding == null) {
 			reloadLastArcherStanding();
 		}
 		return lastarcherstanding;
 	}
 	
 	public void reloadLastArcherStanding(){
-		if(lastarcherstanding.equals(null)){
+		if(lastarcherstanding == null){
 			lastarcherstandingFile = new File(getDataFolder()+"/minigames","lastarcherstanding.yml");
 		}
 		lastarcherstanding = YamlConfiguration.loadConfiguration(lastarcherstandingFile);
@@ -935,14 +935,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//minefield
 	public FileConfiguration getMineField() {
-		if(minefield.equals(null)) {
+		if(minefield == null) {
 			reloadMineField();
 		}
 		return minefield;
 	}
 	
 	public void reloadMineField(){
-		if(minefield.equals(null)){
+		if(minefield == null){
 			minefieldFile = new File(getDataFolder()+"/minigames","minefield.yml");
 		}
 		minefield = YamlConfiguration.loadConfiguration(minefieldFile);
@@ -983,14 +983,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//sheepfreenzy
 	public FileConfiguration getSheepFreenzy() {
-		if(sheepfreenzy.equals(null)) {
+		if(sheepfreenzy == null) {
 			reloadSheepFreenzy();
 		}
 		return sheepfreenzy;
 	}
 	
 	public void reloadSheepFreenzy(){
-		if(sheepfreenzy.equals(null)){
+		if(sheepfreenzy == null){
 			sheepfreenzyFile = new File(getDataFolder()+"/minigames","sheepfreenzy.yml");
 		}
 		sheepfreenzy = YamlConfiguration.loadConfiguration(sheepfreenzyFile);
@@ -1031,14 +1031,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//slapfight
 	public FileConfiguration getSlapFight() {
-		if(slapfight.equals(null)) {
+		if(slapfight == null) {
 			reloadSlapFight();
 		}
 		return slapfight;
 	}
 	
 	public void reloadSlapFight(){
-		if(slapfight.equals(null)){
+		if(slapfight == null){
 			slapfightFile = new File(getDataFolder()+"/minigames","slapfight.yml");
 		}
 		slapfight = YamlConfiguration.loadConfiguration(slapfightFile);
@@ -1079,14 +1079,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//smokemonster
 	public FileConfiguration getSmokeMonster() {
-		if(smokemonster.equals(null)) {
+		if(smokemonster == null) {
 			reloadSmokeMonster();
 		}
 		return smokemonster;
 	}
 	
 	public void reloadSmokeMonster(){
-		if(smokemonster.equals(null)){
+		if(smokemonster == null){
 			smokemonsterFile = new File(getDataFolder()+"/minigames","smokemonster.yml");
 		}
 		smokemonster = YamlConfiguration.loadConfiguration(smokemonsterFile);
@@ -1127,14 +1127,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	//spleef
 	public FileConfiguration getSpleef() {
-		if(spleef.equals(null)) {
+		if(spleef == null) {
 			reloadSpleef();
 		}
 		return spleef;
 	}
 	
 	public void reloadSpleef(){
-		if(spleef.equals(null)){
+		if(spleef == null){
 			spleefFile = new File(getDataFolder()+"/minigames","spleef.yml");
 		}
 		spleef = YamlConfiguration.loadConfiguration(spleefFile);
@@ -1192,7 +1192,7 @@ public class Main extends JavaPlugin implements Listener {
 	}*/
 
 	public void win(Player p){
-		if(p.equals(null)){
+		if(p == null){
 			getLogger().severe("Could not resolve winner: " + Integer.toString(currentmg));
 			return;
 		}
@@ -1973,55 +1973,35 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	public boolean isValidMinigame(String minigame){
-		if(minigame.equals("ColorMatch")) {
-			if(getColorMatch().isSet("minigame." + "data") && getColorMatch().isSet("minigame." + "data" + ".lobby") && getColorMatch().isSet("minigame." + "data" + ".spawn") && getColorMatch().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("ColorMatch") && getColorMatch().isSet("minigame." + "data") && getColorMatch().isSet("minigame." + "data" + ".lobby") && getColorMatch().isSet("minigame." + "data" + ".spawn") && getColorMatch().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("DeadEnd")) {
-			if(getDeadEnd().isSet("minigame." + "data") && getDeadEnd().isSet("minigame." + "data" + ".lobby") && getDeadEnd().isSet("minigame." + "data" + ".spawn") && getDeadEnd().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("DeadEnd") && getDeadEnd().isSet("minigame." + "data") && getDeadEnd().isSet("minigame." + "data" + ".lobby") && getDeadEnd().isSet("minigame." + "data" + ".spawn") && getDeadEnd().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("JumpnRun")) {
-			if(getJumpnRun().isSet("minigame." + "data") && getJumpnRun().isSet("minigame." + "data" + ".lobby") && getJumpnRun().isSet("minigame." + "data" + ".spawn") && getJumpnRun().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("JumpnRun") && getJumpnRun().isSet("minigame." + "data") && getJumpnRun().isSet("minigame." + "data" + ".lobby") && getJumpnRun().isSet("minigame." + "data" + ".spawn") && getJumpnRun().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("LastArcherStanding")) {
-			if(getLastArcherStanding().isSet("minigame." + "data") && getLastArcherStanding().isSet("minigame." + "data" + ".lobby") && getLastArcherStanding().isSet("minigame." + "data" + ".spawn") && getLastArcherStanding().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("LastArcherStanding") && getLastArcherStanding().isSet("minigame." + "data") && getLastArcherStanding().isSet("minigame." + "data" + ".lobby") && getLastArcherStanding().isSet("minigame." + "data" + ".spawn") && getLastArcherStanding().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("MineField")) {
-			if(getMineField().isSet("minigame." + "data") && getMineField().isSet("minigame." + "data" + ".lobby") && getMineField().isSet("minigame." + "data" + ".spawn") && getMineField().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("MineField") && getMineField().isSet("minigame." + "data") && getMineField().isSet("minigame." + "data" + ".lobby") && getMineField().isSet("minigame." + "data" + ".spawn") && getMineField().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("RedAlert")) {
-			if(getRedAlert().isSet("minigame." + "data") && getRedAlert().isSet("minigame." + "data" + ".lobby") && getRedAlert().isSet("minigame." + "data" + ".spawn") && getRedAlert().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("RedAlert") && getRedAlert().isSet("minigame." + "data") && getRedAlert().isSet("minigame." + "data" + ".lobby") && getRedAlert().isSet("minigame." + "data" + ".spawn") && getRedAlert().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("SheepFreenzy")) {
-			if(getSheepFreenzy().isSet("minigame." + "data") && getSheepFreenzy().isSet("minigame." + "data" + ".lobby") && getSheepFreenzy().isSet("minigame." + "data" + ".spawn") && getSheepFreenzy().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("SheepFreenzy") && getSheepFreenzy().isSet("minigame." + "data") && getSheepFreenzy().isSet("minigame." + "data" + ".lobby") && getSheepFreenzy().isSet("minigame." + "data" + ".spawn") && getSheepFreenzy().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("SlapFight")) {
-			if(getSlapFight().isSet("minigame." + "data") && getSlapFight().isSet("minigame." + "data" + ".lobby") && getSlapFight().isSet("minigame." + "data" + ".spawn") && getSlapFight().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("SlapFight") && getSlapFight().isSet("minigame." + "data") && getSlapFight().isSet("minigame." + "data" + ".lobby") && getSlapFight().isSet("minigame." + "data" + ".spawn") && getSlapFight().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("SmokeMonster")) {
-			if(getSmokeMonster().isSet("minigame." + "data") && getSmokeMonster().isSet("minigame." + "data" + ".lobby") && getSmokeMonster().isSet("minigame." + "data" + ".spawn") && getSmokeMonster().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("SmokeMonster") && getSmokeMonster().isSet("minigame." + "data") && getSmokeMonster().isSet("minigame." + "data" + ".lobby") && getSmokeMonster().isSet("minigame." + "data" + ".spawn") && getSmokeMonster().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
-		if(minigame.equals("Spleef")) {
-			if(getSpleef().isSet("minigame." + "data") && getSpleef().isSet("minigame." + "data" + ".lobby") && getSpleef().isSet("minigame." + "data" + ".spawn") && getSpleef().isSet("minigame." + "data" + ".spectatorlobby")){
-				return true;
-			}
+		if(minigame.equals("Spleef") && getSpleef().isSet("minigame." + "data") && getSpleef().isSet("minigame." + "data" + ".lobby") && getSpleef().isSet("minigame." + "data" + ".spawn") && getSpleef().isSet("minigame." + "data" + ".spectatorlobby")) {
+			return true;
 		}
 		return false;
 	}
