@@ -22,7 +22,6 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -1975,52 +1974,52 @@ public class Main extends JavaPlugin implements Listener {
 
 	public boolean isValidMinigame(String minigame){
 		if(minigame == "ColorMatch") {
-			if(getConfig().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getColorMatch().isSet("minigame." + "data") && getColorMatch().isSet("minigame." + "data" + ".lobby") && getColorMatch().isSet("minigame." + "data" + ".spawn") && getColorMatch().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "DeadEnd") {
-			if(getDeadEnd().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getDeadEnd().isSet("minigame." + "data") && getDeadEnd().isSet("minigame." + "data" + ".lobby") && getDeadEnd().isSet("minigame." + "data" + ".spawn") && getDeadEnd().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "JumpnRun") {
-			if(getJumpnRun().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getJumpnRun().isSet("minigame." + "data") && getJumpnRun().isSet("minigame." + "data" + ".lobby") && getJumpnRun().isSet("minigame." + "data" + ".spawn") && getJumpnRun().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "LastArcherStanding") {
-			if(getLastArcherStanding().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getLastArcherStanding().isSet("minigame." + "data") && getLastArcherStanding().isSet("minigame." + "data" + ".lobby") && getLastArcherStanding().isSet("minigame." + "data" + ".spawn") && getLastArcherStanding().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "MineField") {
-			if(getMineField().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getMineField().isSet("minigame." + "data") && getMineField().isSet("minigame." + "data" + ".lobby") && getMineField().isSet("minigame." + "data" + ".spawn") && getMineField().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "RedAlert") {
-			if(getRedAlert().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getRedAlert().isSet("minigame." + "data") && getRedAlert().isSet("minigame." + "data" + ".lobby") && getRedAlert().isSet("minigame." + "data" + ".spawn") && getRedAlert().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "SheepFreenzy") {
-			if(getSheepFreenzy().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getSheepFreenzy().isSet("minigame." + "data") && getSheepFreenzy().isSet("minigame." + "data" + ".lobby") && getSheepFreenzy().isSet("minigame." + "data" + ".spawn") && getSheepFreenzy().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "SlapFight") {
-			if(getSlapFight().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getSlapFight().isSet("minigame." + "data") && getSlapFight().isSet("minigame." + "data" + ".lobby") && getSlapFight().isSet("minigame." + "data" + ".spawn") && getSlapFight().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "SmokeMonster") {
-			if(getSmokeMonster().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getSmokeMonster().isSet("minigame." + "data") && getSmokeMonster().isSet("minigame." + "data" + ".lobby") && getSmokeMonster().isSet("minigame." + "data" + ".spawn") && getSmokeMonster().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}
 		if(minigame == "Spleef") {
-			if(getSpleef().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+			if(getSpleef().isSet("minigame." + "data") && getSpleef().isSet("minigame." + "data" + ".lobby") && getSpleef().isSet("minigame." + "data" + ".spawn") && getSpleef().isSet("minigame." + "data" + ".spectatorlobby")){
 				return true;
 			}
 		}

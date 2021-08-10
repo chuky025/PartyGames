@@ -259,17 +259,130 @@ public class Minigame {
 	
 	public void setEnabled(boolean f){
 		enabled = f;
-		m.getConfig().set("minigames." + name + ".enabled", f);
-		m.saveConfig();
+		if(name == "ColorMatch") {
+			m.getColorMatch().set("minigame.enabled", f);
+			m.saveColorMatch();
+		}
+		if(name == "DeadEnd") {
+			m.getDeadEnd().set("minigame.enabled", f);
+			m.saveDeadEnd();
+		}
+		if(name == "JumpnRun") {
+			m.getJumpnRun().set("minigame.enabled", f);
+			m.saveJumpnRun();
+		}
+		if(name == "LastArcherStanding") {
+			m.getLastArcherStanding().set("minigame.enabled", f);
+			m.saveLastArcherStanding();
+		}
+		if(name == "MineField") {
+			m.getMineField().set("minigame.enabled", f);
+			m.saveMineField();
+		}
+		if(name == "RedAlert") {
+			m.getRedAlert().set("minigame.enabled", f);
+			m.saveRedAlert();
+		}
+		if(name == "SheepFreenzy") {
+			m.getSheepFreenzy().set("minigame.enabled", f);
+			m.saveSheepFreenzy();
+		}
+		if(name == "SlapFight") {
+			m.getSlapFight().set("minigame.enabled", f);
+			m.saveSlapFight();
+		}
+		if(name == "SmokeMonster") {
+			m.getSmokeMonster().set("minigame.enabled", f);
+			m.saveSmokeMonster();
+		}
+		if(name == "Spleef") {
+			m.getSpleef().set("minigame.enabled", f);
+			m.saveSpleef();
+		}
 	}
 	
 	public boolean isEnabled(){
-		if(!m.getConfig().isSet("minigames." + name + ".enabled")){
-			setEnabled(true);
-			return true;
-		}else{
-			return m.getConfig().getBoolean("minigames." + name + ".enabled");
+		if(name == "ColorMatch") {
+			if(!m.getColorMatch().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getColorMatch().getBoolean("minigame.enabled");
+			}
 		}
+		if(name == "DeadEnd") {
+			if(!m.getDeadEnd().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getDeadEnd().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "JumpnRun") {
+			if(!m.getJumpnRun().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getJumpnRun().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "LastArcherStanding") {
+			if(!m.getLastArcherStanding().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getLastArcherStanding().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "MineField") {
+			if(!m.getMineField().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getMineField().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "RedAlert") {
+			if(!m.getRedAlert().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getRedAlert().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "SheepFreenzy") {
+			if(!m.getSheepFreenzy().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getSheepFreenzy().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "SlapFight") {
+			if(!m.getSlapFight().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getSlapFight().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "SmokeMonster") {
+			if(!m.getSmokeMonster().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getSmokeMonster().getBoolean("minigame.enabled");
+			}
+		}
+		if(name == "Spleef") {
+			if(!m.getSpleef().isSet("minigame.enabled")){
+				setEnabled(true);
+				return true;
+			}else{
+				return m.getSpleef().getBoolean("minigame.enabled");
+			}
+		}
+		return false;
 	}
 
 	
