@@ -1827,32 +1827,202 @@ public class Main extends JavaPlugin implements Listener {
 
 	public Location getComponentForMinigame(String minigame, String component, String count){
 		if(isValidMinigame(minigame)){
-			String base = "minigames." + minigame + "." + component + count;
-			return new Location(Bukkit.getWorld(getConfig().getString(base + ".world")), getConfig().getInt(base + ".location.x"), getConfig().getInt(base + ".location.y"), getConfig().getInt(base + ".location.z"));
+			String base = "minigame." + "data." + component + count;
+			if(minigame == "ColorMatch") {
+				return new Location(Bukkit.getWorld(getColorMatch().getString(base + ".world")), getColorMatch().getInt(base + ".location.x"), getColorMatch().getInt(base + ".location.y"), getColorMatch().getInt(base + ".location.z"));
+			}
+			if(minigame == "DeadEnd") {
+				return new Location(Bukkit.getWorld(getDeadEnd().getString(base + ".world")), getDeadEnd().getInt(base + ".location.x"), getDeadEnd().getInt(base + ".location.y"), getDeadEnd().getInt(base + ".location.z"));
+			}
+			if(minigame == "JumpnRun") {
+				return new Location(Bukkit.getWorld(getJumpnRun().getString(base + ".world")), getJumpnRun().getInt(base + ".location.x"), getJumpnRun().getInt(base + ".location.y"), getJumpnRun().getInt(base + ".location.z"));
+			}
+			if(minigame == "LastArcherStanding") {
+				return new Location(Bukkit.getWorld(getLastArcherStanding().getString(base + ".world")), getLastArcherStanding().getInt(base + ".location.x"), getLastArcherStanding().getInt(base + ".location.y"), getLastArcherStanding().getInt(base + ".location.z"));
+			}
+			if(minigame == "MineField") {
+				return new Location(Bukkit.getWorld(getMineField().getString(base + ".world")), getMineField().getInt(base + ".location.x"), getMineField().getInt(base + ".location.y"), getMineField().getInt(base + ".location.z"));
+			}
+			if(minigame == "RedAlert") {
+				return new Location(Bukkit.getWorld(getRedAlert().getString(base + ".world")), getRedAlert().getInt(base + ".location.x"), getRedAlert().getInt(base + ".location.y"), getRedAlert().getInt(base + ".location.z"));
+			}
+			if(minigame == "SheepFreenzy") {
+				return new Location(Bukkit.getWorld(getSheepFreenzy().getString(base + ".world")), getSheepFreenzy().getInt(base + ".location.x"), getSheepFreenzy().getInt(base + ".location.y"), getSheepFreenzy().getInt(base + ".location.z"));
+			}
+			if(minigame == "SlapFight") {
+				return new Location(Bukkit.getWorld(getSlapFight().getString(base + ".world")), getSlapFight().getInt(base + ".location.x"), getSlapFight().getInt(base + ".location.y"), getSlapFight().getInt(base + ".location.z"));
+			}
+			if(minigame == "SmokeMonster") {
+				return new Location(Bukkit.getWorld(getSmokeMonster().getString(base + ".world")), getSmokeMonster().getInt(base + ".location.x"), getSmokeMonster().getInt(base + ".location.y"), getSmokeMonster().getInt(base + ".location.z"));
+			}
+			if(minigame == "Spleef") {
+				return new Location(Bukkit.getWorld(getSpleef().getString(base + ".world")), getSpleef().getInt(base + ".location.x"), getSpleef().getInt(base + ".location.y"), getSpleef().getInt(base + ".location.z"));
+			}
 		}
 		return null;
 	}
 
 	public Location getComponentForMinigame(String minigame, String component){
 		if(isValidMinigame(minigame)){
-			String base = "minigames." + minigame + "." + component;
-			return new Location(Bukkit.getWorld(getConfig().getString(base + ".world")), getConfig().getInt(base + ".location.x"), getConfig().getInt(base + ".location.y"), getConfig().getInt(base + ".location.z"));
+			String base = "minigame." + "data." + component;
+			if(minigame == "ColorMatch") {
+				return new Location(Bukkit.getWorld(getColorMatch().getString(base + ".world")), getColorMatch().getInt(base + ".location.x"), getColorMatch().getInt(base + ".location.y"), getColorMatch().getInt(base + ".location.z"));
+			}
+			if(minigame == "DeadEnd") {
+				return new Location(Bukkit.getWorld(getDeadEnd().getString(base + ".world")), getDeadEnd().getInt(base + ".location.x"), getDeadEnd().getInt(base + ".location.y"), getDeadEnd().getInt(base + ".location.z"));
+			}
+			if(minigame == "JumpnRun") {
+				return new Location(Bukkit.getWorld(getJumpnRun().getString(base + ".world")), getJumpnRun().getInt(base + ".location.x"), getJumpnRun().getInt(base + ".location.y"), getJumpnRun().getInt(base + ".location.z"));
+			}
+			if(minigame == "LastArcherStanding") {
+				return new Location(Bukkit.getWorld(getLastArcherStanding().getString(base + ".world")), getLastArcherStanding().getInt(base + ".location.x"), getLastArcherStanding().getInt(base + ".location.y"), getLastArcherStanding().getInt(base + ".location.z"));
+			}
+			if(minigame == "MineField") {
+				return new Location(Bukkit.getWorld(getMineField().getString(base + ".world")), getMineField().getInt(base + ".location.x"), getMineField().getInt(base + ".location.y"), getMineField().getInt(base + ".location.z"));
+			}
+			if(minigame == "RedAlert") {
+				return new Location(Bukkit.getWorld(getRedAlert().getString(base + ".world")), getRedAlert().getInt(base + ".location.x"), getRedAlert().getInt(base + ".location.y"), getRedAlert().getInt(base + ".location.z"));
+			}
+			if(minigame == "SheepFreenzy") {
+				return new Location(Bukkit.getWorld(getSheepFreenzy().getString(base + ".world")), getSheepFreenzy().getInt(base + ".location.x"), getSheepFreenzy().getInt(base + ".location.y"), getSheepFreenzy().getInt(base + ".location.z"));
+			}
+			if(minigame == "SlapFight") {
+				return new Location(Bukkit.getWorld(getSlapFight().getString(base + ".world")), getSlapFight().getInt(base + ".location.x"), getSlapFight().getInt(base + ".location.y"), getSlapFight().getInt(base + ".location.z"));
+			}
+			if(minigame == "SmokeMonster") {
+				return new Location(Bukkit.getWorld(getSmokeMonster().getString(base + ".world")), getSmokeMonster().getInt(base + ".location.x"), getSmokeMonster().getInt(base + ".location.y"), getSmokeMonster().getInt(base + ".location.z"));
+			}
+			if(minigame == "Spleef") {
+				return new Location(Bukkit.getWorld(getSpleef().getString(base + ".world")), getSpleef().getInt(base + ".location.x"), getSpleef().getInt(base + ".location.y"), getSpleef().getInt(base + ".location.z"));
+			}
 		}
 		return null;
 	}
 
 	public void saveComponentForMinigame(String minigame, String component, Location comploc){
-		String base = "minigames." + minigame + "." + component;
-		getConfig().set(base + ".world", comploc.getWorld().getName());
-		getConfig().set(base + ".location.x", comploc.getBlockX());
-		getConfig().set(base + ".location.y", comploc.getBlockY());
-		getConfig().set(base + ".location.z", comploc.getBlockZ());
-		this.saveConfig();
+		String base = "minigame." + "data." + component;
+		if(minigame == "ColorMatch") {
+			getColorMatch().set(base + ".world", comploc.getWorld().getName());
+			getColorMatch().set(base + ".location.x", comploc.getBlockX());
+			getColorMatch().set(base + ".location.y", comploc.getBlockY());
+			getColorMatch().set(base + ".location.z", comploc.getBlockZ());
+			saveColorMatch();
+		}
+		if(minigame == "DeadEnd") {
+			getDeadEnd().set(base + ".world", comploc.getWorld().getName());
+			getDeadEnd().set(base + ".location.x", comploc.getBlockX());
+			getDeadEnd().set(base + ".location.y", comploc.getBlockY());
+			getDeadEnd().set(base + ".location.z", comploc.getBlockZ());
+			saveDeadEnd();
+		}
+		if(minigame == "JumpnRun") {
+			getJumpnRun().set(base + ".world", comploc.getWorld().getName());
+			getJumpnRun().set(base + ".location.x", comploc.getBlockX());
+			getJumpnRun().set(base + ".location.y", comploc.getBlockY());
+			getJumpnRun().set(base + ".location.z", comploc.getBlockZ());
+			saveJumpnRun();
+		}
+		if(minigame == "LastArcherStanding") {
+			getLastArcherStanding().set(base + ".world", comploc.getWorld().getName());
+			getLastArcherStanding().set(base + ".location.x", comploc.getBlockX());
+			getLastArcherStanding().set(base + ".location.y", comploc.getBlockY());
+			getLastArcherStanding().set(base + ".location.z", comploc.getBlockZ());
+			saveLastArcherStanding();
+		}
+		if(minigame == "MineField") {
+			getMineField().set(base + ".world", comploc.getWorld().getName());
+			getMineField().set(base + ".location.x", comploc.getBlockX());
+			getMineField().set(base + ".location.y", comploc.getBlockY());
+			getMineField().set(base + ".location.z", comploc.getBlockZ());
+			saveMineField();
+		}
+		if(minigame == "RedAlert") {
+			getRedAlert().set(base + ".world", comploc.getWorld().getName());
+			getRedAlert().set(base + ".location.x", comploc.getBlockX());
+			getRedAlert().set(base + ".location.y", comploc.getBlockY());
+			getRedAlert().set(base + ".location.z", comploc.getBlockZ());
+			saveRedAlert();
+		}
+		if(minigame == "SheepFreenzy") {
+			getSheepFreenzy().set(base + ".world", comploc.getWorld().getName());
+			getSheepFreenzy().set(base + ".location.x", comploc.getBlockX());
+			getSheepFreenzy().set(base + ".location.y", comploc.getBlockY());
+			getSheepFreenzy().set(base + ".location.z", comploc.getBlockZ());
+			saveSheepFreenzy();
+		}
+		if(minigame == "SlapFight") {
+			getSlapFight().set(base + ".world", comploc.getWorld().getName());
+			getSlapFight().set(base + ".location.x", comploc.getBlockX());
+			getSlapFight().set(base + ".location.y", comploc.getBlockY());
+			getSlapFight().set(base + ".location.z", comploc.getBlockZ());
+			saveSlapFight();
+		}
+		if(minigame == "SmokeMonster") {
+			getSmokeMonster().set(base + ".world", comploc.getWorld().getName());
+			getSmokeMonster().set(base + ".location.x", comploc.getBlockX());
+			getSmokeMonster().set(base + ".location.y", comploc.getBlockY());
+			getSmokeMonster().set(base + ".location.z", comploc.getBlockZ());
+			saveSmokeMonster();
+		}
+		if(minigame == "Spleef") {
+			getSpleef().set(base + ".world", comploc.getWorld().getName());
+			getSpleef().set(base + ".location.x", comploc.getBlockX());
+			getSpleef().set(base + ".location.y", comploc.getBlockY());
+			getSpleef().set(base + ".location.z", comploc.getBlockZ());
+			saveSpleef();
+		}
 	}
 
 	public boolean isValidMinigame(String minigame){
-		if(getConfig().isSet("minigames." + minigame) && getConfig().isSet("minigames." + minigame + ".lobby") && getConfig().isSet("minigames." + minigame + ".spawn") && getConfig().isSet("minigames." + minigame + ".spectatorlobby")){
-			return true;
+		if(minigame == "ColorMatch") {
+			if(getConfig().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "DeadEnd") {
+			if(getDeadEnd().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "JumpnRun") {
+			if(getJumpnRun().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "LastArcherStanding") {
+			if(getLastArcherStanding().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "MineField") {
+			if(getMineField().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "RedAlert") {
+			if(getRedAlert().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "SheepFreenzy") {
+			if(getSheepFreenzy().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "SlapFight") {
+			if(getSlapFight().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "SmokeMonster") {
+			if(getSmokeMonster().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
+		}
+		if(minigame == "Spleef") {
+			if(getSpleef().isSet("minigames." + "data") && getConfig().isSet("minigames." + "data" + ".lobby") && getConfig().isSet("minigames." + "data" + ".spawn") && getConfig().isSet("minigames." + "data" + ".spectatorlobby")){
+				return true;
+			}
 		}
 		return false;
 	}
