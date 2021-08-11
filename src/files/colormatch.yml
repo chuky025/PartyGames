@@ -1,6 +1,7 @@
 minigame:
   enabled: false
   displayname: 'Color Match'
+  clear_inventory: true
   materials:
     game_floor: 'WOOL' #WOOL, CLAY or GLASS
     finish_floor: 'BEDROCK'

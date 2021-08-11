@@ -90,15 +90,19 @@ public class OnInteractEvent implements Listener {
 			}
 		}else if(event.getAction().equals(Action.PHYSICAL)){
 			if(current.name.equalsIgnoreCase("MineField")) {
-				if(event.getClickedBlock().getType() == Material.STONE_PLATE){
+				if(event.getClickedBlock().getType() == Material.valueOf(main.getMineField().getString("minigame.material.plates"))){
 					if(main.players.contains(event.getPlayer().getName())){
 						final Player p = event.getPlayer();
-						p.getWorld().createExplosion(p.getLocation(), 0);
+						if(main.getMineField().getBoolean("minigame.enable_particles")) {
+							p.getWorld().createExplosion(p.getLocation(), 0);	
+						}
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
 							@Override
 							public void run() {
 								p.teleport(main.minigames.get(main.currentmg).spawn);
-								event.getClickedBlock().setType(Material.AIR);
+								if(main.getMineField().getBoolean("minigame.break_plate")) {
+									event.getClickedBlock().setType(Material.AIR);
+								}
 							}
 						}, 5);
 					}

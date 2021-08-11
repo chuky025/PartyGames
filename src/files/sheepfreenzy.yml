@@ -1,6 +1,8 @@
 minigame:
   enabled: false
   displayname: 'Sheep Freenzy'
+  enable_particles: true
+  enable_explosions: true
   materials:
     game_floor: 'WOOL' 
     finish_floor: 'BEDROCK'

@@ -28,26 +28,28 @@ public class OnFlightAttempt implements Listener {
 	    	}
 	    	if(main.players.contains(p.getName()) && main.minigames.get(main.currentmg).name.equalsIgnoreCase("slapfight")){
 	    		if(!main.players_doublejumped.contains(p.getName())){
-		    		event.getPlayer().setAllowFlight(false);
-			        event.getPlayer().setFlying(false);
-			        event.setCancelled(true);
-		    		event.getPlayer().setVelocity(p.getVelocity().setY(1.4F)); // add(new Vector(0,0.7,0)
-		    		main.players_doublejumped.add(p.getName());
-			        Bukkit.getScheduler().runTaskLater(main, new Runnable(){
-			        	public void run(){
-			        		main.players_doublejumped.remove(p.getName());
-			        	}
-			        }, 20 * 10);
-	    		}else{
-	    			if(main.placeholderapi) {
-	    				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.double_jump"))));
-					} else {
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.double_jump")));
-					}
-	    			
-	    			p.setAllowFlight(false);
-			        p.setFlying(false);
-			        event.setCancelled(true);
+	    			if(main.getSlapFight().getBoolean("minigame.enable_double_jump")) {
+	    				event.getPlayer().setAllowFlight(false);
+				        event.getPlayer().setFlying(false);
+				        event.setCancelled(true);
+			    		event.getPlayer().setVelocity(p.getVelocity().setY(1.4F)); // add(new Vector(0,0.7,0)
+			    		main.players_doublejumped.add(p.getName());
+				        Bukkit.getScheduler().runTaskLater(main, new Runnable(){
+				        	public void run(){
+				        		main.players_doublejumped.remove(p.getName());
+				        	}
+				        }, 20 * 10);
+		    		}else{
+		    			if(main.placeholderapi) {
+		    				p.sendMessage(PlaceholderAPI.setPlaceholders(p, ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.double_jump"))));
+						} else {
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', main.getMessages().getString("messages.game.double_jump")));
+						}
+		    			
+		    			p.setAllowFlight(false);
+				        p.setFlying(false);
+				        event.setCancelled(true);
+		    		}
 	    		}
 	    	}
 	    }

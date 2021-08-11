@@ -31,12 +31,16 @@ public class OnPlayerShearSheep implements Listener {
 				int temp = Shop.getPlayerShopComponent(main, event.getPlayer().getName(), "sheepfreenzy_explosion_immunity");
 				if(temp < 1){
 					Shop.removeFromPlayerShopComponent(main, event.getPlayer().getName(), "sheepfreenzy_explosion_immunity", 1);
-					event.getPlayer().getLocation().getWorld().createExplosion(event.getEntity().getLocation(), 2F);
+					if(main.getSheepFreenzy().getBoolean("minigame.enable_explosions")) {
+						event.getPlayer().getLocation().getWorld().createExplosion(event.getEntity().getLocation(), 2F);	
+					}
 				}
 			}else{
 				main.currentscore.put(event.getPlayer().getName(), main.currentscore.get(event.getPlayer().getName()) + 1);
 			}
-			NMSEffectManager.createSheepFreenzyEffect(event.getEntity().getLocation());
+			if(main.getSheepFreenzy().getBoolean("minigame.enable_particles")) {
+				NMSEffectManager.createSheepFreenzyEffect(event.getEntity().getLocation());	
+			}
 			event.getEntity().remove();
 		}
 	}

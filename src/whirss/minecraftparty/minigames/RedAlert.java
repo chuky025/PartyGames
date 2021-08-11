@@ -163,7 +163,9 @@ public class RedAlert extends Minigame implements Listener{
 				b.setData((byte)14);
 			}else if(colorcode == 14){ // red
 				b.setType(Material.AIR);
-				NMSEffectManager.createFlameEffect(b.getLocation());
+				if(m.getRedAlert().getBoolean("minigame.enable_particles")) {
+					NMSEffectManager.createFlameEffect(b.getLocation());	
+				}
 			}else{
 				b.setData((byte)0);
 			}
