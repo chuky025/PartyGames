@@ -13,6 +13,7 @@ settings:
     announcements: true
     seconds_for_each_minigame: 60
     send_summary: true
+  rewards:
     credits:
       enable: true
       use_economy: false
