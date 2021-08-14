@@ -6,3 +6,4 @@ minigame:
   materials:
     game_floor: 'GOLD_BLOCK'
     finish_floor: 'BEDROCK'
+  description: 'Dont fall while the blocks are disappearing%nl%behind you!'

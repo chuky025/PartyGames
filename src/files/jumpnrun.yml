@@ -4,3 +4,4 @@ minigame:
   materials: #This minigame does not regenerate, so these materials are only for the first generation
     start_floor: 'WOOL' #WOOL, CLAY or GLASS
     finish_floor: 'COAL_BLOCK'
+  description: 'Jump to the finish!'

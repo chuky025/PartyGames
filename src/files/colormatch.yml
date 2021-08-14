@@ -5,3 +5,4 @@ minigame:
   materials:
     game_floor: 'WOOL' #WOOL, CLAY or GLASS
     finish_floor: 'BEDROCK'
+  description: 'Jump to the color corresponding to the wool%nl%color in your inventory!'

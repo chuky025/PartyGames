@@ -4,3 +4,4 @@ minigame:
   materials:
     game_floor: 'SNOW_BLOCK' 
     finish_floor: 'BEDROCK'
+  description: 'Destroy the floor under your opponents to%nl%make them fall and lose!'

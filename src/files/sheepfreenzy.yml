@@ -6,3 +6,4 @@ minigame:
   materials:
     game_floor: 'WOOL' 
     finish_floor: 'BEDROCK'
+  description: 'Shear as many Sheeps as possible!%nl%Attention: Some of them explode.'

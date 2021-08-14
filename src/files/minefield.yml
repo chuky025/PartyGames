@@ -6,3 +6,4 @@ minigame:
   materials:
     game_floor: 'GRASS'
     plates: 'STONE_PLATE'
+  description: 'Run to the finish without touching the mines!'

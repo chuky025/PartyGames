@@ -4,3 +4,4 @@ minigame:
   enable_double_jump: true
   materials: #This minigame does not regenerate, so these materials are only for the first generation
     game: 'WOOL' #WOOL, CLAY or GLASS
+  description: 'Slap the other players to fall! You can use%nl%Double Jump in case you fall, too.'

@@ -182,7 +182,7 @@ public class ColorMatch extends Minigame implements Listener{
 					}, (40L - n) / 12, (40L - n) / 12));
 
 					
-					ItemStack wool = new ItemStack(Material.WOOL, 1, colors.get(currentw).getWoolData());
+					ItemStack wool = new ItemStack(Material.valueOf(m.getColorMatch().getString("minigame.materials.game_floor")), 1, colors.get(currentw).getWoolData());
 					//p.getInventory().all(wool);
 					for(int i = 0; i<9; i++){
 						p.getInventory().setItem(i, wool);

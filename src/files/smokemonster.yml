@@ -2,4 +2,5 @@ minigame:
   enabled: false
   displayname: 'Smoke Monster'
   materials: #This minigame does not regenerate, so these materials are only for the first generation
-    game: 'NETHER_BRICK' 
+    game: 'NETHER_BRICK'
+  description: 'Avoid the smoke monster!'

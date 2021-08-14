@@ -3,3 +3,4 @@ minigame:
   displayname: 'Last Archer Standing'
   materials: #This minigame does not regenerate, so these materials are only for the first generation
     game_floor: 'GRASS'
+  description: 'Shoot the others with the bow!'
