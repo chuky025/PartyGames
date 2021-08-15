@@ -100,8 +100,8 @@ public class ColorMatch extends Minigame implements Listener{
 					for(int j_ = 0; j_ < 4; j_++){
 						Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x_ + i_, y, z_ + j_));
 						Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x_ + i_, y_, z_ + j_));
-						b_.setType(Material.valueOf(main.getColorMatch().getString("minigame.materials.game_floor")));
-						b.setType(Material.valueOf(main.getColorMatch().getString("minigame.materials.finish_floor")));
+						b_.setType(Material.valueOf(main.getColorMatch().getString("minigame.materials.finish_floor")));
+						b.setType(Material.valueOf(main.getColorMatch().getString("minigame.materials.game_floor")));
 						b.setData(colors.get(current).getWoolData());
 					}
 				}
@@ -324,7 +324,7 @@ public class ColorMatch extends Minigame implements Listener{
 						for(int i_ = 0; i_ < 4; i_++){
 							for(int j_ = 0; j_ < 4; j_++){
 								Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x_ + i_, y, z_ + j_));
-								b.setType(Material.WOOL);
+								b.setType(Material.valueOf(m.getColorMatch().getString("minigame.materials.game_floor")));
 								b.setData(colors.get(current).getWoolData());
 							}
 						}
