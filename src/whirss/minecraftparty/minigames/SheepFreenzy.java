@@ -74,9 +74,9 @@ public class SheepFreenzy extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 64; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.material.game_floor")));
+				b.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.materials.game_floor")));
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y - 4, z + j));
-				b_.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.material.finish_floor")));
+				b_.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.materials.finish_floor")));
 			}
 		}
 	}
@@ -92,9 +92,9 @@ public class SheepFreenzy extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 64; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.material.game_floor")));
+				b.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.materials.game_floor")));
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y - 4, z + j));
-				b_.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.material.finish_floor")));
+				b_.setType(Material.valueOf(m.getSheepFreenzy().getString("minigame.materials.finish_floor")));
 			}
 		}
 		

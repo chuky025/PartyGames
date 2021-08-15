@@ -22,6 +22,15 @@ public class OnPlayerJoin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		final Player p = event.getPlayer();
 		
+		if(p.isOp() && main.getConfig().getInt("no_modify") == 17) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MinecraftParty] Your configuration is outdated and will probably not work in this version of the plugin.");
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MinecraftParty] Update your configuration or use an older version of the plugin.");
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MinecraftParty] Tutorial to update the configuration: youtu.be/soon");
+			p.sendMessage(ChatColor.RED + "[MinecraftParty] Your configuration is outdated and will probably not work in this version of the plugin.");
+			p.sendMessage(ChatColor.RED + "[MinecraftParty] Update your configuration or use an older version of the plugin.");
+			p.sendMessage(ChatColor.RED + "[MinecraftParty] Tutorial to update the configuration: youtu.be/soon");
+		}
+		
 		// update credits from mysql
 		try{
 			if(main.msql.getCredits(p.getName()) > -1){

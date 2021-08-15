@@ -49,7 +49,7 @@ public class MineField extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 64; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.valueOf(m.getMineField().getString("minigame.material.game_floor")));
+				b.setType(Material.valueOf(m.getMineField().getString("minigame.materials.game_floor")));
 			}
 		}
 		
@@ -57,7 +57,7 @@ public class MineField extends Minigame implements Listener{
 			for(int j = 0; j < 56; j++){
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y + 1, z + j + 4));
 				if(r.nextBoolean()){
-					b_.setType(Material.valueOf(m.getMineField().getString("minigame.material.plates")));
+					b_.setType(Material.valueOf(m.getMineField().getString("minigame.materials.plates")));
 				}else{
 					b_.setType(Material.AIR);
 				}
@@ -77,7 +77,7 @@ public class MineField extends Minigame implements Listener{
 			for(int j = 0; j < 56; j++){
 				Block b_ = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y + 1, z + j + 4));
 				if(r.nextBoolean()){
-					b_.setType(Material.valueOf(m.getMineField().getString("minigame.material.plates")));
+					b_.setType(Material.valueOf(m.getMineField().getString("minigame.materials.plates")));
 				}else{
 					b_.setType(Material.AIR);
 				}

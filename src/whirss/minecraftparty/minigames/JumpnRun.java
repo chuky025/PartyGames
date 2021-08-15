@@ -71,7 +71,7 @@ public class JumpnRun extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 4; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.valueOf(m.getJumpnRun().getString("minigame.material.start_floor")));
+				b.setType(Material.valueOf(m.getJumpnRun().getString("minigame.materials.start_floor")));
 				b.setData((byte)r.nextInt(15));
 			}
 		}
@@ -79,7 +79,7 @@ public class JumpnRun extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 4; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + 64 - j));
-				b.setType(Material.valueOf(m.getJumpnRun().getString("minigame.material.finish_floor")));
+				b.setType(Material.valueOf(m.getJumpnRun().getString("minigame.materials.finish_floor")));
 			}
 		}
 

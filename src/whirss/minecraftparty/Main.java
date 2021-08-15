@@ -215,14 +215,7 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "|_|  |_|_|_| |_|\\___|\\___|_|  \\__,_|_|  \\__|_|   \\__,_|_|   \\__|\\__, |");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "                                                                |___/");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version:");
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + currentversion);
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Source Code");
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "https://github.com/Whirss/MinecraftParty");
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Contributors:");
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Whirss"); //I will put all the names of all the people who collaborate here.
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Version: " + currentversion + "  /  Source Code: https://github.com/Whirss/MinecraftParty");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "----------------------------------------------------------------------------------");
 		if(getConfig().getInt("no_modify") == 17) {

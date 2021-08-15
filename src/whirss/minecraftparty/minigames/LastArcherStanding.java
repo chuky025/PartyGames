@@ -49,7 +49,7 @@ public class LastArcherStanding extends Minigame implements Listener{
 		for(int i = 0; i < 64; i++){
 			for(int j = 0; j < 64; j++){
 				Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x + i, y, z + j));
-				b.setType(Material.valueOf(m.getLastArcherStanding().getString("minigame.material.game_floor")));
+				b.setType(Material.valueOf(m.getLastArcherStanding().getString("minigame.materials.game_floor")));
 			}
 		}
 	}

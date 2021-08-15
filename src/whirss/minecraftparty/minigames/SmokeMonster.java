@@ -100,7 +100,7 @@ public class SmokeMonster extends Minigame implements Listener {
 		    for(int z_ = -radius; z_ <= radius; z_++) {
 		        if( (x_*x_) + (z_*z_) <= radiusSquared) {
 		        	Block b = start.getWorld().getBlockAt(new Location(start.getWorld(), x - x_, y, z - z_));
-					b.setType(Material.valueOf(m.getSmokeMonster().getString("minigame.material.game")));
+					b.setType(Material.valueOf(m.getSmokeMonster().getString("minigame.materials.game")));
 		        }
 		    }
 		}
